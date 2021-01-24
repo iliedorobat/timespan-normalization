@@ -25,10 +25,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,21 +35,40 @@ public class LidoXmlTimespanAnalysis {
     private static ParserDAO parserDAO = new ParserDAOImpl();
 
     /**
-     * Extract all the timespan values from LIDO files<br/>
+     * Extract all timespan values from LIDO files<br/>
      * <b>Used in the analysis process</b>
      * @param fileNames The list of LIDO file name
-     * @param filePath The full path for the output file
+     * @param outputFullPath The full path for the output file
      * @param inputPath The path to input LIDO files
      */
-    public static void write(String[] fileNames, String filePath, String inputPath) {
+    public static void writeAll(String inputPath, String[] fileNames, String outputFullPath) {
         StringWriter writer = new StringWriter();
-        Set<String> list = extractTimespan(fileNames, inputPath);
+        ArrayList<String> list = extractTimespan(fileNames, inputPath);
 
         for (String string : list) {
             writer.append(string).append("\n");
         }
 
-        File.write(writer, filePath);
+        File.write(writer, outputFullPath);
+    }
+
+    /**
+     * Extract all unique timespan values from LIDO files<br/>
+     * <b>Used in the analysis process</b>
+     * @param fileNames The list of LIDO file name
+     * @param outputFullPath The full path for the output file
+     * @param inputPath The path to input LIDO files
+     */
+    public static void writeUnique(String inputPath, String[] fileNames, String outputFullPath) {
+        StringWriter writer = new StringWriter();
+        ArrayList<String> list = extractTimespan(fileNames, inputPath);
+        Set<String> set = new TreeSet<>(list);
+
+        for (String string : set) {
+            writer.append(string).append("\n");
+        }
+
+        File.write(writer, outputFullPath);
     }
 
     public static void check(String filePath) {
@@ -129,8 +145,8 @@ public class LidoXmlTimespanAnalysis {
      * @param fileNames The list of paths to LIDO files
      * @param inputPath The path to input LIDO files
      */
-    private static Set<String> extractTimespan(String[] fileNames, String inputPath) {
-        Set<String> list = new HashSet<>();
+    private static ArrayList<String> extractTimespan(String[] fileNames, String inputPath) {
+        ArrayList<String> list = new ArrayList<>();
 
         for (int count = 0; count < fileNames.length; count++) {
             String filePath = inputPath
@@ -139,8 +155,8 @@ public class LidoXmlTimespanAnalysis {
             addTimespan(filePath, list);
         }
 
-        Set<String> sorted = new TreeSet<>(list);
-        return sorted;
+        Collections.sort(list);
+        return list;
     }
 
     /**
@@ -148,7 +164,7 @@ public class LidoXmlTimespanAnalysis {
      * @param filePath The path to the LIDO file
      * @param list The related list
      */
-    private static void addTimespan(String filePath, Set<String> list) {
+    private static void addTimespan(String filePath, ArrayList<String> list) {
         LidoWrap lidoWrap = parserDAO.parseLidoFile(filePath);
 
         for (int i = 0; i < lidoWrap.getLido().size(); i++) {
@@ -168,7 +184,7 @@ public class LidoXmlTimespanAnalysis {
      * @param eventSetList The list of EventSet items
      * @param list The related list
      */
-    private static void addEventDateTimespan(ArrayList<EventSet> eventSetList, Set<String> list) {
+    private static void addEventDateTimespan(ArrayList<EventSet> eventSetList, ArrayList<String> list) {
         for (int i = 0; i < eventSetList.size(); i++) {
             EventSet eventSet = eventSetList.get(i);
             EventDate eventDate = eventSet.getEvent().getEventDate();
