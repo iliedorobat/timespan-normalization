@@ -1,6 +1,8 @@
 package main.java.ro.webdata.normalization.timespan.ro;
 
+import main.java.ro.webdata.normalization.timespan.commons.EnvConst;
 import org.apache.commons.lang3.StringUtils;
+import ro.webdata.echo.commons.Const;
 import ro.webdata.echo.commons.File;
 import main.java.ro.webdata.normalization.timespan.ro.regex.AgeRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.TimePeriodRegex;
@@ -11,6 +13,7 @@ import main.java.ro.webdata.normalization.timespan.ro.regex.date.LongDateRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.imprecise.DatelessRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.imprecise.InaccurateYearRegex;
+import ro.webdata.echo.commons.Print;
 import ro.webdata.parser.xml.lido.common.Constants;
 import ro.webdata.parser.xml.lido.core.ParserDAO;
 import ro.webdata.parser.xml.lido.core.ParserDAOImpl;
@@ -42,6 +45,8 @@ public class LidoXmlTimespanAnalysis {
      * @param inputPath The path to input LIDO files
      */
     public static void writeAll(String inputPath, String[] fileNames, String outputFullPath) {
+        Print.operation(Const.OPERATION_END, EnvConst.SHOULD_PRINT);
+
         StringWriter writer = new StringWriter();
         ArrayList<String> list = extractTimespan(fileNames, inputPath);
 
@@ -50,6 +55,8 @@ public class LidoXmlTimespanAnalysis {
         }
 
         File.write(writer, outputFullPath);
+
+        Print.operation(Const.OPERATION_END, EnvConst.SHOULD_PRINT);
     }
 
     /**
@@ -60,6 +67,8 @@ public class LidoXmlTimespanAnalysis {
      * @param inputPath The path to input LIDO files
      */
     public static void writeUnique(String inputPath, String[] fileNames, String outputFullPath) {
+        Print.operation(Const.OPERATION_END, EnvConst.SHOULD_PRINT);
+
         StringWriter writer = new StringWriter();
         ArrayList<String> list = extractTimespan(fileNames, inputPath);
         Set<String> set = new TreeSet<>(list);
@@ -69,6 +78,8 @@ public class LidoXmlTimespanAnalysis {
         }
 
         File.write(writer, outputFullPath);
+
+        Print.operation(Const.OPERATION_END, EnvConst.SHOULD_PRINT);
     }
 
     public static void check(String filePath) {
