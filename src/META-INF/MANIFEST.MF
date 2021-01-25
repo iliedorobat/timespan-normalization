@@ -1,3 +1,4 @@
-Manifest-Version: 1.0
-Main-Class: ro.webdata.normalization.timespan.ro.Main
+Manifest-Version: 1.1
+Main-Class: main.java.ro.webdata.normalization.timespan.Main
+Class-Path: lib/ files/
 
