@@ -88,9 +88,7 @@ public class TimespanUtils {
     //TODO: "2 a.chr - 14 p.chr"
     private static TimespanModel getMatchedValues(TimespanModel timespanModel, String regex) {
         String initialValue = timespanModel.getResidualValue();
-        initialValue = TimeSanitizeUtils.sanitizeValue(initialValue, regex)
-                .replaceAll(TimespanRegex.AGE_BC, TimeUtils.CHRISTUM_BC_PLACEHOLDER)
-                .replaceAll(TimespanRegex.AGE_AD, TimeUtils.CHRISTUM_AD_PLACEHOLDER);
+        initialValue = TimeSanitizeUtils.sanitizeValue(initialValue, regex);
 
         TreeSet<String> matchedSet = timespanModel.getTimespanSet();
         String residualValue = initialValue

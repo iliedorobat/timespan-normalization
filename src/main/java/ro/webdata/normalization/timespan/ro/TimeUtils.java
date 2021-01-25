@@ -1,5 +1,6 @@
 package main.java.ro.webdata.normalization.timespan.ro;
 
+import main.java.ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import ro.webdata.echo.commons.Const;
 
 import java.util.Collections;
@@ -107,6 +108,18 @@ public class TimeUtils {
                 .replaceAll(CHRISTUM_BC_PLACEHOLDER, Const.EMPTY_VALUE_PLACEHOLDER)
                 .replaceAll(CHRISTUM_AD_PLACEHOLDER, Const.EMPTY_VALUE_PLACEHOLDER)
                 .trim();
+    }
+
+    /**
+     * Normalize the Christum notation (E.g.: "a.hr", "î.hr", etc.)
+     * to standard formats ("__AD__" and "__BC__")
+     * @param value The input value
+     * @return The value contains normalized Christum notation
+     */
+    public static String normalizeChristumNotation(String value) {
+        return value
+                .replaceAll(TimespanRegex.AGE_BC, TimeUtils.CHRISTUM_BC_PLACEHOLDER)
+                .replaceAll(TimespanRegex.AGE_AD, TimeUtils.CHRISTUM_AD_PLACEHOLDER);
     }
 
     /**

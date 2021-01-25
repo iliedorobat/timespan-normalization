@@ -1,7 +1,8 @@
 package main.java.ro.webdata.normalization.timespan.ro;
 
-import ro.webdata.echo.commons.Const;
 import main.java.ro.webdata.normalization.timespan.ro.regex.YearRegex;
+import org.apache.commons.lang3.StringUtils;
+import ro.webdata.echo.commons.Const;
 
 public class TimeSanitizeUtils {
     private TimeSanitizeUtils() {}
@@ -9,15 +10,17 @@ public class TimeSanitizeUtils {
     /**
      * Sanitize some values that appear rarely and a regex operation
      * would be time consuming
-     * @param value The original value
+     * @param value The input value
      * @param regex The related regular expression
      * @return The sanitized value
      */
     public static String sanitizeValue(String value, String regex) {
-        String sanitized = clearJunks(value, regex);
+        String sanitized = StringUtils.stripAccents(value);
+        sanitized = clearJunks(sanitized, regex);
         sanitized = sanitizeDateTime(sanitized);
         sanitized = sanitizeAges(sanitized);
         sanitized = sanitizeTimePeriods(sanitized);
+        sanitized = TimeUtils.normalizeChristumNotation(sanitized);
 
         return sanitized;
     }
@@ -27,7 +30,7 @@ public class TimeSanitizeUtils {
      * E.g.: "anul 13=1800/1801" will lead to "anul 13=" junk value.
      * This junk value could be interpreted by another regex as being
      * a year, which is wrong.
-     * @param value The original value
+     * @param value The input value
      * @param regex The related regular expression
      * @return The cleaned value
      */
@@ -35,7 +38,7 @@ public class TimeSanitizeUtils {
     private static String clearJunks(String value, String regex) {
         // Avoid adding junks that could be interpreted by other regexes.
         // E.g.: "anul 13=1800/1801" will lead to "anul 13=" junk value
-        if (regex.equals(YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL)) {
+        if (regex != null && regex.equals(YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL)) {
             return value.replaceAll(
                     YearRegex.YEAR_3_4_DIGITS_SPECIAL_PREFIX,
                     Const.EMPTY_VALUE_PLACEHOLDER
@@ -48,13 +51,13 @@ public class TimeSanitizeUtils {
     /**
      * Sanitize date-like values that appear rarely and a regex operation
      * would be time consuming
-     * @param value The original value
+     * @param value The input value
      * @return The sanitized value
      */
     private static String sanitizeDateTime(String value) {
         switch (value) {
-            case "17 nov. 375-9 aug. 378 __BC__":
-                return "17 nov. 375 - 9 aug. 378 __BC__";
+            case "17 nov. 375-9 aug. 378 a.chr.":
+                return "17 nov. 375 - 9 aug. 378 a.chr.";
             case "[11-13 martie] 1528":
                 return "11 martie 1528 - 13 martie 1528";
             case "6 octombrie1904":
@@ -75,7 +78,7 @@ public class TimeSanitizeUtils {
     /**
      * Sanitize year-like values that appear rarely and a regex operation
      * would be time consuming
-     * @param value The original value
+     * @param value The input value
      * @return The sanitized value
      */
     private static String sanitizeAges(String value) {
@@ -88,7 +91,7 @@ public class TimeSanitizeUtils {
     /**
      * Sanitize centuries and millenniums values that appear rarely
      * and a regex operation would be time consuming
-     * @param value The original value
+     * @param value The input value
      * @return The sanitized value
      */
     private static String sanitizeTimePeriods(String value) {

@@ -45,7 +45,7 @@ public class LidoXmlTimespanAnalysis {
      * @param inputPath The path to input LIDO files
      */
     public static void writeAll(String inputPath, String[] fileNames, String outputFullPath) {
-        Print.operation(Const.OPERATION_END, EnvConst.SHOULD_PRINT);
+        Print.operation(Const.OPERATION_START, EnvConst.SHOULD_PRINT);
 
         StringWriter writer = new StringWriter();
         ArrayList<String> list = extractTimespan(fileNames, inputPath);
@@ -67,7 +67,7 @@ public class LidoXmlTimespanAnalysis {
      * @param inputPath The path to input LIDO files
      */
     public static void writeUnique(String inputPath, String[] fileNames, String outputFullPath) {
-        Print.operation(Const.OPERATION_END, EnvConst.SHOULD_PRINT);
+        Print.operation(Const.OPERATION_START, EnvConst.SHOULD_PRINT);
 
         StringWriter writer = new StringWriter();
         ArrayList<String> list = extractTimespan(fileNames, inputPath);
