@@ -1,14 +1,22 @@
 package test.java.ro.webdata.normalization.timespan.ro;
 
 import main.java.ro.webdata.normalization.timespan.ro.LidoXmlTimespanAnalysis;
+import main.java.ro.webdata.normalization.timespan.ro.TimeSanitizeUtils;
 import main.java.ro.webdata.normalization.timespan.ro.TimespanUtils;
+import test.java.ro.webdata.normalization.timespan.ro.commons.Const;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
-        printTimespan("1/2 sec. iii - sec. ii a. chr.");
-        writeTimespan();
+        String fullTimespan = getFullTimespan("1/2 sec. iii - sec. ii a. chr.");
+        System.out.println(fullTimespan);
+
+//        writeTimespan();
+//        printFullTimespan(Const.PATH_OUTPUT_ALL_TIMESPAN_FILE);
     }
 
     private static void writeTimespan() {
@@ -16,29 +24,40 @@ public class Main {
         LidoXmlTimespanAnalysis.writeUnique(Const.PATH_INPUT_LIDO_FILES, Const.fileNames, Const.PATH_OUTPUT_UNIQUE_TIMESPAN_FILE);
     }
 
-    private static void printTimespan(String text) {
-        TreeSet<String> timespanSet = TimespanUtils.getTimespanSet(text);
-        String header = getHeader(text);
+    /**
+     * Print the original value, the value whose Christum notation has been
+     * sanitized and the prepared value (the DBpedia links)<br/>
+     * !!! <b>writeTimespan</b> will be used to generate the required text files !!!
+     * @param inputFullPath The full path to the text file (E.g.: "timespan_all.txt")
+     *                      which stores the timespan values
+     */
+    private static void printFullTimespan(String inputFullPath) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(inputFullPath));
+            String readLine;
 
-        System.out.println(header);
-        for (String timespan : timespanSet) {
-            System.out.println("timespan: " + timespan);
+            while((readLine = br.readLine()) != null) {
+                if (readLine.length() > 0) {
+                    System.out.println(getFullTimespan(readLine));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println();
     }
 
-    private static String getHeader(String text) {
-        String separator = getHeaderSeparator(text.length());
-        return separator + "\n" + text + "\n" + separator;
-    }
+    /**
+     * Get the original value, the value whose Christum notation has been
+     * sanitized and the prepared value (the DBpedia links)
+     * @param value The original value
+     * @return The prepared output
+     */
+    private static String getFullTimespan(String value) {
+        String sanitized = TimeSanitizeUtils.sanitizeValue(value, null);
+        TreeSet<String> set = TimespanUtils.getTimespanSet(value);
 
-    private static String getHeaderSeparator(int length) {
-        StringBuilder separator = new StringBuilder();
-
-        for (int i = 0; i < length; i++) {
-            separator.append("-");
-        }
-
-        return separator.toString();
+        return value
+                + Const.CSV_SEPARATOR + sanitized
+                + Const.CSV_SEPARATOR + set;
     }
 }

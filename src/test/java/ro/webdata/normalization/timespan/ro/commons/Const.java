@@ -1,8 +1,11 @@
-package test.java.ro.webdata.normalization.timespan.ro;
+package test.java.ro.webdata.normalization.timespan.ro.commons;
 
 import ro.webdata.echo.commons.File;
 
 public class Const {
+    public static final String CSV_SEPARATOR = "|";
+    public static final String DASH_PLACEHOLDER = "-";
+
     private static final String FILE_NAME_ARHEOLOGIE = "inp-clasate-arheologie-2014-02-02";
     private static final String FILE_NAME_ARTA = "inp-clasate-arta-2014-02-02";
     private static final String FILE_NAME_ARTE_DECO = "inp-clasate-arte-decorative-2014-02-02";
