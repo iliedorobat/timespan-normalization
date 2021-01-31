@@ -1,5 +1,6 @@
 package main.java.ro.webdata.normalization.timespan.ro.model;
 
+import main.java.ro.webdata.normalization.timespan.commons.EnvConst;
 import main.java.ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.echo.commons.Date;
 import ro.webdata.echo.commons.Print;
@@ -30,7 +31,9 @@ public class TimeModel {
         Integer millenniumEnd = millennium;
 
         if (millennium > Date.LAST_UPDATE_MILLENNIUM && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
-            Print.tooBigMillennium("setting millennium", position, millennium);
+            if (EnvConst.PRINT_ERROR) {
+                Print.tooBigMillennium("setting millennium", position, millennium);
+            }
             millenniumStart = null;
             millenniumEnd = null;
         }
@@ -45,7 +48,9 @@ public class TimeModel {
         try {
             int year = Integer.parseInt(yearStr.trim());
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
-                Print.tooBigYear("setting century", position, year);
+                if (EnvConst.PRINT_ERROR) {
+                    Print.tooBigYear("setting century", position, year);
+                }
             } else {
                 int century = (int) (Math.floor((year / 100)) + 1);
                 setCentury(century, position);
@@ -60,7 +65,9 @@ public class TimeModel {
         Integer centuryEnd = century;
 
         if (century > Date.LAST_UPDATE_CENTURY && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
-            Print.tooBigCentury("setting century", position, century);
+            if (EnvConst.PRINT_ERROR) {
+                Print.tooBigCentury("setting century", position, century);
+            }
             centuryStart = null;
             centuryEnd = null;
         }
@@ -76,7 +83,9 @@ public class TimeModel {
             int year = Integer.parseInt(yearStr.trim());
 
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
-                Print.tooBigYear("setting year", position, year);
+                if (EnvConst.PRINT_ERROR) {
+                    Print.tooBigYear("setting year", position, year);
+                }
             } else {
                 if (position.equals(TimeUtils.START_PLACEHOLDER))
                     this.yearStart = year;
