@@ -52,7 +52,13 @@ public class TimeModel {
                     Print.tooBigYear("setting century", position, year);
                 }
             } else {
-                int century = (int) (Math.floor((year / 100)) + 1);
+                /**
+                 * E.g.: the year 100 is part of the first century
+                 * Math.floor(100 / 100) + 0 = 1st century
+                 * Math.floor(101 / 100) + 1 = 2nd century
+                 */
+                int buffer = year % 100 == 0 ? 0 : 1;
+                int century = (int) (Math.floor(year / 100) + buffer);
                 setCentury(century, position);
             }
         } catch (NumberFormatException e) {
