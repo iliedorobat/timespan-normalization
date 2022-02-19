@@ -1,9 +1,6 @@
 package main.java.ro.webdata.normalization.timespan.ro;
 
 import main.java.ro.webdata.normalization.timespan.commons.EnvConst;
-import org.apache.commons.lang3.StringUtils;
-import ro.webdata.echo.commons.Const;
-import ro.webdata.echo.commons.File;
 import main.java.ro.webdata.normalization.timespan.ro.regex.AgeRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.TimePeriodRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.UnknownRegex;
@@ -13,8 +10,9 @@ import main.java.ro.webdata.normalization.timespan.ro.regex.date.LongDateRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.imprecise.DatelessRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.imprecise.InaccurateYearRegex;
+import org.apache.commons.lang3.StringUtils;
+import ro.webdata.echo.commons.File;
 import ro.webdata.echo.commons.Print;
-import ro.webdata.parser.xml.lido.common.Constants;
 import ro.webdata.parser.xml.lido.core.ParserDAO;
 import ro.webdata.parser.xml.lido.core.ParserDAOImpl;
 import ro.webdata.parser.xml.lido.core.leaf.descriptiveMetadata.DescriptiveMetadata;
@@ -27,63 +25,55 @@ import ro.webdata.parser.xml.lido.core.wrap.lidoWrap.LidoWrap;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LidoXmlTimespanAnalysis {
     private LidoXmlTimespanAnalysis() {}
 
-    private static ParserDAO parserDAO = new ParserDAOImpl();
+    private static final ParserDAO parserDAO = new ParserDAOImpl();
+    private static final String OPERATION_END = "----- END -----";
+    private static final String OPERATION_START = "----- START -----";
 
     /**
-     * Extract all timespan values from LIDO files<br/>
+     * Extract all time expressions from LIDO files<br/>
      * <b>Used in the analysis process</b>
-     * @param fileNames The list of LIDO file name
      * @param outputFullPath The full path for the output file
      * @param inputPath The path to input LIDO files
      */
-    public static void writeAll(String inputPath, String[] fileNames, String outputFullPath) {
-        Print.operation(Const.OPERATION_START, EnvConst.SHOULD_PRINT);
+    public static void writeAll(String inputPath, String outputFullPath) {
+        Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
+        Print.operation("LidoXmlTimespanAnalysis.writeAll is in progress...", EnvConst.SHOULD_PRINT);
 
-        StringWriter writer = new StringWriter();
-        ArrayList<String> list = extractTimespan(fileNames, inputPath);
+        ArrayList<String> list = extractTimespan(inputPath);
+        File.write(list, outputFullPath, false);
 
-        for (String string : list) {
-            writer.append(string).append("\n");
-        }
-
-        File.write(writer, outputFullPath);
-
-        Print.operation(Const.OPERATION_END, EnvConst.SHOULD_PRINT);
+        Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
     }
 
     /**
-     * Extract all unique timespan values from LIDO files<br/>
+     * Extract all unique time expressions from LIDO files<br/>
      * <b>Used in the analysis process</b>
-     * @param fileNames The list of LIDO file name
      * @param outputFullPath The full path for the output file
      * @param inputPath The path to input LIDO files
      */
-    public static void writeUnique(String inputPath, String[] fileNames, String outputFullPath) {
-        Print.operation(Const.OPERATION_START, EnvConst.SHOULD_PRINT);
+    public static void writeUnique(String inputPath, String outputFullPath) {
+        Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
+        Print.operation("LidoXmlTimespanAnalysis.writeUnique is in progress...", EnvConst.SHOULD_PRINT);
 
-        StringWriter writer = new StringWriter();
-        ArrayList<String> list = extractTimespan(fileNames, inputPath);
+        ArrayList<String> list = extractTimespan(inputPath);
         Set<String> set = new TreeSet<>(list);
+        File.write(new ArrayList<>(set), outputFullPath, false);
 
-        for (String string : set) {
-            writer.append(string).append("\n");
-        }
-
-        File.write(writer, outputFullPath);
-
-        Print.operation(Const.OPERATION_END, EnvConst.SHOULD_PRINT);
+        Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
     }
 
     public static void check(String filePath) {
-        // The order is crucial !!!
+        // Order is crucial !!!
         String[] list = {
                 UnknownRegex.UNKNOWN,
 
@@ -153,17 +143,20 @@ public class LidoXmlTimespanAnalysis {
 
     /**
      * Extract all timespan to a sorted list
-     * @param fileNames The list of paths to LIDO files
      * @param inputPath The path to input LIDO files
      */
-    private static ArrayList<String> extractTimespan(String[] fileNames, String inputPath) {
+    private static ArrayList<String> extractTimespan(String inputPath) {
         ArrayList<String> list = new ArrayList<>();
+        java.io.File file = new java.io.File(inputPath);
+        String[] fileList = file.list();
 
-        for (int count = 0; count < fileNames.length; count++) {
-            String filePath = inputPath
-                    + Constants.FILE_SEPARATOR + fileNames[count]
-                    + File.EXTENSION_SEPARATOR + File.EXTENSION_XML;
-            addTimespan(filePath, list);
+        if (fileList != null) {
+            for (String fileName : fileList) {
+                if (fileName.contains(File.EXTENSION_SEPARATOR + File.EXTENSION_XML)) {
+                    String filePath = inputPath + File.FILE_SEPARATOR + fileName;
+                    addTimespan(filePath, list);
+                }
+            }
         }
 
         Collections.sort(list);
@@ -177,13 +170,12 @@ public class LidoXmlTimespanAnalysis {
      */
     private static void addTimespan(String filePath, ArrayList<String> list) {
         LidoWrap lidoWrap = parserDAO.parseLidoFile(filePath);
+        ArrayList<Lido> lidoList = lidoWrap.getLido();
 
-        for (int i = 0; i < lidoWrap.getLido().size(); i++) {
-            Lido lido = lidoWrap.getLido().get(i);
+        for (Lido lido : lidoList) {
             ArrayList<DescriptiveMetadata> descriptiveMetadataList = lido.getDescriptiveMetadata();
 
-            for (int j = 0; j < descriptiveMetadataList.size(); j++) {
-                DescriptiveMetadata descriptiveMetadata = descriptiveMetadataList.get(j);
+            for (DescriptiveMetadata descriptiveMetadata : descriptiveMetadataList) {
                 ArrayList<EventSet> eventSetList = descriptiveMetadata.getEventWrap().getEventSet();
                 addEventDateTimespan(eventSetList, list);
             }
@@ -196,15 +188,13 @@ public class LidoXmlTimespanAnalysis {
      * @param list The related list
      */
     private static void addEventDateTimespan(ArrayList<EventSet> eventSetList, ArrayList<String> list) {
-        for (int i = 0; i < eventSetList.size(); i++) {
-            EventSet eventSet = eventSetList.get(i);
+        for (EventSet eventSet : eventSetList) {
             EventDate eventDate = eventSet.getEvent().getEventDate();
 
             if (eventDate != null) {
                 ArrayList<DisplayDate> displayDateList = eventDate.getDisplayDate();
 
-                for (int k = 0; k < displayDateList.size(); k++) {
-                    DisplayDate displayDate = displayDateList.get(k);
+                for (DisplayDate displayDate : displayDateList) {
                     String timespan = displayDate.getText().toLowerCase();
                     list.add(timespan);
                 }
@@ -219,13 +209,12 @@ public class LidoXmlTimespanAnalysis {
      * @return true/false
      */
     private static boolean isMatching(String value, String[] regexList) {
-        boolean output = false;
-
-        for (int i = 0; i < regexList.length; i++) {
-            output = output || isMatching(value, regexList[i]);
+        for (String regex : regexList) {
+            if (isMatching(value, regex))
+                return true;
         }
 
-        return output;
+        return false;
     }
 
     /**
@@ -239,11 +228,6 @@ public class LidoXmlTimespanAnalysis {
         preparedValue = TimeSanitizeUtils.sanitizeValue(preparedValue, regex);
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(preparedValue);
-
-        while (matcher.find()) {
-            return true;
-        }
-
-        return false;
+        return matcher.find();
     }
 }

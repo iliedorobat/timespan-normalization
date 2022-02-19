@@ -1,1 +1,61 @@
-# timespan-normalization
+# Time Expressions Normalization Framework
+Aim: Normalize calendar data expressed in different shapes, years, and phrases by which the centuries and millennia can be identified
+
+Supported Language: Romanian
+
+<b>Table I.</b> Types of time expressions which can be handled
+<table>
+    <tr>
+        <th>Type of Time Period</th>
+        <th>Examples of Time Periods*</th>
+    </tr>
+    <tr>
+        <td>date</td>
+        <td>
+            YMD: 1881-08-31; 1857 mai 10; etc.<br/>
+            DMY: 09.11.1518; 1 noiembrie 1624; etc.<br/>
+            MY: ianuarie 632; etc.
+        </td>
+    </tr>
+    <tr>
+        <td>timespans</td>
+        <td>
+            centuries: s:; sc; se.; sec; sec.; secol; secolele; secolul; sex.<br/>
+            millenniums: mil; mil.; mileniul; mileniului; mileniile
+        </td>
+    </tr>
+    <tr>
+        <td>years</td>
+        <td>77; 78; 1652; [1873]; aproximativ 1834; cca. 1420; etc.</td>
+    </tr>
+</table>
+* The values are mentioned in the reference language – Romanian language
+
+## Example<hr/>
+
+### Usecase
+```java
+TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. ii a. chr.", null);
+System.out.print(expression);
+```
+
+### Result
+```java
+1/2 sec. iii - sec. ii a. chr.
+1/2 sec. iii - sec. ii __BC__
+[http://dbpedia.org/page/2nd_century_BC, http://dbpedia.org/page/3rd_century_BC]
+```
+
+## Publications<hr/>
+
+### The Power of Regular Expressions in Recognizing Dates and Epochs (2021)
+* IEEE: https://ieeexplore.ieee.org/document/9515139
+```
+@inproceedings{9515139,
+  author={Dorobăț, Ilie Cristian and Posea, Vlad},
+  booktitle={2021 13th International Conference on Electronics, Computers and Artificial Intelligence (ECAI)}, 
+  title={The Power of Regular Expressions in Recognizing Dates and Epochs}, 
+  year={2021},
+  pages={1-3},
+  doi={10.1109/ECAI52376.2021.9515139}}
+```
