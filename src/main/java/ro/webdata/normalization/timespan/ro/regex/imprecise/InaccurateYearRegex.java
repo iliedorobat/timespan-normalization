@@ -1,7 +1,7 @@
 package main.java.ro.webdata.normalization.timespan.ro.regex.imprecise;
 
-import main.java.ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
+import main.java.ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
 
 public class InaccurateYearRegex {
     private InaccurateYearRegex() {}

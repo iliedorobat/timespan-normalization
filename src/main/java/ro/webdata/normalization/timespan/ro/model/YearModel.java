@@ -1,8 +1,8 @@
 package main.java.ro.webdata.normalization.timespan.ro.model;
 
 import main.java.ro.webdata.normalization.timespan.ro.TimeUtils;
-import ro.webdata.echo.commons.Collection;
 import main.java.ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
+import ro.webdata.echo.commons.Collection;
 
 import java.util.TreeSet;
 

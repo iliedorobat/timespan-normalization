@@ -10,7 +10,10 @@ import main.java.ro.webdata.normalization.timespan.ro.model.imprecise.DatelessMo
 import main.java.ro.webdata.normalization.timespan.ro.model.imprecise.InaccurateYearModel;
 import main.java.ro.webdata.normalization.timespan.ro.model.timePeriod.CenturyModel;
 import main.java.ro.webdata.normalization.timespan.ro.model.timePeriod.MillenniumModel;
-import main.java.ro.webdata.normalization.timespan.ro.regex.*;
+import main.java.ro.webdata.normalization.timespan.ro.regex.AgeRegex;
+import main.java.ro.webdata.normalization.timespan.ro.regex.TimePeriodRegex;
+import main.java.ro.webdata.normalization.timespan.ro.regex.UnknownRegex;
+import main.java.ro.webdata.normalization.timespan.ro.regex.YearRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.date.LongDateRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;

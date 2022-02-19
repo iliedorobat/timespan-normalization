@@ -1,11 +1,11 @@
 package main.java.ro.webdata.normalization.timespan.ro.model.date;
 
 import main.java.ro.webdata.normalization.timespan.ro.TimeUtils;
-import ro.webdata.echo.commons.Collection;
-import ro.webdata.echo.commons.Date;
 import main.java.ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import main.java.ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import main.java.ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
+import ro.webdata.echo.commons.Collection;
+import ro.webdata.echo.commons.Date;
 
 import java.util.TreeSet;
 

@@ -1,9 +1,9 @@
 package main.java.ro.webdata.normalization.timespan.ro.model;
 
 import main.java.ro.webdata.normalization.timespan.ro.TimeUtils;
+import main.java.ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import ro.webdata.echo.commons.Const;
 import ro.webdata.echo.commons.graph.Namespace;
-import main.java.ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 
 import java.util.TreeSet;
 import java.util.regex.Matcher;

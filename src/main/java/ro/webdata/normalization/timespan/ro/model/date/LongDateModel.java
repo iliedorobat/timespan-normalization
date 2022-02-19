@@ -1,10 +1,10 @@
 package main.java.ro.webdata.normalization.timespan.ro.model.date;
 
 import main.java.ro.webdata.normalization.timespan.ro.TimeUtils;
+import main.java.ro.webdata.normalization.timespan.ro.regex.date.LongDateRegex;
 import ro.webdata.echo.commons.Collection;
 import ro.webdata.echo.commons.Const;
 import ro.webdata.echo.commons.Date;
-import main.java.ro.webdata.normalization.timespan.ro.regex.date.LongDateRegex;
 
 import java.util.TreeSet;
 
