@@ -31,7 +31,7 @@ Supported Language: Romanian
 </table>
 * The values are mentioned in the reference language – Romanian language
 
-## Example<hr/>
+## Example
 
 ### Usecase
 ```java
@@ -46,7 +46,7 @@ System.out.print(expression);
 [http://dbpedia.org/page/2nd_century_BC, http://dbpedia.org/page/3rd_century_BC]
 ```
 
-## Publications<hr/>
+## Publications
 
 ### The Power of Regular Expressions in Recognizing Dates and Epochs (2021)
 * IEEE: https://ieeexplore.ieee.org/document/9515139
