@@ -35,15 +35,19 @@ Supported Language: Romanian
 
 ### Usecase
 ```java
-TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. ii a. chr.", null);
+TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", null);
 System.out.print(expression);
 ```
 
 ### Result
 ```java
-1/2 sec. iii - sec. ii a. chr.
-1/2 sec. iii - sec. ii __BC__
-[http://dbpedia.org/page/2nd_century_BC, http://dbpedia.org/page/3rd_century_BC]
+input value = 1/2 sec. iii - sec. ii a. chr.
+sanitized value = 1/2 sec. iii - sec. i __BC__
+normalized values = [
+        http://dbpedia.org/page/1st_century_BC,
+        http://dbpedia.org/page/2nd_century_BC,
+        http://dbpedia.org/page/3rd_century_BC
+]
 ```
 
 ## Publications
