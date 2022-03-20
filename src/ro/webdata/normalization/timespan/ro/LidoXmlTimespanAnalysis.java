@@ -221,7 +221,7 @@ public class LidoXmlTimespanAnalysis {
      */
     private static void addTimespan(String filePath, ArrayList<String> list) {
         LidoWrap lidoWrap = parserDAO.parseLidoFile(filePath);
-        ArrayList<Lido> lidoList = lidoWrap.getLido();
+        ArrayList<Lido> lidoList = lidoWrap.getLidoList();
 
         for (Lido lido : lidoList) {
             ArrayList<DescriptiveMetadata> descriptiveMetadataList = lido.getDescriptiveMetadata();
