@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Extract time expressions from LIDO datasets
-        LidoXmlTimespanAnalysis.writeAll(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE);
-        LidoXmlTimespanAnalysis.writeUnique(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE);
+        LidoXmlTimespanAnalysis.writeAll(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, null);
+        LidoXmlTimespanAnalysis.writeUnique(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, null);
     }
 }

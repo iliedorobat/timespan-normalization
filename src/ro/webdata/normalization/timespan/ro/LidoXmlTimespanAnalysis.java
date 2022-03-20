@@ -44,12 +44,13 @@ public class LidoXmlTimespanAnalysis {
      * <b>Used in the analysis process</b>
      * @param outputFullPath The full path for the output file
      * @param inputPath The path to input LIDO files
+     * @param excludedFiles List of excluded files (E.g.: "demo.xml")
      */
-    public static void writeAll(String inputPath, String outputFullPath) {
+    public static void writeAll(String inputPath, String outputFullPath, ArrayList<String> excludedFiles) {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
         Print.operation("LidoXmlTimespanAnalysis.writeAll is in progress...", EnvConst.SHOULD_PRINT);
 
-        ArrayList<String> list = extractTimespan(inputPath);
+        ArrayList<String> list = extractTimespan(inputPath, excludedFiles);
         File.write(list, outputFullPath, false);
 
         Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
@@ -60,12 +61,13 @@ public class LidoXmlTimespanAnalysis {
      * <b>Used in the analysis process</b>
      * @param outputFullPath The full path for the output file
      * @param inputPath The path to input LIDO files
+     * @param excludedFiles List of excluded files (E.g.: "demo.xml")
      */
-    public static void writeUnique(String inputPath, String outputFullPath) {
+    public static void writeUnique(String inputPath, String outputFullPath, ArrayList<String> excludedFiles) {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
         Print.operation("LidoXmlTimespanAnalysis.writeUnique is in progress...", EnvConst.SHOULD_PRINT);
 
-        ArrayList<String> list = extractTimespan(inputPath);
+        ArrayList<String> list = extractTimespan(inputPath, excludedFiles);
         Set<String> set = new TreeSet<>(list);
         File.write(new ArrayList<>(set), outputFullPath, false);
 
@@ -195,15 +197,22 @@ public class LidoXmlTimespanAnalysis {
     /**
      * Extract all timespan to a sorted list
      * @param inputPath The path to input LIDO files
+     * @param excludedFiles List of excluded files (E.g.: "demo.xml")
      */
-    private static ArrayList<String> extractTimespan(String inputPath) {
+    private static ArrayList<String> extractTimespan(String inputPath, ArrayList<String> excludedFiles) {
+        ArrayList<String> excludedList = excludedFiles != null
+                ? excludedFiles
+                : new ArrayList<>();
         ArrayList<String> list = new ArrayList<>();
         java.io.File file = new java.io.File(inputPath);
         String[] fileList = file.list();
 
         if (fileList != null) {
             for (String fileName : fileList) {
-                if (fileName.contains(File.EXTENSION_SEPARATOR + File.EXTENSION_XML)) {
+                if (
+                        fileName.contains(File.EXTENSION_SEPARATOR + File.EXTENSION_XML) &&
+                                !excludedList.contains(fileName)
+                ) {
                     String filePath = inputPath + File.FILE_SEPARATOR + fileName;
                     addTimespan(filePath, list);
                 }
