@@ -1,5 +1,6 @@
 package test.java.ro.webdata.normalization.timespan.ro;
 
+import main.java.ro.webdata.normalization.timespan.ro.LidoXmlTimespanAnalysis;
 import main.java.ro.webdata.normalization.timespan.ro.TimeExpression;
 import ro.webdata.echo.commons.File;
 
@@ -12,10 +13,13 @@ public class Main {
             "timespan_all" + File.EXTENSION_SEPARATOR + File.EXTENSION_TXT;
 
     public static void main(String[] args) {
-        TimeExpression timeExpression = new TimeExpression("1/2 sec. iii - sec. ii a. chr.", null);
+        TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 - sec. 1 a. chr.", null);
+//        timeExpression = new TimeExpression("epoca modernă", null);
         System.out.println(timeExpression);
 
 //        printFullTimespan(PATH_OUTPUT_ALL_TIMESPAN_FILE);
+        // 1779; TOTAL: 39427
+//        LidoXmlTimespanAnalysis.printUnknownTimeExpressions(PATH_OUTPUT_ALL_TIMESPAN_FILE);
     }
 
     /**

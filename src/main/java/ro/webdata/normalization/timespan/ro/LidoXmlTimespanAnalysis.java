@@ -141,6 +141,57 @@ public class LidoXmlTimespanAnalysis {
         }
     }
 
+    public static void printUnknownTimeExpressions(String filePath) {
+        // Order is crucial !!!
+        String[] list = {
+                UnknownRegex.UNKNOWN,
+
+                AgeRegex.PLEISTOCENE_AGE,
+                AgeRegex.MESOLITHIC_AGE,
+                AgeRegex.CHALCOLITHIC_AGE,
+                AgeRegex.NEOLITHIC_AGE,
+                AgeRegex.BRONZE_AGE,
+                AgeRegex.MIDDLE_AGES,
+                AgeRegex.MODERN_AGES,
+                AgeRegex.HALLSTATT_CULTURE,
+                AgeRegex.AURIGNACIAN_CULTURE,
+                AgeRegex.PTOLEMAIC_DYNASTY,
+                AgeRegex.ROMAN_EMPIRE_AGE,
+                AgeRegex.NERVA_ANTONINE_DYNASTY,
+                AgeRegex.RENAISSANCE,
+                AgeRegex.FRENCH_CONSULATE_AGE,
+                AgeRegex.WW_I_PERIOD,
+                AgeRegex.INTERWAR_PERIOD,
+                AgeRegex.WW_II_PERIOD,
+
+                DatelessRegex.DATELESS,
+                InaccurateYearRegex.AFTER_INTERVAL,
+                InaccurateYearRegex.BEFORE_INTERVAL,
+                InaccurateYearRegex.APPROX_AGES_INTERVAL,
+                InaccurateYearRegex.AFTER,
+                InaccurateYearRegex.BEFORE,
+                InaccurateYearRegex.APPROX_AGES_OPTIONS
+        };
+
+        try {
+            int count = 0;
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            String readLine;
+
+            while ((readLine = br.readLine()) != null) {
+                if (readLine.length() > 0) {
+                    boolean check = isMatching(readLine, list);
+                    if (check)
+                        count++;
+                }
+            }
+
+            System.out.println("unknown time expressions: " + count);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Extract all timespan to a sorted list
      * @param inputPath The path to input LIDO files

@@ -9,7 +9,7 @@ public class TimeSanitizeUtils {
 
     /**
      * Sanitize some values that appear rarely and a regex operation
-     * would be time consuming
+     * would be time-consuming
      * @param value The input value
      * @param regex The related regular expression
      * @return The sanitized value
@@ -50,7 +50,7 @@ public class TimeSanitizeUtils {
 
     /**
      * Sanitize date-like values that appear rarely and a regex operation
-     * would be time consuming
+     * would be time-consuming
      * @param value The input value
      * @return The sanitized value
      */
@@ -77,7 +77,7 @@ public class TimeSanitizeUtils {
 
     /**
      * Sanitize year-like values that appear rarely and a regex operation
-     * would be time consuming
+     * would be time-consuming
      * @param value The input value
      * @return The sanitized value
      */
@@ -90,7 +90,7 @@ public class TimeSanitizeUtils {
 
     /**
      * Sanitize centuries and millenniums values that appear rarely
-     * and a regex operation would be time consuming
+     * and a regex operation would be time-consuming
      * @param value The input value
      * @return The sanitized value
      */
