@@ -1,13 +1,10 @@
 package ro.webdata.normalization.timespan.ro.model.date;
 
+import ro.webdata.echo.commons.Date;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
-import ro.webdata.echo.commons.Collection;
-import ro.webdata.echo.commons.Date;
-
-import java.util.TreeSet;
 
 /**
  * Used for date presented as day-month-year or year-month-day format.<br/>
@@ -48,12 +45,6 @@ public class DateModel extends TimePeriodModel {
         }
     }
 
-    @Override
-    public String toString() {
-        TreeSet<String> centurySet = getCenturySet();
-        return Collection.treeSetToDbpediaString(centurySet);
-    }
-
     // values.length == 4 if the month name is abbreviated (E.g.: "aug.")
     private void setDate(String value, String order, String position) {
         String year = null, month = null, day = null;
@@ -70,6 +61,7 @@ public class DateModel extends TimePeriodModel {
             day = values.length == 4 ? values[3] : values[2];
         }
 
+        setMillennium(year, position);
         setCentury(year, position);
         setYear(year, position);
         setMonth(month, position);

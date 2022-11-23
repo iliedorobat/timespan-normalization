@@ -2,9 +2,6 @@ package ro.webdata.normalization.timespan.ro.model;
 
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
-import ro.webdata.echo.commons.Collection;
-
-import java.util.TreeSet;
 
 public class YearModel extends TimePeriodModel {
     // Used to separate the minus sign from the dash separator "-2 - -14 p.chr"; "-2 p.chr - -14 p.chr"
@@ -41,13 +38,8 @@ public class YearModel extends TimePeriodModel {
         }
     }
 
-    @Override
-    public String toString() {
-        TreeSet<String> centurySet = getCenturySet();
-        return Collection.treeSetToDbpediaString(centurySet);
-    }
-
     private void setDate(String year, String position) {
+        setMillennium(year, position);
         setCentury(year, position);
         setYear(year, position);
     }

@@ -26,6 +26,28 @@ public class TimeModel {
         }
     }
 
+    protected void setMillennium(String yearStr, String position) {
+        try {
+            int year = Integer.parseInt(yearStr.trim());
+            if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
+                if (EnvConst.PRINT_ERROR) {
+                    Print.tooBigYear("setting millennium", position, year);
+                }
+            } else {
+                /**
+                 * E.g.: the year 100 is part of the first century
+                 * Math.floor(100 / 100) + 0 = 1st century
+                 * Math.floor(101 / 100) + 1 = 2nd century
+                 */
+                int buffer = year % 1000 == 0 ? 0 : 1;
+                int millennium = (int) (Math.floor(year / 1000) + buffer);
+                setMillennium(millennium, position);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void setMillennium(Integer millennium, String position) {
         Integer millenniumStart = millennium;
         Integer millenniumEnd = millennium;

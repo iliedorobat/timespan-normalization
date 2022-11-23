@@ -1,5 +1,8 @@
 package ro.webdata.normalization.timespan.ro;
 
+import org.apache.commons.lang3.StringUtils;
+import ro.webdata.echo.commons.Collection;
+import ro.webdata.echo.commons.Const;
 import ro.webdata.normalization.timespan.ro.model.AgeModel;
 import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 import ro.webdata.normalization.timespan.ro.model.YearModel;
@@ -19,9 +22,6 @@ import ro.webdata.normalization.timespan.ro.regex.date.LongDateRegex;
 import ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
 import ro.webdata.normalization.timespan.ro.regex.imprecise.DatelessRegex;
 import ro.webdata.normalization.timespan.ro.regex.imprecise.InaccurateYearRegex;
-import org.apache.commons.lang3.StringUtils;
-import ro.webdata.echo.commons.Collection;
-import ro.webdata.echo.commons.Const;
 
 import java.util.Arrays;
 import java.util.TreeSet;

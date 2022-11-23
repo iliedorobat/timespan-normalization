@@ -1,12 +1,9 @@
 package ro.webdata.normalization.timespan.ro.model.imprecise;
 
+import ro.webdata.echo.commons.Const;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
-import ro.webdata.echo.commons.Collection;
-import ro.webdata.echo.commons.Const;
-
-import java.util.TreeSet;
 
 //TODO: find a way to store the detail for inaccurate time periods (after, before, approx.)
 public class InaccurateYearModel extends TimePeriodModel {
@@ -43,17 +40,12 @@ public class InaccurateYearModel extends TimePeriodModel {
         }
     }
 
-    @Override
-    public String toString() {
-        TreeSet<String> centurySet = getCenturySet();
-        return Collection.treeSetToDbpediaString(centurySet);
-    }
-
     //TODO: "dupa 29 aprilie 1616"; "dupa 10 mai 1903"
     private void setDate(String value, String position) {
         String year = value
                 .replaceAll(REGEX_NON_DIGIT, Const.EMPTY_VALUE_PLACEHOLDER);
 
+        setMillennium(year, position);
         setCentury(year, position);
         setYear(year, position);
     }

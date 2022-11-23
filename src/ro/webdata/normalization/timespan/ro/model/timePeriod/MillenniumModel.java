@@ -1,19 +1,17 @@
 package ro.webdata.normalization.timespan.ro.model.timePeriod;
 
+import ro.webdata.normalization.timespan.ro.TimePeriodUtils;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
-import ro.webdata.echo.commons.Collection;
-
-import java.util.TreeSet;
 
 public class MillenniumModel extends TimePeriodModel {
     public MillenniumModel(String value) {
         setMillenniumModel(value);
     }
 
-    private void setMillenniumModel(String value) {
-        String preparedValue = TimePeriodModel.sanitizeTimePeriod(value);
+    public void setMillenniumModel(String value) {
+        String preparedValue = TimePeriodUtils.sanitizeTimePeriod(value);
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
@@ -40,17 +38,8 @@ public class MillenniumModel extends TimePeriodModel {
         }
     }
 
-    @Override
-    public String toString() {
-//        TreeSet<String> millenniumSet = getMillenniumSet();
-//        return Collection.treeSetToDbpediaString(millenniumSet);
-
-        TreeSet<String> centurySet = getCenturySet();
-        return Collection.treeSetToDbpediaString(centurySet);
-    }
-
     private void setMillenniumDate(String value, String position) {
-        Integer millennium = TimePeriodModel.timePeriodToNumber(value);
+        Integer millennium = TimePeriodUtils.timePeriodToNumber(value);
         if (millennium != null)
             setMillennium(millennium, position);
     }
