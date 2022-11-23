@@ -1,9 +1,9 @@
 package ro.webdata.normalization.timespan.ro.model;
 
-import ro.webdata.normalization.timespan.commons.EnvConst;
-import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.echo.commons.Date;
 import ro.webdata.echo.commons.Print;
+import ro.webdata.normalization.timespan.commons.EnvConst;
+import ro.webdata.normalization.timespan.ro.TimeUtils;
 
 public class TimeModel {
     protected String eraStart, eraEnd;
@@ -52,7 +52,7 @@ public class TimeModel {
         Integer millenniumStart = millennium;
         Integer millenniumEnd = millennium;
 
-        if (millennium > Date.LAST_UPDATE_MILLENNIUM && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
+        if (millennium != null && millennium > Date.LAST_UPDATE_MILLENNIUM && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
             if (EnvConst.PRINT_ERROR) {
                 Print.tooBigMillennium("setting millennium", position, millennium);
             }
@@ -60,10 +60,12 @@ public class TimeModel {
             millenniumEnd = null;
         }
 
-        if (position.equals(TimeUtils.START_PLACEHOLDER))
-            this.millenniumStart = millenniumStart;
-        else if (position.equals(TimeUtils.END_PLACEHOLDER))
-            this.millenniumEnd = millenniumEnd;
+        if (position != null) {
+            if (position.equals(TimeUtils.START_PLACEHOLDER))
+                this.millenniumStart = millenniumStart;
+            else if (position.equals(TimeUtils.END_PLACEHOLDER))
+                this.millenniumEnd = millenniumEnd;
+        }
     }
 
     protected void setCentury(String yearStr, String position) {
@@ -92,7 +94,7 @@ public class TimeModel {
         Integer centuryStart = century;
         Integer centuryEnd = century;
 
-        if (century > Date.LAST_UPDATE_CENTURY && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
+        if (century != null && century > Date.LAST_UPDATE_CENTURY && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
             if (EnvConst.PRINT_ERROR) {
                 Print.tooBigCentury("setting century", position, century);
             }
@@ -100,10 +102,12 @@ public class TimeModel {
             centuryEnd = null;
         }
 
-        if (position.equals(TimeUtils.START_PLACEHOLDER))
-            this.centuryStart = centuryStart;
-        else if (position.equals(TimeUtils.END_PLACEHOLDER))
-            this.centuryEnd = centuryEnd;
+        if (position != null) {
+            if (position.equals(TimeUtils.START_PLACEHOLDER))
+                this.centuryStart = centuryStart;
+            else if (position.equals(TimeUtils.END_PLACEHOLDER))
+                this.centuryEnd = centuryEnd;
+        }
     }
 
     protected void setYear(String yearStr, String position) {

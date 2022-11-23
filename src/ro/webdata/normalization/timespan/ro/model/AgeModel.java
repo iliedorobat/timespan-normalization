@@ -1,26 +1,15 @@
 package ro.webdata.normalization.timespan.ro.model;
 
-import ro.webdata.echo.commons.Collection;
 import ro.webdata.normalization.timespan.ro.regex.AgeRegex;
 
-import java.util.TreeSet;
-
-public class AgeModel {
+public class AgeModel extends TimePeriodModel {
     private String age;
 
     public AgeModel(String age, String regex) {
         this.age = mapAge(age, regex);
-    }
 
-    @Override
-    public String toString() {
-//        TreeSet<String> ageSet = new TreeSet<>();
-//        ageSet.add(this.age);
-//        return Collection.treeSetToDbpediaString(ageSet);
-
-        // The ThreeSet is empty because the entry doesn't have a year or a century
-        TreeSet<String> centurySet = new TreeSet<>();
-        return Collection.treeSetToDbpediaString(centurySet);
+        setMillennium((Integer) null, null);
+        setCentury((Integer) null, null);
     }
 
     private String mapAge(String age, String regex) {

@@ -12,39 +12,40 @@ public class TimePeriodModel extends TimeModel {
 
     @Override
     public String toString() {
+        TreeSet<String> timePeriodSet = new TreeSet<>();
         TreeSet<String> millenniumSet = getMillenniumSet();
         TreeSet<String> centurySet = getCenturySet();
-        TreeSet<String> timePeriodSet = new TreeSet<>();
+        TreeSet<String> yearSet = getYearSet();
+
         timePeriodSet.addAll(millenniumSet);
         timePeriodSet.addAll(centurySet);
+        timePeriodSet.addAll(yearSet);
 
         return Collection.treeSetToDbpediaString(timePeriodSet);
     }
 
-//    public TreeSet<String> getYearSet() {
-//        TreeSet<String> yearSet = new TreeSet<>();
-//
-//        if (this.yearStart != null && this.yearEnd != null) {
-//            pushSameBc(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, Const.EMPTY_VALUE_PLACEHOLDER, yearSet);
-//            pushSameAd(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, Const.EMPTY_VALUE_PLACEHOLDER, yearSet);
-//            pushBcAd(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, Const.EMPTY_VALUE_PLACEHOLDER, yearSet);
-//            pushAdBc(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, Const.EMPTY_VALUE_PLACEHOLDER, yearSet);
-//        }
-//
-//        return yearSet;
-//    }
+    public TreeSet<String> getYearSet() {
+        TreeSet<String> yearSet = new TreeSet<>();
+
+        if (this.yearStart != null && this.yearEnd != null) {
+            pushSameAd(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
+        }
+
+        return yearSet;
+    }
 
     public TreeSet<String> getCenturySet() {
         TreeSet<String> centurySet = new TreeSet<>();
 
         if (this.centuryStart != null && this.centuryEnd != null) {
-            pushSameBc(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet);
-            pushSameAd(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet);
-            pushBcAd(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet);
-            pushAdBc(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet);
-        } else {
-            centurySet.add(Namespace.NS_REPO_RESOURCE_TIMESPAN_UNKNOWN_CENTURY);
+            pushSameBc(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet, true);
+            pushSameAd(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet, true);
+            pushBcAd(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet, true);
+            pushAdBc(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet, true);
         }
+//        else {
+//            centurySet.add(Namespace.NS_REPO_RESOURCE_TIMESPAN_UNKNOWN_CENTURY);
+//        }
 
         return centurySet;
     }
@@ -53,13 +54,14 @@ public class TimePeriodModel extends TimeModel {
         TreeSet<String> millenniumSet = new TreeSet<>();
 
         if (this.millenniumStart != null && this.millenniumEnd != null) {
-            pushSameBc(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet);
-            pushSameAd(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet);
-            pushBcAd(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet);
-            pushAdBc(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet);
-        } else {
-            millenniumSet.add(Namespace.NS_REPO_RESOURCE_TIMESPAN_UNKNOWN_MILLENNIUM);
+            pushSameBc(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet, true);
+            pushSameAd(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet, true);
+            pushBcAd(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet, true);
+            pushAdBc(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet, true);
         }
+//        else {
+//            millenniumSet.add(Namespace.NS_REPO_RESOURCE_TIMESPAN_UNKNOWN_MILLENNIUM);
+//        }
 
         return millenniumSet;
     }
@@ -79,6 +81,9 @@ public class TimePeriodModel extends TimeModel {
      *                        * Const.MILLENNIUM_PLACEHOLDER<br/>
      *                        * Const.EMPTY_VALUE_PLACEHOLDER
      * @param timeSet The set where DBPedia time periods will be stored
+     * @param ordinal Tell the user whether "TimeUtils.getOrdinal" should be used or not
+     *                E.g: "1990" should be used as it is
+     *                E.g.: "century ix" should become "9th century"
      */
     private void pushSameAd(
             String eraStart,
@@ -86,7 +91,8 @@ public class TimePeriodModel extends TimeModel {
             Integer timeStart,
             Integer timeEnd,
             String timePlaceholder,
-            TreeSet<String> timeSet
+            TreeSet<String> timeSet,
+            boolean ordinal
     ) {
         if (eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)
                 && eraEnd.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
@@ -94,7 +100,8 @@ public class TimePeriodModel extends TimeModel {
             int end = Math.max(timeStart, timeEnd);
 
             for (int timePeriod = start; timePeriod <= end; timePeriod++) {
-                String timeDbpedia = TimeUtils.getOrdinal(timePeriod)
+                String period = ordinal ? TimeUtils.getOrdinal(timePeriod) : String.valueOf(timePeriod);
+                String timeDbpedia = period
                         + timePlaceholder;
                 timeSet.add(timeDbpedia);
             }
@@ -116,6 +123,9 @@ public class TimePeriodModel extends TimeModel {
      *                        * Const.MILLENNIUM_PLACEHOLDER<br/>
      *                        * Const.EMPTY_VALUE_PLACEHOLDER
      * @param timeSet The set where DBPedia time periods will be stored
+     * @param ordinal Tell the user whether "TimeUtils.getOrdinal" should be used or not
+     *                E.g.: "century ix" should become "9th century"
+     *                E.g: "1990" should be used as it is
      */
     private void pushSameBc(
             String eraStart,
@@ -123,7 +133,8 @@ public class TimePeriodModel extends TimeModel {
             Integer timeStart,
             Integer timeEnd,
             String timePlaceholder,
-            TreeSet<String> timeSet
+            TreeSet<String> timeSet,
+            boolean ordinal
     ) {
         if (eraStart.equals(TimeUtils.CHRISTUM_BC_PLACEHOLDER)
                 && eraEnd.equals(TimeUtils.CHRISTUM_BC_PLACEHOLDER)) {
@@ -131,7 +142,8 @@ public class TimePeriodModel extends TimeModel {
             int end = Math.min(timeStart, timeEnd);
 
             for (int timePeriod = start; timePeriod >= end; timePeriod--) {
-                String timeDbpedia = TimeUtils.getOrdinal(timePeriod)
+                String period = ordinal ? TimeUtils.getOrdinal(timePeriod) : String.valueOf(timePeriod);
+                String timeDbpedia = period
                         + timePlaceholder
                         + Const.UNDERSCORE_PLACEHOLDER
                         + TimeUtils.CHRISTUM_BC_LABEL;
@@ -146,7 +158,8 @@ public class TimePeriodModel extends TimeModel {
             Integer timeStart,
             Integer timeEnd,
             String timePlaceholder,
-            TreeSet<String> timeSet
+            TreeSet<String> timeSet,
+            boolean ordinal
     ) {
         // sec. VI a.Chr - sec. II-lea p.Chr
         if (eraStart.equals(TimeUtils.CHRISTUM_BC_PLACEHOLDER)
@@ -159,7 +172,8 @@ public class TimePeriodModel extends TimeModel {
                     start,
                     end,
                     timePlaceholder,
-                    timeSet
+                    timeSet,
+                    ordinal
             );
 
             start = 1;
@@ -170,7 +184,8 @@ public class TimePeriodModel extends TimeModel {
                     start,
                     end,
                     timePlaceholder,
-                    timeSet
+                    timeSet,
+                    ordinal
             );
         }
     }
@@ -181,7 +196,8 @@ public class TimePeriodModel extends TimeModel {
             Integer timeStart,
             Integer timeEnd,
             String timePlaceholder,
-            TreeSet<String> timeSet
+            TreeSet<String> timeSet,
+            boolean ordinal
     ) {
         // sec. II p.Chr - sec. VI-lea a.Chr
         if (eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)
@@ -194,7 +210,8 @@ public class TimePeriodModel extends TimeModel {
                     start,
                     end,
                     timePlaceholder,
-                    timeSet
+                    timeSet,
+                    ordinal
             );
 
             start = 1;
@@ -205,7 +222,8 @@ public class TimePeriodModel extends TimeModel {
                     start,
                     end,
                     timePlaceholder,
-                    timeSet
+                    timeSet,
+                    ordinal
             );
         }
     }
