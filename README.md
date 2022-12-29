@@ -31,6 +31,15 @@ Supported Language: Romanian
 </table>
 * The values are mentioned in the reference language – Romanian language
 
+## Local setup
+### Requirements
+- JDK 11 or OpenJDK 11.
+
+### Setup
+1. Clone the repository:
+```bash
+git clone https://github.com/iliedorobat/timespan-normalization.git
+
 ## Example
 
 ### Usecase
@@ -51,9 +60,7 @@ normalized values = [
 ```
 
 ## Publications
-
-### The Power of Regular Expressions in Recognizing Dates and Epochs (2021)
-* IEEE: https://ieeexplore.ieee.org/document/9515139
+ECAI 2021: [The Power of Regular Expressions in Recognizing Dates and Epochs (2021)](https://ieeexplore.ieee.org/document/9515139)
 ```
 @inproceedings{9515139,
   author={Dorobăț, Ilie Cristian and Posea, Vlad},

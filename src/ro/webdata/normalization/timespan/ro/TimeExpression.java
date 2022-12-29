@@ -1,5 +1,8 @@
 package ro.webdata.normalization.timespan.ro;
 
+import ro.webdata.normalization.timespan.ro.model.TimespanModel;
+
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class TimeExpression {
@@ -7,6 +10,7 @@ public class TimeExpression {
     private String value = null;
     private String sanitizedValue = null;
     private TreeSet<String> normalizedValues = new TreeSet<>();
+    private ArrayList<String> types = new ArrayList<>();
 
     /**
      * Set the original value, the value whose Christum notation has been
@@ -17,7 +21,10 @@ public class TimeExpression {
     public TimeExpression(String value, String separator) {
         this.value = value;
         this.sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
-        this.normalizedValues = TimespanUtils.getTimespanSet(this.sanitizedValue);
+        TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(this.sanitizedValue);
+        this.normalizedValues = timespanModel.getTimespanSet();
+        this.types = timespanModel.getTypes();
+
         if (separator != null)
             this.separator = separator;
     }
@@ -26,7 +33,8 @@ public class TimeExpression {
     public String toString() {
         return value
                 + separator + sanitizedValue
-                + separator + normalizedValues;
+                + separator + normalizedValues
+                + separator + types;
     }
 
     public String getValue() {
