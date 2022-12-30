@@ -3,7 +3,6 @@ package ro.webdata.normalization.timespan.ro.model;
 import ro.webdata.echo.commons.Const;
 
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class TimespanModel {
@@ -37,10 +36,7 @@ public class TimespanModel {
         this.timespanList = timespanList;
     }
 
-    private void setTypes(ArrayList<String> types) {
-        Set<String> set = new TreeSet<>(types);
-        this.types = new ArrayList<>(set);
-    }
+    private void setTypes(ArrayList<String> types) { this.types = types; }
 
     private void setResidualValue(String residualValue) {
         this.residualValue = residualValue;
