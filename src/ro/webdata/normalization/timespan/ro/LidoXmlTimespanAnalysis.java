@@ -53,6 +53,9 @@ public class LidoXmlTimespanAnalysis {
         ArrayList<String> list = extractTimespan(inputPath, excludedFiles);
         File.write(list, outputFullPath, false);
 
+        ArrayList<String> timeExpressions = toTimeExpressions(list);
+        File.write(timeExpressions, outputFullPath.replaceAll("\\.[a-zA-Z]*", File.EXTENSION_SEPARATOR + File.EXTENSION_CSV), false);
+
         Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
     }
 
@@ -70,6 +73,9 @@ public class LidoXmlTimespanAnalysis {
         ArrayList<String> list = extractTimespan(inputPath, excludedFiles);
         Set<String> set = new TreeSet<>(list);
         File.write(new ArrayList<>(set), outputFullPath, false);
+
+        ArrayList<String> timeExpressions = toTimeExpressions(new ArrayList<>(set));
+        File.write(timeExpressions, outputFullPath.replaceAll("\\.[a-zA-Z]*", File.EXTENSION_SEPARATOR + File.EXTENSION_CSV), false);
 
         Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
     }
@@ -190,6 +196,17 @@ public class LidoXmlTimespanAnalysis {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static ArrayList<String> toTimeExpressions(ArrayList<String> strTimeExpressions) {
+        ArrayList<String> timeExpressions = new ArrayList<>();
+
+        for (String str : strTimeExpressions) {
+            TimeExpression timeExpression = new TimeExpression(str, "|");
+            timeExpressions.add(timeExpression.toString());
+        }
+
+        return timeExpressions;
     }
 
     /**
