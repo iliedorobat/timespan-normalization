@@ -76,12 +76,9 @@ public class TimespanUtils {
         timespanModel = getMatchedValues(timespanModel, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
 
         // Firstly, the years consisting of 3 - 4 digits need to be processed
-        timespanModel = getMatchedValues(timespanModel, YearRegex.YEAR_3_4_DIGITS_INTERVAL, TimespanType.YEAR);
+        timespanModel = getMatchedValues(timespanModel, YearRegex.YEAR_INTERVAL, TimespanType.YEAR);
         timespanModel = getMatchedValues(timespanModel, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
-        timespanModel = getMatchedValues(timespanModel, YearRegex.YEAR_3_4_DIGITS_OPTIONS, TimespanType.YEAR);
-        // Secondly, the years consisting of 2 digits need to be processed
-        timespanModel = getMatchedValues(timespanModel, YearRegex.YEAR_2_DIGITS_INTERVAL, TimespanType.YEAR);
-        timespanModel = getMatchedValues(timespanModel, YearRegex.YEAR_2_DIGITS_OPTIONS, TimespanType.YEAR);
+        timespanModel = getMatchedValues(timespanModel, YearRegex.YEAR_OPTIONS, TimespanType.YEAR);
         // This call need to be made after all the years processing !!!
         timespanModel = getMatchedValues(timespanModel, YearRegex.UNKNOWN_YEARS, TimespanType.UNKNOWN);
 
@@ -159,11 +156,9 @@ public class TimespanUtils {
             case UnknownRegex.UNKNOWN:
                 DatelessModel datelessModel = new DatelessModel(value);
                 return datelessModel.toString();
-            case YearRegex.YEAR_2_DIGITS_INTERVAL:
-            case YearRegex.YEAR_2_DIGITS_OPTIONS:
-            case YearRegex.YEAR_3_4_DIGITS_INTERVAL:
+            case YearRegex.YEAR_INTERVAL:
             case YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL:
-            case YearRegex.YEAR_3_4_DIGITS_OPTIONS:
+            case YearRegex.YEAR_OPTIONS:
                 YearModel yearModel = new YearModel(value);
                 return yearModel.toString();
             default:

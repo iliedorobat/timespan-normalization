@@ -119,11 +119,9 @@ public class LidoXmlTimespanAnalysis {
                 InaccurateYearRegex.BEFORE,
                 InaccurateYearRegex.APPROX_AGES_OPTIONS,
 
-                YearRegex.YEAR_3_4_DIGITS_INTERVAL,
+                YearRegex.YEAR_INTERVAL,
                 YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL,
-                YearRegex.YEAR_3_4_DIGITS_OPTIONS,
-                YearRegex.YEAR_2_DIGITS_INTERVAL,
-                YearRegex.YEAR_2_DIGITS_OPTIONS,
+                YearRegex.YEAR_OPTIONS,
                 YearRegex.UNKNOWN_YEARS
         };
 

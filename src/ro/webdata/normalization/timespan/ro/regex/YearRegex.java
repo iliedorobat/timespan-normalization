@@ -15,25 +15,16 @@ public class YearRegex {
     private static final String REGEX_INTERVAL_DELIMITER = TimespanRegex.REGEX_INTERVAL_DELIMITER;
     private static final String AD_BC_OPTIONAL = TimespanRegex.AD_BC_OPTIONAL;
 
-    public static final String YEAR_2_DIGITS_OPTIONS = "("
-                + TEXT_START + "\\d{2}" + AD_BC_OPTIONAL + TEXT_END
-            + ")";
-    public static final String YEAR_2_DIGITS_INTERVAL = "("
-                + "("
-                    + YEAR_2_DIGITS_OPTIONS
-                    + REGEX_INTERVAL_DELIMITER
-                    + YEAR_2_DIGITS_OPTIONS
-                + ")"
-            + ")";
+    public static final String YEAR = "(\\({0,1}\\d{1,4}\\){0,1}\\s*\\d{1,4})";
 
-    public static final String YEAR_3_4_DIGITS_OPTIONS = "("
-                + TEXT_START + "\\d{3,4}" + AD_BC_OPTIONAL + TEXT_END
+    public static final String YEAR_OPTIONS = "("
+                + TEXT_START + YEAR + AD_BC_OPTIONAL + TEXT_END
             + ")";
-    public static final String YEAR_3_4_DIGITS_INTERVAL = "("
+    public static final String YEAR_INTERVAL = "("
                 + "("
-                    + YEAR_3_4_DIGITS_OPTIONS
+                    + YEAR_OPTIONS
                     + REGEX_INTERVAL_DELIMITER
-                    + YEAR_3_4_DIGITS_OPTIONS
+                    + YEAR_OPTIONS
                 + ")"
             + ")";
 
