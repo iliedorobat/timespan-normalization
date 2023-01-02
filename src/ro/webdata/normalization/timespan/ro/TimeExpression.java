@@ -22,7 +22,7 @@ public class TimeExpression {
         this.value = value;
         this.sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
         TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(this.sanitizedValue);
-        this.normalizedValues = timespanModel.getTimespanSet();
+        this.normalizedValues = timespanModel.getDBpediaUris();
         this.types = timespanModel.getTypes();
 
         if (separator != null)

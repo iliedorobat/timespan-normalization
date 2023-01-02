@@ -3,10 +3,12 @@ package ro.webdata.normalization.timespan.ro.model;
 import ro.webdata.echo.commons.Const;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeSet;
 
 public class TimespanModel {
-    private TreeSet<String> timespanList = new TreeSet<>();
+    private ArrayList<HashMap<String, String>> dbpediaEdgesUris = new ArrayList<>();
+    private TreeSet<String> dbpediaUris = new TreeSet<>();
     private String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
     private ArrayList<String> types = new ArrayList<>();
 
@@ -14,26 +16,35 @@ public class TimespanModel {
         setResidualValue(value);
     }
 
-    public TimespanModel(TreeSet<String> treeSet, String value, ArrayList<String> types) {
-        setTimespanSet(treeSet);
+    public TimespanModel(TreeSet<String> dbpediaUris, ArrayList<HashMap<String, String>> dbpediaEdgesUris, String value, ArrayList<String> types) {
+        setDBpediaUris(dbpediaUris);
+        addDBpediaEdgesUris(dbpediaEdgesUris);
         setResidualValue(value);
         setTypes(types);
     }
 
-    public TreeSet<String> getTimespanSet() {
-        return timespanList;
+    public void addDBpediaEdgesUris(ArrayList<HashMap<String, String>> edgesUris) {
+        this.dbpediaEdgesUris.addAll(edgesUris);
+    }
+
+    public ArrayList<HashMap<String, String>> getDBpediaEdgesUris() {
+        return this.dbpediaEdgesUris;
+    }
+
+    public TreeSet<String> getDBpediaUris() {
+        return this.dbpediaUris;
     }
 
     public String getResidualValue() {
-        return residualValue;
+        return this.residualValue;
     }
 
     public ArrayList<String> getTypes() {
-        return types;
+        return this.types;
     }
 
-    private void setTimespanSet(TreeSet<String> timespanList) {
-        this.timespanList = timespanList;
+    private void setDBpediaUris(TreeSet<String> timespanList) {
+        this.dbpediaUris = timespanList;
     }
 
     private void setTypes(ArrayList<String> types) { this.types = types; }

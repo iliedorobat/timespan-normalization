@@ -2,8 +2,9 @@ package ro.webdata.normalization.timespan.ro.model;
 
 import ro.webdata.echo.commons.Collection;
 import ro.webdata.echo.commons.Const;
-import ro.webdata.echo.commons.graph.Namespace;
+import ro.webdata.normalization.timespan.ro.DBpediaTimeUtils;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
+import ro.webdata.normalization.timespan.ro.TimespanType;
 
 import java.util.TreeSet;
 
@@ -22,6 +23,42 @@ public class TimePeriodModel extends TimeModel {
         timePeriodSet.addAll(yearSet);
 
         return Collection.treeSetToDbpediaString(timePeriodSet);
+    }
+
+    public String toDBpediaStartUri(String timespanType) {
+        if (timespanType == null) {
+            return null;
+        }
+
+        switch (timespanType) {
+            case TimespanType.CENTURY:
+                return DBpediaTimeUtils.prepareUri(eraStart, centuryStart, timespanType);
+            case TimespanType.MILLENNIUM:
+                return DBpediaTimeUtils.prepareUri(eraStart, millenniumStart, timespanType);
+            case TimespanType.DATE:
+            case TimespanType.YEAR:
+                return DBpediaTimeUtils.prepareUri(eraStart, yearStart, timespanType);
+            default:
+                return null;
+        }
+    }
+
+    public String toDBpediaEndUri(String timespanType) {
+        if (timespanType == null) {
+            return null;
+        }
+
+        switch (timespanType) {
+            case TimespanType.CENTURY:
+                return DBpediaTimeUtils.prepareUri(eraEnd, centuryEnd, timespanType);
+            case TimespanType.MILLENNIUM:
+                return DBpediaTimeUtils.prepareUri(eraEnd, millenniumEnd, timespanType);
+            case TimespanType.DATE:
+            case TimespanType.YEAR:
+                return DBpediaTimeUtils.prepareUri(eraEnd, yearEnd, timespanType);
+            default:
+                return null;
+        }
     }
 
     public TreeSet<String> getYearSet() {
