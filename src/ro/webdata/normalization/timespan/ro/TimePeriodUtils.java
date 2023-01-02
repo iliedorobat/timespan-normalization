@@ -49,13 +49,48 @@ public class TimePeriodUtils {
      */
     public static Integer timePeriodToNumber(String timePeriod) {
         Integer value = null;
+        String clearedTimePeriod = TimeUtils.clearChristumNotation(timePeriod);
 
         try {
-            value = Integer.parseInt(timePeriod);
+            value = Integer.parseInt(clearedTimePeriod);
         } catch (Exception e) {
-            value = TimeUtils.romanToInt(timePeriod);
+            value = TimeUtils.romanToInt(clearedTimePeriod);
         }
 
         return value;
+    }
+
+    public static Integer getStartTime(String[] intervalValues) {
+        Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0]);
+        Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1]);
+
+        // E.g.: "prima jum. a sec. xxxxiv - xxxv a.ch."
+        // "xxxxiv" is an invalid roman numeral
+        if (first == null || second == null) {
+            return null;
+        }
+
+        if (first > second) {
+            return second;
+        }
+
+        return first;
+    }
+
+    public static Integer getEndTime(String[] intervalValues) {
+        Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0]);
+        Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1]);
+
+        // E.g.: "prima jum. a sec. xxxxiv - xxxv a.ch."
+        // "xxxxiv" is an invalid roman numeral
+        if (first == null || second == null) {
+            return null;
+        }
+
+        if (first > second) {
+            return first;
+        }
+
+        return second;
     }
 }

@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @apiNote <a href="http://math.hws.edu/eck/cs124/javanotes3/c9/ex-9-3-answer.html">Pre-processing roman numbers</a>
@@ -152,19 +154,20 @@ public class TimeUtils {
         int length = romanChar.length() - 1;
         int sum = 0;
 
+        Pattern pattern = Pattern.compile("^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$");
+        Matcher matcher = pattern.matcher(string);
+        boolean isValid = matcher.find();
+
+        // E.g.: "XIC" (89) is incorrect. The correct number is "LXXXIX" (89).
+        if (!isValid) {
+            return null;
+        }
+
         for (int i = 0; i < length; i++) {
             int crrValue = romanMap.get(romanChar.charAt(i));
             int nextValue = romanMap.get(romanChar.charAt(i + 1));
 
             if (crrValue < nextValue) {
-                // The roman numbers are built from left to right, but short roman numbers
-                // are build based on "V" and "X" characters are build from right to left.
-                // So, for the case of the rest of roman characters, the roman number is
-                // INCORRECT if it's build from right to left.
-                // E.g.: "XIC" (89) is incorrect. The correct number is "LXXXIX" (89).
-                if (nextValue > 10) {
-                    return null;
-                }
                 sum -= crrValue;
             } else {
                 sum += crrValue;

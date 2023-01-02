@@ -19,8 +19,8 @@ public class CenturyModel extends TimePeriodModel {
 
             // Set the end time before the start time in order to use it
             // as start time too, if this is missing, but the end year exists
-            String endValue = TimeUtils.clearChristumNotation(intervalValues[1]);
-            String startValue = TimeUtils.clearChristumNotation(intervalValues[0]);
+            Integer endValue = TimePeriodUtils.getEndTime(intervalValues);
+            Integer startValue = TimePeriodUtils.getStartTime(intervalValues);
 
             setEra(intervalValues[1], TimeUtils.END_PLACEHOLDER);
             setEra(intervalValues[0], TimeUtils.START_PLACEHOLDER);
@@ -28,7 +28,7 @@ public class CenturyModel extends TimePeriodModel {
             setCenturyDate(endValue, TimeUtils.END_PLACEHOLDER);
             setCenturyDate(startValue, TimeUtils.START_PLACEHOLDER);
         } else {
-            String centuryValue = TimeUtils.clearChristumNotation(preparedValue);
+            Integer centuryValue = TimePeriodUtils.timePeriodToNumber(preparedValue);
 
             setEra(value, TimeUtils.END_PLACEHOLDER);
             setEra(value, TimeUtils.START_PLACEHOLDER);
@@ -38,8 +38,7 @@ public class CenturyModel extends TimePeriodModel {
         }
     }
 
-    private void setCenturyDate(String value, String position) {
-        Integer century = TimePeriodUtils.timePeriodToNumber(value);
+    private void setCenturyDate(Integer century, String position) {
         if (century != null) {
             int millennium = (century / 10) + 1;
             setMillennium(millennium, position);
