@@ -3,6 +3,7 @@ package ro.webdata.normalization.timespan.ro.model;
 import ro.webdata.echo.commons.Const;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.TreeSet;
 
@@ -23,8 +24,20 @@ public class TimespanModel {
         setTypes(types);
     }
 
+    public void addDbpediaEdgesUri(HashMap<String, String> edgesUri) {
+        this.dbpediaEdgesUris.add(edgesUri);
+    }
+
     public void addDBpediaEdgesUris(ArrayList<HashMap<String, String>> edgesUris) {
         this.dbpediaEdgesUris.addAll(edgesUris);
+    }
+
+    public void addDBpediaUris(String[] matchedList) {
+        this.dbpediaUris.addAll(Arrays.asList(matchedList));
+    }
+
+    public void addType(String type) {
+        this.types.add(type);
     }
 
     public ArrayList<HashMap<String, String>> getDBpediaEdgesUris() {
@@ -49,7 +62,7 @@ public class TimespanModel {
 
     private void setTypes(ArrayList<String> types) { this.types = types; }
 
-    private void setResidualValue(String residualValue) {
+    public void setResidualValue(String residualValue) {
         this.residualValue = residualValue;
     }
 }

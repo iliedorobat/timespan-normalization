@@ -12,7 +12,10 @@ public class Test {
             "timespan_all" + File.EXTENSION_SEPARATOR + File.EXTENSION_TXT;
 
     public static void main(String[] args) {
-        TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 a. chr - sec. 2 p. chr.", null);
+       TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 a. chr - sec. 2 p. chr.", null);
+//        TimeExpression timeExpression = new TimeExpression("1/2 mil. 5 - sec. i al mil. 4 a.chr.", null);
+//        TimeExpression timeExpression = new TimeExpression("4/4 sec.xix. sfârșitul sec.al xix-lea și începutul sec.al xx-lea.", null);
+//        TimeExpression timeExpression = new TimeExpression("402-403, 405-406 a. chr.", null);
 //        TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 - sec. 1 a. chr.", null);
 //        timeExpression = new TimeExpression("epoca modernă", null);
         System.out.println(timeExpression);
