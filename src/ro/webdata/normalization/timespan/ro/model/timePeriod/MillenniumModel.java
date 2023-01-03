@@ -19,8 +19,8 @@ public class MillenniumModel extends TimePeriodModel {
 
             // Set the end time before the start time in order to use it
             // as start time too, if this is missing, but the end year exists
-            Integer endValue = TimePeriodUtils.getEndTime(intervalValues);
-            Integer startValue = TimePeriodUtils.getStartTime(intervalValues);
+            Integer endValue = TimePeriodUtils.getEndTime(intervalValues, this.eraStart);
+            Integer startValue = TimePeriodUtils.getStartTime(intervalValues, this.eraStart);
 
             setEra(intervalValues[1], TimeUtils.END_PLACEHOLDER);
             setEra(intervalValues[0], TimeUtils.START_PLACEHOLDER);

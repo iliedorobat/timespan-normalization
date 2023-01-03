@@ -60,7 +60,7 @@ public class TimePeriodUtils {
         return value;
     }
 
-    public static Integer getStartTime(String[] intervalValues) {
+    public static Integer getStartTime(String[] intervalValues, String eraStart) {
         Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0]);
         Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1]);
 
@@ -70,14 +70,16 @@ public class TimePeriodUtils {
             return null;
         }
 
-        if (first > second) {
+        boolean isAD = eraStart != null && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER);
+        if (isAD && first > second) {
             return second;
         }
 
+        // E.g. "sec. ii a.chr. - sec. i p.chr."
         return first;
     }
 
-    public static Integer getEndTime(String[] intervalValues) {
+    public static Integer getEndTime(String[] intervalValues, String eraStart) {
         Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0]);
         Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1]);
 
@@ -87,10 +89,12 @@ public class TimePeriodUtils {
             return null;
         }
 
-        if (first > second) {
+        boolean isAD = eraStart != null && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER);
+        if (isAD && first > second) {
             return first;
         }
 
+        // E.g. "sec. ii a.chr. - sec. i p.chr."
         return second;
     }
 }
