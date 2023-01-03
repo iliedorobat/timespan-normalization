@@ -17,21 +17,17 @@ public class YearModel extends TimePeriodModel {
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
-            setIsInterval(true);
+            setEra(intervalValues[0], intervalValues[1]);
 
             String endYear = TimeUtils.clearChristumNotation(intervalValues[1]);
             String startYear = TimeUtils.clearChristumNotation(intervalValues[0]);
 
-            setEra(intervalValues[1], TimeUtils.END_PLACEHOLDER);
-            setEra(intervalValues[0], TimeUtils.START_PLACEHOLDER);
-
             setDate(endYear, TimeUtils.END_PLACEHOLDER);
             setDate(startYear, TimeUtils.START_PLACEHOLDER);
         } else {
-            String yearValue = TimeUtils.clearChristumNotation(preparedValue);
+            setEra(value, value);
 
-            setEra(preparedValue, TimeUtils.END_PLACEHOLDER);
-            setEra(preparedValue, TimeUtils.START_PLACEHOLDER);
+            String yearValue = TimeUtils.clearChristumNotation(preparedValue);
 
             setDate(yearValue, TimeUtils.END_PLACEHOLDER);
             setDate(yearValue, TimeUtils.START_PLACEHOLDER);

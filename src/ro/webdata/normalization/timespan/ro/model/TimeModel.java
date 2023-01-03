@@ -3,6 +3,7 @@ package ro.webdata.normalization.timespan.ro.model;
 import ro.webdata.echo.commons.Date;
 import ro.webdata.echo.commons.Print;
 import ro.webdata.normalization.timespan.commons.EnvConst;
+import ro.webdata.normalization.timespan.ro.TimePeriodUtils;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 
 public class TimeModel {
@@ -14,15 +15,38 @@ public class TimeModel {
     protected int dayStart, dayEnd;
     protected boolean isInterval = false;
 
-    protected void setEra(String value, String position) {
-        if (position.equals(TimeUtils.START_PLACEHOLDER)) {
-            boolean containsEra = value.contains(TimeUtils.CHRISTUM_BC_PLACEHOLDER)
-                    || value.contains(TimeUtils.CHRISTUM_AD_PLACEHOLDER);
-            this.eraStart = !containsEra && this.eraEnd != null
-                    ? TimeUtils.getEraName(this.eraEnd)
-                    : TimeUtils.getEraName(value);
-        } else if (position.equals(TimeUtils.END_PLACEHOLDER)) {
-            this.eraEnd = TimeUtils.getEraName(value);
+    protected void setEra(String startValue, String endValue) {
+        boolean hasStartEra = hasChristumNotation(startValue);
+        boolean hasEndEra = hasChristumNotation(endValue);
+
+        if (hasStartEra && hasEndEra) {
+            this.eraStart = TimeUtils.getEraName(startValue);
+            this.eraEnd = TimeUtils.getEraName(endValue);
+        }
+        else if (!hasStartEra && !hasEndEra) {
+            Integer start = TimePeriodUtils.timePeriodToNumber(startValue);
+            Integer end = TimePeriodUtils.timePeriodToNumber(endValue);
+
+            if (start == null || end == null) {
+                this.eraStart = TimeUtils.CHRISTUM_AD_PLACEHOLDER;
+                this.eraEnd = TimeUtils.CHRISTUM_AD_PLACEHOLDER;
+            } else if (start > end) {
+                this.eraStart = TimeUtils.CHRISTUM_BC_PLACEHOLDER;
+                this.eraEnd = TimeUtils.CHRISTUM_BC_PLACEHOLDER;
+            } else {
+                this.eraStart = TimeUtils.CHRISTUM_AD_PLACEHOLDER;
+                this.eraEnd = TimeUtils.CHRISTUM_AD_PLACEHOLDER;
+            }
+        }
+        // E.g.: "sec. i a.chr. - sec. i"
+        else if (hasStartEra && !hasEndEra) {
+            this.eraStart = TimeUtils.getEraName(startValue);
+            this.eraEnd = TimeUtils.CHRISTUM_AD_PLACEHOLDER;
+        }
+        else if (!hasStartEra && hasEndEra) {
+            String endEra = TimeUtils.getEraName(endValue);
+            this.eraStart = endEra;
+            this.eraEnd = endEra;
         }
     }
 
@@ -142,7 +166,14 @@ public class TimeModel {
         }
     }
 
-    protected void setIsInterval(boolean isInterval) {
-        this.isInterval = isInterval;
+    /**
+     * Check if the input value contain formatted Christum notation
+     * ("__AD__" or "__BC__")
+     * @param value The input value
+     * @return True/False
+     */
+    private boolean hasChristumNotation(String value) {
+        return value.contains(TimeUtils.CHRISTUM_BC_PLACEHOLDER)
+                || value.contains(TimeUtils.CHRISTUM_AD_PLACEHOLDER);
     }
 }

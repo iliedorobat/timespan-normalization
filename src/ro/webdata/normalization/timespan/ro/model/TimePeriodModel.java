@@ -65,7 +65,10 @@ public class TimePeriodModel extends TimeModel {
         TreeSet<String> yearSet = new TreeSet<>();
 
         if (this.yearStart != null && this.yearEnd != null) {
+            pushSameBc(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
             pushSameAd(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
+            pushBcAd(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
+            pushAdBc(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
         }
 
         return yearSet;

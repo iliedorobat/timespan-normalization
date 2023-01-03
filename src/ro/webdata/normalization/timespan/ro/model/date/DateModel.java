@@ -22,23 +22,17 @@ public class DateModel extends TimePeriodModel {
         String[] intervalValues = value.split(DateRegex.REGEX_DATE_INTERVAL_SEPARATOR);
 
         if (intervalValues.length == 2) {
-            setIsInterval(true);
+            setEra(intervalValues[0], intervalValues[1]);
 
-            // Set the end time before the start time in order to use it
-            // as start time too, if this is missing, but the end year exists
             String endValue = TimeUtils.clearChristumNotation(intervalValues[1]);
             String startValue = TimeUtils.clearChristumNotation(intervalValues[0]);
-
-            setEra(intervalValues[1], TimeUtils.END_PLACEHOLDER);
-            setEra(intervalValues[0], TimeUtils.START_PLACEHOLDER);
 
             setDate(endValue, order, TimeUtils.END_PLACEHOLDER);
             setDate(startValue, order, TimeUtils.START_PLACEHOLDER);
         } else {
-            String preparedValue = TimeUtils.clearChristumNotation(value);
+            setEra(value, value);
 
-            setEra(value, TimeUtils.END_PLACEHOLDER);
-            setEra(value, TimeUtils.START_PLACEHOLDER);
+            String preparedValue = TimeUtils.clearChristumNotation(value);
 
             setDate(preparedValue, order, TimeUtils.END_PLACEHOLDER);
             setDate(preparedValue, order, TimeUtils.START_PLACEHOLDER);

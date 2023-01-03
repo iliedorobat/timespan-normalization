@@ -15,23 +15,17 @@ public class MillenniumModel extends TimePeriodModel {
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
-            setIsInterval(true);
+            setEra(intervalValues[0], intervalValues[1]);
 
-            // Set the end time before the start time in order to use it
-            // as start time too, if this is missing, but the end year exists
             Integer endValue = TimePeriodUtils.getEndTime(intervalValues, this.eraStart);
             Integer startValue = TimePeriodUtils.getStartTime(intervalValues, this.eraStart);
-
-            setEra(intervalValues[1], TimeUtils.END_PLACEHOLDER);
-            setEra(intervalValues[0], TimeUtils.START_PLACEHOLDER);
 
             setMillenniumDate(endValue, TimeUtils.END_PLACEHOLDER);
             setMillenniumDate(startValue, TimeUtils.START_PLACEHOLDER);
         } else {
-            Integer millenniumValue = TimePeriodUtils.timePeriodToNumber(preparedValue);
+            setEra(value, value);
 
-            setEra(value, TimeUtils.END_PLACEHOLDER);
-            setEra(value, TimeUtils.START_PLACEHOLDER);
+            Integer millenniumValue = TimePeriodUtils.timePeriodToNumber(preparedValue);
 
             setMillenniumDate(millenniumValue, TimeUtils.END_PLACEHOLDER);
             setMillenniumDate(millenniumValue, TimeUtils.START_PLACEHOLDER);
