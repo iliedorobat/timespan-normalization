@@ -40,7 +40,7 @@ public class CenturyModel extends TimePeriodModel {
 
     private void setCenturyDate(Integer century, String position) {
         if (century != null) {
-            int millennium = (century / 10) + 1;
+            int millennium = TimeUtils.centuryToMillennium(century);
             setMillennium(millennium, position);
             setCentury(century, position);
         }

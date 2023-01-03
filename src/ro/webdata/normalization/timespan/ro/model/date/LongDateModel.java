@@ -51,7 +51,7 @@ public class LongDateModel extends TimePeriodModel {
                 .trim();
         try {
             int century = Integer.parseInt(centuryStr);
-            int millennium = (century / 10) + 1;
+            int millennium = TimeUtils.centuryToMillennium(century);
             this.millenniumStart = millennium;
             this.millenniumEnd = millennium;
         } catch (NumberFormatException e) {

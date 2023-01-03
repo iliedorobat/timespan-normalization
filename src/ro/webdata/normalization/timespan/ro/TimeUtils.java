@@ -196,4 +196,14 @@ public class TimeUtils {
                 return value + suffixes[value % 10];
         }
     }
+
+    public static int centuryToMillennium(int century) {
+        float division = (float) century / 10;
+        return (int) Math.ceil(division);
+    }
+
+    public static int yearToMillennium(int century) {
+        float division = (float) century / 1000;
+        return (int) Math.ceil(division);
+    }
 }

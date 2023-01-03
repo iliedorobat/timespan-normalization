@@ -34,13 +34,7 @@ public class TimeModel {
                     Print.tooBigYear("setting millennium", position, year);
                 }
             } else {
-                /**
-                 * E.g.: the year 100 is part of the first century
-                 * Math.floor(100 / 100) + 0 = 1st century
-                 * Math.floor(101 / 100) + 1 = 2nd century
-                 */
-                int buffer = year % 1000 == 0 ? 0 : 1;
-                int millennium = (int) (Math.floor(year / 1000) + buffer);
+                int millennium = TimeUtils.yearToMillennium(year);
                 setMillennium(millennium, position);
             }
         } catch (NumberFormatException e) {
