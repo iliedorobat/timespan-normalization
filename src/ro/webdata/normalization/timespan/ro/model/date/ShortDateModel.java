@@ -9,7 +9,7 @@ import ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
 /**
  * Used for date presented as month-year format<br/>
  * E.g.:<br/>
- *      * MY: "octombrie 1639", "ianuarie 632", "septembrie - octombrie 1919", "17/29 octombrie 1893"
+ *      * MY: "octombrie 1639", "ianuarie 632", "septembrie - octombrie 1919"
  */
 public class ShortDateModel extends TimePeriodModel {
     public ShortDateModel(String value, String order) {

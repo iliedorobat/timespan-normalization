@@ -15,6 +15,18 @@ public class YearRegex {
     private static final String REGEX_INTERVAL_DELIMITER = TimespanRegex.REGEX_INTERVAL_DELIMITER;
     private static final String AD_BC_OPTIONAL = TimespanRegex.AD_BC_OPTIONAL;
 
+    public static final String YEAR_OR_SEPARATOR =
+            "("
+                + "\\s*"
+                + "("
+                    // E.g.: "110/109 a. chr."; "anul 13=1800/1801"
+                    + "/" + TimespanRegex.REGEX_OR
+                    // E.g.: "112 sau 111 î.chr."
+                    + "sau"
+                + ")"
+                + "\\s*"
+            + ")";
+
     public static final String YEAR = "(\\({0,1}\\d{1,}(\\.\\d{1,})?\\){0,1}\\s*\\d{1,})";
 
     public static final String YEAR_OPTIONS = "("
@@ -31,10 +43,10 @@ public class YearRegex {
     public static final String YEAR_3_4_DIGITS_SPECIAL_PREFIX = "("
                 + "anul[ ]*\\d{1,2}="
             + ")";
-    // "anul 13=1800/1801"; "110/109 a. chr."
+    // "anul 13=1800/1801"; "110/109 a. chr."; "112 sau 111 î.chr."
     public static final String YEAR_3_4_DIGITS_SPECIAL_INTERVAL = TEXT_START + "("
                 + "\\d{3,4}" + AD_BC_OPTIONAL
-                + "/"
+                + YEAR_OR_SEPARATOR
                 + "\\d{3,4}" + AD_BC_OPTIONAL
             + ")" + TEXT_END;
 

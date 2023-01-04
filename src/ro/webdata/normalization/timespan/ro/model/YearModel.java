@@ -2,6 +2,7 @@ package ro.webdata.normalization.timespan.ro.model;
 
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
+import ro.webdata.normalization.timespan.ro.regex.YearRegex;
 
 public class YearModel extends TimePeriodModel {
     // Used to separate the minus sign from the dash separator "-2 - -14 p.chr"; "-2 p.chr - -14 p.chr"
@@ -12,8 +13,7 @@ public class YearModel extends TimePeriodModel {
     }
 
     private void setYearModel(String value) {
-        // used for cases similar with "anul 13=1800/1801" or with "110/109 a. chr."
-        String preparedValue = value.replaceAll("/", " - ");
+        String preparedValue = value.replaceAll(YearRegex.YEAR_OR_SEPARATOR, " - ");
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
