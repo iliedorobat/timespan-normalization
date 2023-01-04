@@ -72,10 +72,9 @@ public class TimespanUtils {
         updateMatchedValues(timespanModel, InaccurateYearRegex.APPROX_AGES_INTERVAL, TimespanType.YEAR);
         updateMatchedValues(timespanModel, InaccurateYearRegex.AFTER, TimespanType.YEAR);
         updateMatchedValues(timespanModel, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
-        updateMatchedValues(timespanModel, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
 
-        // Firstly, the years consisting of 3 - 4 digits need to be processed
         updateMatchedValues(timespanModel, YearRegex.YEAR_INTERVAL, TimespanType.YEAR);
+        updateMatchedValues(timespanModel, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
         updateMatchedValues(timespanModel, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
         updateMatchedValues(timespanModel, YearRegex.YEAR_OPTIONS, TimespanType.YEAR);
         // This call need to be made after all the years processing !!!
