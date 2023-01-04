@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class TimePeriodUtils {
     private static final String[] REGEX_LIST = {
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.START_END,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.CENTURY_NOTATION,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MILLENNIUM_NOTATION,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FIRST_HALF,
