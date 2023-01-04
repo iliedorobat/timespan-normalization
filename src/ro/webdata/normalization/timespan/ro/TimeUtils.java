@@ -2,6 +2,7 @@ package ro.webdata.normalization.timespan.ro;
 
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import ro.webdata.echo.commons.Const;
+import ro.webdata.normalization.timespan.ro.regex.imprecise.InaccurateYearRegex;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -110,6 +111,15 @@ public class TimeUtils {
                 .replaceAll(CHRISTUM_BC_PLACEHOLDER, Const.EMPTY_VALUE_PLACEHOLDER)
                 .replaceAll(CHRISTUM_AD_PLACEHOLDER, Const.EMPTY_VALUE_PLACEHOLDER)
                 .trim();
+    }
+
+    /**
+     * Remove the inaccurate notation ("aprox", "c.", etc.)
+     * @param value The input value
+     * @return The value without inaccurate notation
+     */
+    public static String clearInaccurateDate(String value) {
+        return value.replaceAll(InaccurateYearRegex.APPROX_NOTATION, "");
     }
 
     /**

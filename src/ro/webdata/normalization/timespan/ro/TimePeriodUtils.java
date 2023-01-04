@@ -50,7 +50,8 @@ public class TimePeriodUtils {
      */
     public static Integer timePeriodToNumber(String timePeriod) {
         Integer value = null;
-        String clearedTimePeriod = TimeUtils.clearChristumNotation(timePeriod);
+        String clearedTimePeriod = TimeUtils.clearInaccurateDate(timePeriod);
+        clearedTimePeriod = TimeUtils.clearChristumNotation(clearedTimePeriod);
 
         try {
             value = Integer.parseInt(clearedTimePeriod);

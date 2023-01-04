@@ -14,18 +14,21 @@ public class InaccurateYearRegex {
     private static final String TEXT_START = TimespanRegex.TEXT_START;
     private static final String TEXT_END = TimespanRegex.TEXT_END;
 
+    public static final String APPROX_NOTATION = TEXT_START
+            + "("
+                + "catre" + REGEX_OR
+                + "probabil" + REGEX_OR
+                + "aprox[\\.]*" + REGEX_OR
+                + "aproximativ([ ]anii)*" + REGEX_OR
+                + "c[a]{0,1}[\\.]{0,1}" + REGEX_OR
+                + "cca[\\.]*" + REGEX_OR
+                + "circa"
+            + ")[ ]*";
     private static final String APPROX_AGES_GROUP =
             "("
                 + "("
-                    + "("
-                        + "catre" + REGEX_OR
-                        + "probabil" + REGEX_OR
-                        + "aprox[\\.]*" + REGEX_OR
-                        + "aproximativ([ ]anii)*" + REGEX_OR
-                        + "c[a]{0,1}[\\.]{0,1}" + REGEX_OR
-                        + "cca[\\.]*" + REGEX_OR
-                        + "circa)[ ]*\\d+"
-                    + ")"
+                    + APPROX_NOTATION + "\\d+"
+                + ")"
                 + "(" + REGEX_PUNCTUATION_UNLIMITED + AD_BC_OPTIONAL + ")*"
             + ")";
 
