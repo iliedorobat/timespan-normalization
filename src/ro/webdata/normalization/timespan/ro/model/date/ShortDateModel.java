@@ -9,7 +9,7 @@ import ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
 /**
  * Used for date presented as month-year format<br/>
  * E.g.:<br/>
- *      * MY: "octombrie 1639", "ianuarie 632", "septembrie - octombrie 1919"
+ *      * MY: "octombrie 1639", "ianuarie 632", "septembrie - octombrie 1919", "17/29 octombrie 1893"
  */
 public class ShortDateModel extends TimePeriodModel {
     public ShortDateModel(String value, String order) {
@@ -24,37 +24,65 @@ public class ShortDateModel extends TimePeriodModel {
         if (intervalValues.length == 2) {
             setEra(intervalValues[0], intervalValues[1]);
 
-            String startValue = TimeUtils.clearChristumNotation(intervalValues[0]);
-            String endValue = TimeUtils.clearChristumNotation(intervalValues[1]);
+            String endMonth = getMonth(intervalValues[0]);
+            String endYear = getYear(intervalValues[0], intervalValues[1], order, TimeUtils.END_PLACEHOLDER);
+            setDate(endYear, endMonth, order, TimeUtils.END_PLACEHOLDER);
 
-            setDate(endValue, order, TimeUtils.END_PLACEHOLDER);
-            setDate(startValue, order, TimeUtils.START_PLACEHOLDER);
+            String startMonth = getMonth(intervalValues[1]);
+            String startYear = getYear(intervalValues[0], intervalValues[1], order, TimeUtils.START_PLACEHOLDER);
+            setDate(startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
         } else {
             setEra(value, value);
 
-            String preparedValue = TimeUtils.clearChristumNotation(value);
+            String endMonth = getMonth(value);
+            String endYear = getYear(value, value, order, TimeUtils.END_PLACEHOLDER);
+            setDate(endYear, endMonth, order, TimeUtils.END_PLACEHOLDER);
 
-            setDate(preparedValue, order, TimeUtils.END_PLACEHOLDER);
-            setDate(preparedValue, order, TimeUtils.START_PLACEHOLDER);
+            String startMonth = getMonth(value);
+            String startYear = getYear(value, value, order, TimeUtils.START_PLACEHOLDER);
+            setDate(startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
         }
     }
 
-    private void setDate(String value, String order, String position) {
-        String preparedValue = Date.prepareDate(value);
-        String[] values = preparedValue.split(TimespanRegex.REGEX_DATE_SEPARATOR);
-
+    private void setDate(String year, String month, String order, String position) {
         if (order.equals(TimeUtils.MY_PLACEHOLDER)) {
-            // For cases similar with "septembrie - octombrie 1919", we need to extract
-            // the startYear from the section that stores the endYear
-            String year = position.equals(TimeUtils.START_PLACEHOLDER) && values.length == 1
-                    ? String.valueOf(this.yearEnd)
-                    : values[1];
-            String month = Date.getMonthName(values[0].trim());
-
             setMillennium(year, position);
             setCentury(year, position);
             setYear(year, position);
             setMonth(month, position);
         }
+    }
+
+    private String getYear(String startDate, String endDate, String order, String position) {
+        String[] startValues = splitDate(startDate);
+        String[] endValues = splitDate(endDate);
+
+        if (order.equals(TimeUtils.MY_PLACEHOLDER)) {
+            // For cases like "septembrie - octombrie 1919", we need to extract
+            // the startYear from the section that stores the endYear
+            if (position.equals(TimeUtils.START_PLACEHOLDER)) {
+                return startValues.length > 1
+                        ? startValues[1]
+                        : endValues[1];
+            } else if (position.equals(TimeUtils.END_PLACEHOLDER)) {
+                return endValues[1];
+            }
+        }
+
+        return null;
+    }
+
+    private String getMonth(String date) {
+        String preparedValue = Date.prepareDate(date);
+        String[] values = preparedValue.split(TimespanRegex.REGEX_DATE_SEPARATOR);
+
+        return Date.getMonthName(values[0].trim());
+    }
+
+    private String[] splitDate(String date) {
+        String preparedValue = TimeUtils.clearChristumNotation(date);
+        preparedValue = Date.prepareDate(preparedValue);
+
+        return preparedValue.split(TimespanRegex.REGEX_DATE_SEPARATOR);
     }
 }

@@ -114,12 +114,15 @@ public class TimeUtils {
     }
 
     /**
-     * Remove the inaccurate notation ("aprox", "c.", etc.)
+     * Remove the inaccurate notation ("aprox", "c.", etc.) and some of punctuation marks
      * @param value The input value
      * @return The value without inaccurate notation
      */
-    public static String clearInaccurateDate(String value) {
-        return value.replaceAll(InaccurateYearRegex.APPROX_NOTATION, "");
+    public static String clearDate(String value) {
+        return value
+                .replaceAll(InaccurateYearRegex.APPROX_NOTATION, "")
+                .replaceAll("[\\.\\(\\)\\s]*", "")
+                .trim();
     }
 
     /**

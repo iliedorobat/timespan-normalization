@@ -52,7 +52,7 @@ public class TimeModel {
 
     protected void setMillennium(String yearStr, String position) {
         try {
-            int year = Integer.parseInt(yearStr.trim().replaceAll("\\(*\\)*\\s*", ""));
+            int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
                     Print.tooBigYear("setting millennium", position, year);
@@ -88,7 +88,7 @@ public class TimeModel {
 
     protected void setCentury(String yearStr, String position) {
         try {
-            int year = Integer.parseInt(yearStr.trim().replaceAll("\\(*\\)*\\s*", ""));
+            int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
                     Print.tooBigYear("setting century", position, year);
@@ -130,7 +130,7 @@ public class TimeModel {
 
     protected void setYear(String yearStr, String position) {
         try {
-            int year = Integer.parseInt(yearStr.trim().replaceAll("\\(*\\)*\\s*", ""));
+            int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
                     Print.tooBigYear("setting year", position, year);

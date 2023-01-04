@@ -15,7 +15,7 @@ public class YearRegex {
     private static final String REGEX_INTERVAL_DELIMITER = TimespanRegex.REGEX_INTERVAL_DELIMITER;
     private static final String AD_BC_OPTIONAL = TimespanRegex.AD_BC_OPTIONAL;
 
-    public static final String YEAR = "(\\({0,1}\\d{1,4}\\){0,1}\\s*\\d{1,4})";
+    public static final String YEAR = "(\\({0,1}\\d{1,}(\\.\\d{1,})?\\){0,1}\\s*\\d{1,})";
 
     public static final String YEAR_OPTIONS = "("
                 + TEXT_START + YEAR + AD_BC_OPTIONAL + TEXT_END
