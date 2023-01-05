@@ -89,13 +89,28 @@ public class TimeSanitizeUtils {
     }
 
     /**
-     * Sanitize centuries and millenniums values that appear rarely
+     * Sanitize centuries and millenniums values that rarely appear
      * and a regex operation would be time-consuming
      * @param value The input value
      * @return The sanitized value
      */
     private static String sanitizeTimePeriods(String value) {
         switch (value) {
+            case "15(6)3":
+                return "1563";
+            case "a doua jumatate a sec. i a.chr. (-43 - -29); a doua jum. a sec.xix (montura inel)":
+                return "a doua jumatate a sec. i a.chr. (43 - 29 a.chr.); a doua jum. a sec.xix (montura inel)";
+            case "prima jumatate a secolului xviii (rest de datare 174...)":
+                return "prima jumatate a secolului xviii";
+            case "sec. xviii - xix 18(40)":
+                return "sec. xviii - xix";
+            case "281-222 (232?) p. chr.":
+                return "281-222 p. chr.";
+            case "0803":
+                return "unknown";
+
+            case "34 sec. xx":
+                return "sec. xx";
             case "i p. chr.":
                 return "sec. i p.ch.";
             case "i a. chr.-i p. chr.":
