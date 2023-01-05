@@ -100,6 +100,8 @@ public class TimeSanitizeUtils {
                 return "1563";
             case "a doua jumatate a sec. i a.chr. (-43 - -29); a doua jum. a sec.xix (montura inel)":
                 return "a doua jumatate a sec. i a.chr. (43 - 29 a.chr.); a doua jum. a sec.xix (montura inel)";
+            case "instituit in decembrie 1915 - desfiintat in 1973":
+                return "1915 - 1973";
             case "prima jumatate a secolului xviii (rest de datare 174...)":
                 return "prima jumatate a secolului xviii";
             case "sec. xviii - xix 18(40)":

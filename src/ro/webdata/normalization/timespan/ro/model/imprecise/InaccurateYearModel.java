@@ -5,7 +5,10 @@ import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 
-//TODO: find a way to store the detail for inaccurate time periods (after, before, approx.)
+/**
+ * E.g.: "aprox. 1900"
+ */
+// TODO: find a way to store the detail for inaccurate time periods (after, before, approx.)
 public class InaccurateYearModel extends TimePeriodModel {
     private static final String REGEX_NON_DIGIT = "[^\\d]";
 
@@ -34,7 +37,6 @@ public class InaccurateYearModel extends TimePeriodModel {
         }
     }
 
-    //TODO: "dupa 29 aprilie 1616"; "dupa 10 mai 1903"
     private void setDate(String original, String value, String position) {
         String year = value
                 .replaceAll(REGEX_NON_DIGIT, Const.EMPTY_VALUE_PLACEHOLDER);

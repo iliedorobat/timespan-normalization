@@ -33,7 +33,8 @@ public class MillenniumModel extends TimePeriodModel {
     }
 
     private void setMillenniumDate(String original, Integer millennium, String position) {
-        if (millennium != null)
+        if (millennium != null) {
             setMillennium(original, millennium, position);
+        }
     }
 }

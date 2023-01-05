@@ -71,18 +71,18 @@ public class TimespanRegex {
 
     public static final String MONTHS_RO =
             "("
-                + "ianuarie" + REGEX_OR + "ian[\\.]" + REGEX_OR
-                + "februarie" + REGEX_OR + "fevruarie" + REGEX_OR + "feb[\\.]" + REGEX_OR
-                + "martie" + REGEX_OR + "mart[\\.]" + REGEX_OR
-                + "aprilie" + REGEX_OR + "apr[\\.]" + REGEX_OR
-                + "mai" + REGEX_OR
-                + "iunie" + REGEX_OR + "iumie" + REGEX_OR + "iun[\\.]" + REGEX_OR
-                + "iulie" + REGEX_OR + "iul[\\.]" + REGEX_OR
-                + "august" + REGEX_OR + "aug[\\.]" + REGEX_OR
-                + "septembrie" + REGEX_OR + "sept[\\.]" + REGEX_OR
-                + "octombrie" + REGEX_OR + "0ctombrie" + REGEX_OR + "oct[\\.]" + REGEX_OR
-                + "noiembrie" + REGEX_OR + "noimbrie" + REGEX_OR + "nov[\\.]" + REGEX_OR
-                + "decembrie" + REGEX_OR + "decembre" + REGEX_OR + "dec[\\.]"
+                + "ianuarie" + REGEX_OR + "ian[\\.]" + REGEX_OR + "01" + REGEX_OR
+                + "februarie" + REGEX_OR + "fevruarie" + REGEX_OR + "feb[\\.]" + REGEX_OR + "02" + REGEX_OR
+                + "martie" + REGEX_OR + "mart[\\.]" + REGEX_OR + "03" + REGEX_OR
+                + "aprilie" + REGEX_OR + "apr[\\.]" + REGEX_OR + "04" + REGEX_OR
+                + "mai" + REGEX_OR + "05" + REGEX_OR
+                + "iunie" + REGEX_OR + "iumie" + REGEX_OR + "iun[\\.]" + REGEX_OR + "06" + REGEX_OR
+                + "iulie" + REGEX_OR + "iul[\\.]" + REGEX_OR + "07" + REGEX_OR
+                + "august" + REGEX_OR + "aug[\\.]" + REGEX_OR + "08" + REGEX_OR
+                + "septembrie" + REGEX_OR + "sept[\\.]" + REGEX_OR + "09" + REGEX_OR
+                + "octombrie" + REGEX_OR + "0ctombrie" + REGEX_OR + "oct[\\.]" + REGEX_OR + "10" + REGEX_OR
+                + "noiembrie" + REGEX_OR + "noimbrie" + REGEX_OR + "nov[\\.]" + REGEX_OR + "11" + REGEX_OR
+                + "decembrie" + REGEX_OR + "decembre" + REGEX_OR + "dec[\\.]" + REGEX_OR + "12"
             + ")";
 
     public static final String AGES_GROUP_SUFFIX = "([- ]*lea){0,1}";

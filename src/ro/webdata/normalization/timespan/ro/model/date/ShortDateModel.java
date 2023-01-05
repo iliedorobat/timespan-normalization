@@ -16,7 +16,6 @@ public class ShortDateModel extends TimePeriodModel {
         setDateModel(original, value, order);
     }
 
-    // TODO: "instituit in decembrie 1915 - desfiintat in 1973"
     // TODO: "09 1875"
     private void setDateModel(String original, String value, String order) {
         String[] intervalValues = value.split(ShortDateRegex.REGEX_DATE_INTERVAL_SEPARATOR);
