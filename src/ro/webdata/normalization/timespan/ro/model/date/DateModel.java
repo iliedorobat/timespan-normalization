@@ -13,44 +13,46 @@ import ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
  *      * YMD: "1974-05-05", "1891 decembrie 07", "1738, MAI, 4"
  */
 public class DateModel extends TimePeriodModel {
-    public DateModel(String value, String order) {
-        setDateModel(value, order);
+    public DateModel(String original, String value, String order) {
+        setDateModel(original, value, order);
     }
 
-    private void setDateModel(String value, String order) {
+    private void setDateModel(String original, String value, String order) {
         String[] intervalValues = value.split(DateRegex.REGEX_DATE_INTERVAL_SEPARATOR);
 
         if (intervalValues.length == 2) {
             setEra(
+                    original,
                     getYear(intervalValues[0], order),
                     getYear(intervalValues[1], order)
             );
-            setDate(intervalValues[0], intervalValues[1], order);
+            setDate(original, intervalValues[0], intervalValues[1], order);
         } else {
             setEra(
+                    original,
                     getYear(value, order),
                     getYear(value, order)
             );
-            setDate(value, value, order);
+            setDate(original, value, value, order);
         }
     }
 
-    private void setDate(String startDate, String endDate, String order) {
-        setDateTime(endDate, order, TimeUtils.END_PLACEHOLDER);
-        setDateTime(startDate, order, TimeUtils.START_PLACEHOLDER);
+    private void setDate(String original, String startDate, String endDate, String order) {
+        setDateTime(original, endDate, order, TimeUtils.END_PLACEHOLDER);
+        setDateTime(original, startDate, order, TimeUtils.START_PLACEHOLDER);
     }
 
-    private void setDateTime(String date, String order, String position) {
+    private void setDateTime(String original, String date, String order, String position) {
         String preparedDate = TimeUtils.clearChristumNotation(date);
         String year = getYear(preparedDate, order);
         String month = getMonth(preparedDate, order);
         String day = getDay(preparedDate, order);
 
-        setMillennium(year, position);
-        setCentury(year, position);
-        setYear(year, position);
-        setMonth(month, position);
-        setDay(day, position);
+        setMillennium(original, year, position);
+        setCentury(original, year, position);
+        setYear(original, year, position);
+        setMonth(original, month, position);
+        setDay(original, day, position);
     }
 
     private static String getYear(String date, String order) {

@@ -17,7 +17,7 @@ public class LongDateModel extends TimePeriodModel {
     private static final String SUFFIX_MONTH = "l:";
     private static final String SUFFIX_DAY = "z:";
 
-    public LongDateModel(String value) {
+    public LongDateModel(String original, String value) {
         String preparedValue = TimeUtils.clearChristumNotation(value);
         String[] values = preparedValue.split(LongDateRegex.DATE_SEPARATOR);
 

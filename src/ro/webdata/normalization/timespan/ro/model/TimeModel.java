@@ -15,7 +15,7 @@ public class TimeModel {
     protected int dayStart, dayEnd;
     protected boolean isInterval = false;
 
-    protected void setEra(String startValue, String endValue) {
+    protected void setEra(String original, String startValue, String endValue) {
         boolean hasStartEra = hasChristumNotation(startValue);
         boolean hasEndEra = hasChristumNotation(endValue);
 
@@ -50,29 +50,29 @@ public class TimeModel {
         }
     }
 
-    protected void setMillennium(String yearStr, String position) {
+    protected void setMillennium(String original, String yearStr, String position) {
         try {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
-                    Print.tooBigYear("setting millennium", position, year);
+                    Print.tooBigYear("setting millennium from \"" + original + "\"", position, year);
                 }
             } else {
                 int millennium = TimeUtils.yearToMillennium(year);
-                setMillennium(millennium, position);
+                setMillennium(original, millennium, position);
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
     }
 
-    protected void setMillennium(Integer millennium, String position) {
+    protected void setMillennium(String original, Integer millennium, String position) {
         Integer millenniumStart = millennium;
         Integer millenniumEnd = millennium;
 
         if (millennium != null && millennium > Date.LAST_UPDATE_MILLENNIUM && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
             if (EnvConst.PRINT_ERROR) {
-                Print.tooBigMillennium("setting millennium", position, millennium);
+                Print.tooBigMillennium("setting millennium from \"" + original + "\"", position, millennium);
             }
             millenniumStart = null;
             millenniumEnd = null;
@@ -86,12 +86,12 @@ public class TimeModel {
         }
     }
 
-    protected void setCentury(String yearStr, String position) {
+    protected void setCentury(String original, String yearStr, String position) {
         try {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
-                    Print.tooBigYear("setting century", position, year);
+                    Print.tooBigYear("setting century from \"" + original + "\"", position, year);
                 }
             } else {
                 /**
@@ -101,20 +101,20 @@ public class TimeModel {
                  */
                 int buffer = year % 100 == 0 ? 0 : 1;
                 int century = (int) (Math.floor(year / 100) + buffer);
-                setCentury(century, position);
+                setCentury(original, century, position);
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
     }
 
-    protected void setCentury(Integer century, String position) {
+    protected void setCentury(String original, Integer century, String position) {
         Integer centuryStart = century;
         Integer centuryEnd = century;
 
         if (century != null && century > Date.LAST_UPDATE_CENTURY && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
             if (EnvConst.PRINT_ERROR) {
-                Print.tooBigCentury("setting century", position, century);
+                Print.tooBigCentury("setting century from \"" + original + "\"", position, century);
             }
             centuryStart = null;
             centuryEnd = null;
@@ -128,12 +128,12 @@ public class TimeModel {
         }
     }
 
-    protected void setYear(String yearStr, String position) {
+    protected void setYear(String original, String yearStr, String position) {
         try {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
-                    Print.tooBigYear("setting year", position, year);
+                    Print.tooBigYear("setting year from \"" + original + "\"", position, year);
                 }
             } else {
                 if (position.equals(TimeUtils.START_PLACEHOLDER))
@@ -146,14 +146,14 @@ public class TimeModel {
         }
     }
 
-    protected void setMonth(String month, String position) {
+    protected void setMonth(String original, String month, String position) {
         if (position.equals(TimeUtils.START_PLACEHOLDER))
             this.monthStart = month;
         else if (position.equals(TimeUtils.END_PLACEHOLDER))
             this.monthEnd = month;
     }
 
-    protected void setDay(String dayStr, String position) {
+    protected void setDay(String original, String dayStr, String position) {
         try {
             int day = Integer.parseInt(dayStr);
 

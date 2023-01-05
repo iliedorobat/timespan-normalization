@@ -6,37 +6,37 @@ import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 
 public class CenturyModel extends TimePeriodModel {
-    public CenturyModel(String value) {
-        setCenturyModel(value);
+    public CenturyModel(String original, String value) {
+        setCenturyModel(original, value);
     }
 
-    public void setCenturyModel(String value) {
+    public void setCenturyModel(String original, String value) {
         String preparedValue = TimePeriodUtils.sanitizeTimePeriod(value);
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
-            setEra(intervalValues[0], intervalValues[1]);
+            setEra(original, intervalValues[0], intervalValues[1]);
 
             Integer endValue = TimePeriodUtils.getEndTime(intervalValues, this.eraStart);
             Integer startValue = TimePeriodUtils.getStartTime(intervalValues, this.eraStart);
 
-            setCenturyDate(endValue, TimeUtils.END_PLACEHOLDER);
-            setCenturyDate(startValue, TimeUtils.START_PLACEHOLDER);
+            setCenturyDate(original, endValue, TimeUtils.END_PLACEHOLDER);
+            setCenturyDate(original, startValue, TimeUtils.START_PLACEHOLDER);
         } else {
-            setEra(value, value);
+            setEra(original, value, value);
 
             Integer centuryValue = TimePeriodUtils.timePeriodToNumber(preparedValue);
 
-            setCenturyDate(centuryValue, TimeUtils.END_PLACEHOLDER);
-            setCenturyDate(centuryValue, TimeUtils.START_PLACEHOLDER);
+            setCenturyDate(original, centuryValue, TimeUtils.END_PLACEHOLDER);
+            setCenturyDate(original, centuryValue, TimeUtils.START_PLACEHOLDER);
         }
     }
 
-    private void setCenturyDate(Integer century, String position) {
+    private void setCenturyDate(String original, Integer century, String position) {
         if (century != null) {
             int millennium = TimeUtils.centuryToMillennium(century);
-            setMillennium(millennium, position);
-            setCentury(century, position);
+            setMillennium(original, millennium, position);
+            setCentury(original, century, position);
         }
     }
 }
