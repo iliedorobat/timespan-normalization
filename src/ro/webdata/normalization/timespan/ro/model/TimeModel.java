@@ -13,7 +13,6 @@ public class TimeModel {
     protected Integer yearStart, yearEnd;
     protected String monthStart, monthEnd;
     protected int dayStart, dayEnd;
-    protected boolean isInterval = false;
 
     protected void setEra(String original, String startValue, String endValue) {
         boolean hasStartEra = hasChristumNotation(startValue);
