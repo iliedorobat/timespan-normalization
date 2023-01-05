@@ -23,7 +23,11 @@ public class DateRegex {
     private static final String DATE_DMY_SLASH = "("
                 + "\\d{1,2}[/]{1}\\d{2}[/]{1}\\d{3,}"
                 + TimespanRegex.AD_BC_OPTIONAL
-            + ")";          // E.g.:
+            + ")";          // E.g.: "21/01/1916"
+    private static final String DATE_DMY_SPACE = "("
+            + "\\d{1,2}\\s*{1}\\d{2}\\s*{1}\\d{3,}"
+            + TimespanRegex.AD_BC_OPTIONAL
+            + ")";          // E.g.: "7 06 1911"
     private static final String DATE_DMY_TEXT = "("
                 + "\\d{1,2}[, ]+"
                 + TimespanRegex.MONTHS_RO
@@ -44,6 +48,7 @@ public class DateRegex {
     private static final String DATE_DMY_START_OPTIONS = "("
                 + "(" + TEXT_START + DATE_DMY_DOT + ")" + REGEX_OR
                 + "(" + TEXT_START + DATE_DMY_SLASH + ")" + REGEX_OR
+                + "(" + TEXT_START + DATE_DMY_SPACE+ ")" + REGEX_OR
                 + "(" + TEXT_START + DATE_DMY_TEXT + ")"
             + ")";
     private static final String DATE_YMD_START_OPTIONS = "("
@@ -53,6 +58,7 @@ public class DateRegex {
     private static final String DATE_DMY_END_OPTIONS = "("
                 + "(" + DATE_DMY_DOT + TEXT_END + ")" + REGEX_OR
                 + "(" + DATE_DMY_SLASH + TEXT_END + ")" + REGEX_OR
+                + "(" + TEXT_START + DATE_DMY_SPACE+ ")" + REGEX_OR
                 + "(" + DATE_DMY_TEXT + TEXT_END + ")"
             + ")";
     private static final String DATE_YMD_END_OPTIONS = "("
@@ -64,6 +70,7 @@ public class DateRegex {
             + "("
                 + "(" + TEXT_START + DATE_DMY_DOT + TEXT_END + ")" + REGEX_OR
                 + "(" + TEXT_START + DATE_DMY_SLASH + TEXT_END + ")" + REGEX_OR
+                + "(" + TEXT_START + DATE_DMY_SPACE+ ")" + REGEX_OR
                 + "(" + TEXT_START + DATE_DMY_TEXT + TEXT_END + ")"
             + ")";
     public static final String DATE_YMD_OPTIONS = TimespanRegex.CASE_INSENSITIVE
