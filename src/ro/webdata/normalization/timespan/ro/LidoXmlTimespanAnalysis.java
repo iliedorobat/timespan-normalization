@@ -1,5 +1,9 @@
 package ro.webdata.normalization.timespan.ro;
 
+import org.apache.commons.lang3.StringUtils;
+import ro.webdata.echo.commons.Const;
+import ro.webdata.echo.commons.File;
+import ro.webdata.echo.commons.Print;
 import ro.webdata.normalization.timespan.commons.EnvConst;
 import ro.webdata.normalization.timespan.ro.regex.AgeRegex;
 import ro.webdata.normalization.timespan.ro.regex.TimePeriodRegex;
@@ -10,13 +14,11 @@ import ro.webdata.normalization.timespan.ro.regex.date.LongDateRegex;
 import ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
 import ro.webdata.normalization.timespan.ro.regex.imprecise.DatelessRegex;
 import ro.webdata.normalization.timespan.ro.regex.imprecise.InaccurateYearRegex;
-import org.apache.commons.lang3.StringUtils;
-import ro.webdata.echo.commons.File;
-import ro.webdata.echo.commons.Print;
 import ro.webdata.parser.xml.lido.core.ParserDAO;
 import ro.webdata.parser.xml.lido.core.ParserDAOImpl;
 import ro.webdata.parser.xml.lido.core.leaf.descriptiveMetadata.DescriptiveMetadata;
 import ro.webdata.parser.xml.lido.core.leaf.displayDate.DisplayDate;
+import ro.webdata.parser.xml.lido.core.leaf.event.Event;
 import ro.webdata.parser.xml.lido.core.leaf.eventDate.EventDate;
 import ro.webdata.parser.xml.lido.core.leaf.lido.Lido;
 import ro.webdata.parser.xml.lido.core.set.eventSet.EventSet;
@@ -25,12 +27,10 @@ import ro.webdata.parser.xml.lido.core.wrap.lidoWrap.LidoWrap;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class LidoXmlTimespanAnalysis {
     private LidoXmlTimespanAnalysis() {}
@@ -42,7 +42,7 @@ public class LidoXmlTimespanAnalysis {
     /**
      * Extract all time expressions from LIDO files<br/>
      * <b>Used in the analysis process</b>
-     * @param outputFullPath The full path for the output file
+     * @param outputFullPath The full path of the output file
      * @param inputPath The path to input LIDO files
      * @param excludedFiles List of excluded files (E.g.: "demo.xml")
      */
@@ -50,11 +50,20 @@ public class LidoXmlTimespanAnalysis {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
         Print.operation("LidoXmlTimespanAnalysis.writeAll is in progress...", EnvConst.SHOULD_PRINT);
 
-        ArrayList<String> list = extractTimespan(inputPath, excludedFiles);
-        File.write(list, outputFullPath, false);
+        HashMap<String, ArrayList<String>> timespanMap = extractTimespan(inputPath, excludedFiles);
 
-        ArrayList<String> timeExpressions = toTimeExpressions(list);
-        File.write(timeExpressions, outputFullPath.replaceAll("\\.[a-zA-Z]*", File.EXTENSION_SEPARATOR + File.EXTENSION_CSV), false);
+        for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
+            String eventType = entry.getKey();
+            String newOutputFullPath = eventType != null
+                    ? appendFileSuffix(outputFullPath, eventType)
+                    : outputFullPath;
+
+            ArrayList<String> list = entry.getValue();
+            write(list, newOutputFullPath);
+        }
+
+        ArrayList<String> consolidatedTimespanMap = consolidateTimespanMap(timespanMap);
+        write(consolidatedTimespanMap, outputFullPath);
 
         Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
     }
@@ -62,7 +71,7 @@ public class LidoXmlTimespanAnalysis {
     /**
      * Extract all unique time expressions from LIDO files<br/>
      * <b>Used in the analysis process</b>
-     * @param outputFullPath The full path for the output file
+     * @param outputFullPath The full path of the output file
      * @param inputPath The path to input LIDO files
      * @param excludedFiles List of excluded files (E.g.: "demo.xml")
      */
@@ -70,14 +79,54 @@ public class LidoXmlTimespanAnalysis {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
         Print.operation("LidoXmlTimespanAnalysis.writeUnique is in progress...", EnvConst.SHOULD_PRINT);
 
-        ArrayList<String> list = extractTimespan(inputPath, excludedFiles);
-        Set<String> set = new TreeSet<>(list);
-        File.write(new ArrayList<>(set), outputFullPath, false);
+        HashMap<String, ArrayList<String>> timespanMap = extractTimespan(inputPath, excludedFiles);
 
-        ArrayList<String> timeExpressions = toTimeExpressions(new ArrayList<>(set));
-        File.write(timeExpressions, outputFullPath.replaceAll("\\.[a-zA-Z]*", File.EXTENSION_SEPARATOR + File.EXTENSION_CSV), false);
+        for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
+            String eventType = entry.getKey();
+            String newOutputFullPath = eventType != null
+                    ? appendFileSuffix(outputFullPath, eventType)
+                    : outputFullPath;
+
+            Set<String> set = new TreeSet<>(entry.getValue());
+            write(new ArrayList<>(set), newOutputFullPath);
+        }
+
+        Set<String> set = new TreeSet<>(consolidateTimespanMap(timespanMap));
+        write(new ArrayList<>(set), outputFullPath);
 
         Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
+    }
+
+    private static void write(ArrayList<String> timespanList, String outputFullPath) {
+        File.write(timespanList, outputFullPath, false);
+
+        ArrayList<String> timeExpressions = toTimeExpressions(timespanList);
+        File.write(timeExpressions, generateCsvFilePath(outputFullPath), false);
+    }
+
+    /**
+     * Replace the extension of the input filePath with **File.EXTENSION_CSV**
+     * @param filePath The full path
+     * @return The new path
+     */
+    private static String generateCsvFilePath(String filePath) {
+        return filePath.replaceAll("\\.[a-zA-Z]*", File.EXTENSION_SEPARATOR + File.EXTENSION_CSV);
+    }
+
+    /**
+     * Append the filename suffix to the input filePath.
+     * E.g.: /usr/local/my_file.txt => /usr/local/my_file_suffix.txt
+     *
+     * @param filePath The full path
+     * @param suffix A word added at the end of the target word
+     * @return The new path
+     */
+    private static String appendFileSuffix(String filePath, String suffix) {
+        String SUFFIX = suffix == null ? "" : suffix.toLowerCase();
+        String newFilePath = filePath.replaceAll("\\.[a-zA-Z]*", Const.UNDERSCORE_PLACEHOLDER + SUFFIX);
+        String extension = filePath.replaceAll(".*\\.", "");
+
+        return newFilePath + File.EXTENSION_SEPARATOR + extension;
     }
 
     public static void check(String filePath) {
@@ -209,16 +258,27 @@ public class LidoXmlTimespanAnalysis {
         return timeExpressions;
     }
 
+    private static ArrayList<String> consolidateTimespanMap(HashMap<String, ArrayList<String>> timespanMap) {
+        ArrayList<String> consolidatedList = new ArrayList<>();
+
+        for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
+            consolidatedList.addAll(entry.getValue());
+        }
+
+        Collections.sort(consolidatedList);
+        return consolidatedList;
+    }
+
     /**
      * Extract all timespan to a sorted list
      * @param inputPath The path to input LIDO files
      * @param excludedFiles List of excluded files (E.g.: "demo.xml")
      */
-    private static ArrayList<String> extractTimespan(String inputPath, ArrayList<String> excludedFiles) {
+    private static HashMap<String, ArrayList<String>> extractTimespan(String inputPath, ArrayList<String> excludedFiles) {
         ArrayList<String> excludedList = excludedFiles != null
                 ? excludedFiles
                 : new ArrayList<>();
-        ArrayList<String> list = new ArrayList<>();
+        HashMap<String, ArrayList<String>> timespanMap = new HashMap<>();
         java.io.File file = new java.io.File(inputPath);
         String[] fileList = file.list();
 
@@ -229,21 +289,24 @@ public class LidoXmlTimespanAnalysis {
                                 !excludedList.contains(fileName)
                 ) {
                     String filePath = inputPath + File.FILE_SEPARATOR + fileName;
-                    addTimespan(filePath, list);
+                    addTimespan(filePath, timespanMap);
                 }
             }
         }
 
-        Collections.sort(list);
-        return list;
+        for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
+            Collections.sort(entry.getValue());
+        }
+
+        return timespanMap;
     }
 
     /**
      * Add timespan to the provided list
      * @param filePath The path to the LIDO file
-     * @param list The related list
+     * @param timespanMap The map containing the list of time expressions per event type
      */
-    private static void addTimespan(String filePath, ArrayList<String> list) {
+    private static void addTimespan(String filePath, HashMap<String, ArrayList<String>> timespanMap) {
         LidoWrap lidoWrap = parserDAO.parseLidoFile(filePath);
         ArrayList<Lido> lidoList = lidoWrap.getLidoList();
 
@@ -252,7 +315,7 @@ public class LidoXmlTimespanAnalysis {
 
             for (DescriptiveMetadata descriptiveMetadata : descriptiveMetadataList) {
                 ArrayList<EventSet> eventSetList = descriptiveMetadata.getEventWrap().getEventSet();
-                addEventDateTimespan(eventSetList, list);
+                addEventDateTimespan(eventSetList, timespanMap);
             }
         }
     }
@@ -260,18 +323,34 @@ public class LidoXmlTimespanAnalysis {
     /**
      * Add event related timespan to the provided list
      * @param eventSetList The list of EventSet items
-     * @param list The related list
+     * @param timespanMap The map containing the list of time expressions per event type
      */
-    private static void addEventDateTimespan(ArrayList<EventSet> eventSetList, ArrayList<String> list) {
+    private static void addEventDateTimespan(ArrayList<EventSet> eventSetList, HashMap<String, ArrayList<String>> timespanMap) {
         for (EventSet eventSet : eventSetList) {
-            EventDate eventDate = eventSet.getEvent().getEventDate();
+            Event event = eventSet.getEvent();
+            EventDate eventDate = event.getEventDate();
+            List<String> termList = event
+                    .getEventType()
+                    .getTerm()
+                    .stream().map(term -> term.getText().trim())
+                    .collect(Collectors.toList());
 
             if (eventDate != null) {
                 ArrayList<DisplayDate> displayDateList = eventDate.getDisplayDate();
 
                 for (DisplayDate displayDate : displayDateList) {
                     String timespan = displayDate.getText().toLowerCase();
-                    list.add(timespan);
+
+                    for (String eventType : termList) {
+                        if (timespanMap.containsKey(eventType)) {
+                            timespanMap.get(eventType).add(timespan);
+                        } else {
+                            ArrayList<String> arr = new ArrayList<>() {{
+                                add(timespan);
+                            }};
+                            timespanMap.put(eventType, arr);
+                        }
+                    }
                 }
             }
         }

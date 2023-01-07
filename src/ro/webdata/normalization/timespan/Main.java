@@ -1,7 +1,7 @@
 package ro.webdata.normalization.timespan;
 
-import ro.webdata.normalization.timespan.ro.LidoXmlTimespanAnalysis;
 import ro.webdata.echo.commons.File;
+import ro.webdata.normalization.timespan.ro.LidoXmlTimespanAnalysis;
 
 public class Main {
     private static final String LIDO_DATASET_PATH = File.PATH_DATASET_DIR + File.FILE_SEPARATOR + "lido/";
