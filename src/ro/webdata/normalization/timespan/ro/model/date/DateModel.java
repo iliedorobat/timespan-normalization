@@ -25,14 +25,16 @@ public class DateModel extends TimePeriodModel {
             setEra(
                     original,
                     getYear(intervalValues[0], order),
-                    getYear(intervalValues[1], order)
+                    getYear(intervalValues[1], order),
+                    true
             );
             setDate(original, intervalValues[0], intervalValues[1], order);
         } else {
             setEra(
                     original,
                     getYear(value, order),
-                    getYear(value, order)
+                    getYear(value, order),
+                    true
             );
             setDate(original, value, value, order);
         }

@@ -15,17 +15,17 @@ public class CenturyModel extends TimePeriodModel {
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
-            setEra(original, intervalValues[0], intervalValues[1]);
+            setEra(original, intervalValues[0], intervalValues[1], false);
 
-            Integer endValue = TimePeriodUtils.getEndTime(intervalValues, this.eraStart);
-            Integer startValue = TimePeriodUtils.getStartTime(intervalValues, this.eraStart);
+            Integer endValue = TimePeriodUtils.getEndTime(intervalValues, this.eraStart, false);
+            Integer startValue = TimePeriodUtils.getStartTime(intervalValues, this.eraStart, false);
 
             setCenturyDate(original, endValue, TimeUtils.END_PLACEHOLDER);
             setCenturyDate(original, startValue, TimeUtils.START_PLACEHOLDER);
         } else {
-            setEra(original, value, value);
+            setEra(original, preparedValue, preparedValue, false);
 
-            Integer centuryValue = TimePeriodUtils.timePeriodToNumber(preparedValue);
+            Integer centuryValue = TimePeriodUtils.timePeriodToNumber(preparedValue, false);
 
             setCenturyDate(original, centuryValue, TimeUtils.END_PLACEHOLDER);
             setCenturyDate(original, centuryValue, TimeUtils.START_PLACEHOLDER);
@@ -34,8 +34,6 @@ public class CenturyModel extends TimePeriodModel {
 
     private void setCenturyDate(String original, Integer century, String position) {
         if (century != null) {
-            int millennium = TimeUtils.centuryToMillennium(century);
-            setMillennium(original, millennium, position);
             setCentury(original, century, position);
         }
     }

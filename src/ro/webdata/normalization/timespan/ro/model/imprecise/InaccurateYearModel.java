@@ -20,7 +20,7 @@ public class InaccurateYearModel extends TimePeriodModel {
         String[] intervalValues = value.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
-            setEra(original, intervalValues[0], intervalValues[1]);
+            setEra(original, intervalValues[0], intervalValues[1], true);
 
             String startValue = TimeUtils.clearChristumNotation(intervalValues[0]);
             String endValue = TimeUtils.clearChristumNotation(intervalValues[1]);
@@ -28,7 +28,7 @@ public class InaccurateYearModel extends TimePeriodModel {
             setDate(original, endValue, TimeUtils.END_PLACEHOLDER);
             setDate(original, startValue, TimeUtils.START_PLACEHOLDER);
         } else {
-            setEra(original, value, value);
+            setEra(original, value, value, true);
 
             String preparedValue = TimeUtils.clearChristumNotation(value);
 

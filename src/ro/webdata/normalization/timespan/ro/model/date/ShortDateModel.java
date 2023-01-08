@@ -20,7 +20,7 @@ public class ShortDateModel extends TimePeriodModel {
         String[] intervalValues = value.split(ShortDateRegex.REGEX_DATE_INTERVAL_SEPARATOR);
 
         if (intervalValues.length == 2) {
-            setEra(original, intervalValues[0], intervalValues[1]);
+            setEra(original, intervalValues[0], intervalValues[1], true);
 
             String endMonth = getMonth(intervalValues[0]);
             String endYear = getYear(intervalValues[0], intervalValues[1], order, TimeUtils.END_PLACEHOLDER);
@@ -30,7 +30,7 @@ public class ShortDateModel extends TimePeriodModel {
             String startYear = getYear(intervalValues[0], intervalValues[1], order, TimeUtils.START_PLACEHOLDER);
             setDate(original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
         } else {
-            setEra(original, value, value);
+            setEra(original, value, value, true);
 
             String endMonth = getMonth(value);
             String endYear = getYear(value, value, order, TimeUtils.END_PLACEHOLDER);

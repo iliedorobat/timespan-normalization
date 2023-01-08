@@ -14,7 +14,7 @@ public class TimeModel {
     protected String monthStart, monthEnd;
     protected int dayStart, dayEnd;
 
-    protected void setEra(String original, String startValue, String endValue) {
+    protected void setEra(String original, String startValue, String endValue, boolean isDate) {
         boolean hasStartEra = hasChristumNotation(startValue);
         boolean hasEndEra = hasChristumNotation(endValue);
 
@@ -23,8 +23,8 @@ public class TimeModel {
             this.eraEnd = TimeUtils.getEraName(endValue);
         }
         else if (!hasStartEra && !hasEndEra) {
-            Integer start = TimePeriodUtils.timePeriodToNumber(startValue);
-            Integer end = TimePeriodUtils.timePeriodToNumber(endValue);
+            Integer start = TimePeriodUtils.timePeriodToNumber(startValue, isDate);
+            Integer end = TimePeriodUtils.timePeriodToNumber(endValue, isDate);
 
             if (start == null || end == null) {
                 this.eraStart = TimeUtils.CHRISTUM_AD_PLACEHOLDER;
@@ -66,22 +66,21 @@ public class TimeModel {
     }
 
     protected void setMillennium(String original, Integer millennium, String position) {
-        Integer millenniumStart = millennium;
-        Integer millenniumEnd = millennium;
-
-        if (millennium != null && millennium > Date.LAST_UPDATE_MILLENNIUM && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
-            if (EnvConst.PRINT_ERROR) {
-                Print.tooBigMillennium("setting millennium from \"" + original + "\"", position, millennium);
+        if (millennium != null) {
+            if (millennium > Date.LAST_UPDATE_MILLENNIUM && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
+                if (EnvConst.PRINT_ERROR) {
+                    Print.tooBigMillennium("setting millennium from \"" + original + "\"", position, millennium);
+                }
+                this.millenniumStart = null;
+                this.millenniumEnd = null;
+            } else {
+                if (position != null) {
+                    if (position.equals(TimeUtils.START_PLACEHOLDER))
+                        this.millenniumStart = millennium;
+                    else if (position.equals(TimeUtils.END_PLACEHOLDER))
+                        this.millenniumEnd = millennium;
+                }
             }
-            millenniumStart = null;
-            millenniumEnd = null;
-        }
-
-        if (position != null) {
-            if (position.equals(TimeUtils.START_PLACEHOLDER))
-                this.millenniumStart = millenniumStart;
-            else if (position.equals(TimeUtils.END_PLACEHOLDER))
-                this.millenniumEnd = millenniumEnd;
         }
     }
 
@@ -108,22 +107,24 @@ public class TimeModel {
     }
 
     protected void setCentury(String original, Integer century, String position) {
-        Integer centuryStart = century;
-        Integer centuryEnd = century;
+        if (century != null) {
+            if (century > Date.LAST_UPDATE_CENTURY && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
+                if (EnvConst.PRINT_ERROR) {
+                    Print.tooBigCentury("setting century from \"" + original + "\"", position, century);
+                }
+                this.centuryStart = null;
+                this.centuryEnd = null;
+            } else {
+                if (position != null) {
+                    int millennium = TimeUtils.centuryToMillennium(century);
+                    setMillennium(original, millennium, position);
 
-        if (century != null && century > Date.LAST_UPDATE_CENTURY && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
-            if (EnvConst.PRINT_ERROR) {
-                Print.tooBigCentury("setting century from \"" + original + "\"", position, century);
+                    if (position.equals(TimeUtils.START_PLACEHOLDER))
+                        this.centuryStart = century;
+                    else if (position.equals(TimeUtils.END_PLACEHOLDER))
+                        this.centuryEnd = century;
+                }
             }
-            centuryStart = null;
-            centuryEnd = null;
-        }
-
-        if (position != null) {
-            if (position.equals(TimeUtils.START_PLACEHOLDER))
-                this.centuryStart = centuryStart;
-            else if (position.equals(TimeUtils.END_PLACEHOLDER))
-                this.centuryEnd = centuryEnd;
         }
     }
 

@@ -143,7 +143,7 @@ public class TimespanRegex {
                 + TEXT_START + "("
                     + "(1/4)" + REGEX_OR
                     + "(¼)" + REGEX_OR
-                    + "(" + "(inc[\\w]*)" + "([\\. ]*de){0,1}" + ")" + REGEX_OR
+                    + "(" + "(inc[\\w]*[\\. ]*)" + "(de){0,1}" + ")" + REGEX_OR
                     + "(" + "primul[ ]+sfert" + "([ ]+a[l]{0,1}){0,1}" + ")"
                 + ")" + TEXT_END
             + ")";
@@ -169,8 +169,7 @@ public class TimespanRegex {
             "("
                 + TEXT_START + "("
                     + "(4/4)" + REGEX_OR
-                    + "(" + "(ultimul[ ]+sfert)" + "([ ]+(a[l]{0,1}|de)*){0,1}" + ")" + REGEX_OR
-                    + "(" + "(sf[^(ert)][\\w]*)" + "([\\. ]de){0,1}" + ")"
+                    + "(" + "(ultimul[ ]+sfert)" + "([ ]+(a[l]{0,1}|de)*){0,1}" + ")"
                 + ")"
             + ")";
 }

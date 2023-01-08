@@ -3,14 +3,15 @@ package ro.webdata.normalization.timespan.ro;
 import ro.webdata.echo.commons.Const;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class TimePeriodUtils {
+    private static final String SPECIAL_CHARS_REGEX = "[\\.,;\\?!]*\\s*";
     private static final String[] REGEX_LIST = {
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.START_END,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.CENTURY_NOTATION,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MILLENNIUM_NOTATION,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FIRST_HALF,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.SECOND_HALF,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MIDDLE_OF,
@@ -18,8 +19,10 @@ public class TimePeriodUtils {
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.SECOND_QUARTER,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.THIRD_QUARTER,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FORTH_QUARTER,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.CENTURY_NOTATION,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MILLENNIUM_NOTATION,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.AGES_GROUP_SUFFIX,
-            "[\\.,;\\?!\\p{Space}]*"
+            SPECIAL_CHARS_REGEX
     };
 
     /**
@@ -29,28 +32,75 @@ public class TimePeriodUtils {
      */
     public static String sanitizeTimePeriod(String value) {
         String preparedValue = value;
+        List<String> groups = getGroupList(preparedValue);
 
-        for (String regex : REGEX_LIST) {
-            Pattern suffixPattern = Pattern.compile(regex);
-            Matcher suffixMatcher = suffixPattern.matcher(preparedValue);
+        for (int i = groups.size() - 1; i >= 0; i--) {
+            String group = groups.get(i);
 
-            while (suffixMatcher.find()) {
-                String group = suffixMatcher.group();
+            if (group.length() > 0) {
+                // E.g.: "3/4. sec. 19", "4/4. xviii - 1/4. xix", "sf sec.xix - mijl. sec. xx"
+                if (specialCharsOnly(group) && group.contains(".")) {
+                    group = group.replaceAll("\\.", "");
+                    preparedValue = preparedValue.replaceAll("\\.", Const.EMPTY_VALUE_PLACEHOLDER);
+                }
+
                 preparedValue = preparedValue.replaceAll(group, Const.EMPTY_VALUE_PLACEHOLDER);
             }
         }
 
+        preparedValue = preparedValue.replaceAll("\\s*", Const.EMPTY_VALUE_PLACEHOLDER);
+
         return preparedValue;
+    }
+
+    private static List<String> getGroupList(String value) {
+        Set<String> set = new HashSet<>();
+
+        for (String regex : REGEX_LIST) {
+            Pattern suffixPattern = Pattern.compile(regex);
+            Matcher suffixMatcher = suffixPattern.matcher(value);
+
+            while (suffixMatcher.find()) {
+                String group = suffixMatcher.group();
+
+                if (group.length() > 0) {
+                    if (!isSpace(group)) {
+                        set.add(group.trim());
+                    }
+                }
+            }
+        }
+
+        return set.stream()
+                .sorted(Comparator.comparingInt(String::length))
+                .collect(Collectors.toList());
+    }
+
+    private static boolean isSpace(String regex) {
+        return regex.matches("\\s\\s*");
+    }
+
+    private static boolean specialCharsOnly(String regex) {
+        for (int i = 0; i < regex.length(); i++) {
+            char item = regex.charAt(i);
+
+            if (!SPECIAL_CHARS_REGEX.contains(String.valueOf(item))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
      * Transform a time period into number.
      * @param timePeriod The original time period (E.g.: 'i', '5' etc.)
+     * @param isDate Flag indicating if the input timePeriod is a date (E.g.: "01.10.1929", "1709, decembrie 24", etc.)
      * @return The number that represents the time period (E.g.: 5, 9 etc.)
      */
-    public static Integer timePeriodToNumber(String timePeriod) {
+    public static Integer timePeriodToNumber(String timePeriod, boolean isDate) {
         Integer value = null;
-        String clearedTimePeriod = TimeUtils.clearDate(timePeriod);
+        String clearedTimePeriod = isDate ? TimeUtils.clearDate(timePeriod) : timePeriod;
         clearedTimePeriod = TimeUtils.clearChristumNotation(clearedTimePeriod);
 
         try {
@@ -62,9 +112,9 @@ public class TimePeriodUtils {
         return value;
     }
 
-    public static Integer getStartTime(String[] intervalValues, String eraStart) {
-        Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0]);
-        Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1]);
+    public static Integer getStartTime(String[] intervalValues, String eraStart, boolean isDate) {
+        Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0], isDate);
+        Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1], isDate);
 
         // E.g.: "prima jum. a sec. xxxxiv - xxxv a.ch."
         // "xxxxiv" is an invalid roman numeral
@@ -81,9 +131,9 @@ public class TimePeriodUtils {
         return first;
     }
 
-    public static Integer getEndTime(String[] intervalValues, String eraStart) {
-        Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0]);
-        Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1]);
+    public static Integer getEndTime(String[] intervalValues, String eraStart, boolean isDate) {
+        Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0], isDate);
+        Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1], isDate);
 
         // E.g.: "prima jum. a sec. xxxxiv - xxxv a.ch."
         // "xxxxiv" is an invalid roman numeral
