@@ -24,32 +24,38 @@ public class DateModel extends TimePeriodModel {
         if (intervalValues.length == 2) {
             setEra(
                     original,
-                    getYear(intervalValues[0], order),
-                    getYear(intervalValues[1], order),
+                    getYear(intervalValues[0], intervalValues[1], order),
+                    getYear(intervalValues[1], intervalValues[0], order),
                     true
             );
-            setDate(original, intervalValues[0], intervalValues[1], order);
+            setDate(original, intervalValues[0], intervalValues[1], order, TimeUtils.END_PLACEHOLDER);
+            setDate(original, intervalValues[0], intervalValues[1], order, TimeUtils.START_PLACEHOLDER);
         } else {
             setEra(
                     original,
-                    getYear(value, order),
-                    getYear(value, order),
+                    getYear(value, value, order),
+                    getYear(value, value, order),
                     true
             );
-            setDate(original, value, value, order);
+            setDate(original, value, value, order, TimeUtils.END_PLACEHOLDER);
+            setDate(original, value, value, order, TimeUtils.START_PLACEHOLDER);
         }
     }
 
-    private void setDate(String original, String startDate, String endDate, String order) {
-        setDateTime(original, endDate, order, TimeUtils.END_PLACEHOLDER);
-        setDateTime(original, startDate, order, TimeUtils.START_PLACEHOLDER);
+    private void setDate(String original, String startDate, String endDate, String order, String position) {
+        String start = TimeUtils.clearChristumNotation(startDate);
+        String end = TimeUtils.clearChristumNotation(endDate);
+
+        String mainDate = position.equals(TimeUtils.START_PLACEHOLDER) ? start : end;
+        String secondDate = position.equals(TimeUtils.START_PLACEHOLDER) ? end : start;
+
+        setDateTime(original, mainDate, secondDate, order, position);
     }
 
-    private void setDateTime(String original, String date, String order, String position) {
-        String preparedDate = TimeUtils.clearChristumNotation(date);
-        String year = getYear(preparedDate, order);
-        String month = getMonth(preparedDate, order);
-        String day = getDay(preparedDate, order);
+    private void setDateTime(String original, String firstDate, String secondDate, String order, String position) {
+        String year = getYear(firstDate, secondDate, order);
+        String month = getMonth(firstDate, secondDate, order);
+        String day = getDay(firstDate, secondDate, order);
 
         setMillennium(original, year, position);
         setCentury(original, year, position);
@@ -58,22 +64,26 @@ public class DateModel extends TimePeriodModel {
         setDay(original, day, position);
     }
 
-    private static String getYear(String date, String order) {
-        String preparedDate = Date.prepareDate(date);
+    private static String getYear(String mainDate, String secondDate, String order) {
+        String preparedDate = Date.prepareDate(mainDate);
         String[] values = preparedDate.split(TimespanRegex.REGEX_DATE_SEPARATOR);
 
-        // values.length == 4 if the month name is abbreviated (E.g.: "aug.")
-        if (order.equals(TimeUtils.DMY_PLACEHOLDER)) {
-            return values.length == 4 ? values[3] : values[2];
-        } else if (order.equals(TimeUtils.YMD_PLACEHOLDER)) {
-            return values[0];
+        try {
+            // values.length == 4 if the month name is abbreviated (E.g.: "aug.")
+            if (order.equals(TimeUtils.DMY_PLACEHOLDER)) {
+                return values.length == 4 ? values[3] : values[2];
+            } else if (order.equals(TimeUtils.YMD_PLACEHOLDER)) {
+                return values[0];
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return getYear(secondDate, mainDate, order);
         }
 
         return null;
     }
 
-    private static String getMonth(String date, String order) {
-        String preparedDate = Date.prepareDate(date);
+    private static String getMonth(String mainDate, String secondDate, String order) {
+        String preparedDate = Date.prepareDate(mainDate);
         String[] values = preparedDate.split(TimespanRegex.REGEX_DATE_SEPARATOR);
 
         if (order.equals(TimeUtils.DMY_PLACEHOLDER)) {
@@ -85,8 +95,8 @@ public class DateModel extends TimePeriodModel {
         return null;
     }
 
-    private static String getDay(String date, String order) {
-        String preparedDate = Date.prepareDate(date);
+    private static String getDay(String mainDate, String secondDate, String order) {
+        String preparedDate = Date.prepareDate(mainDate);
         String[] values = preparedDate.split(TimespanRegex.REGEX_DATE_SEPARATOR);
 
         if (order.equals(TimeUtils.DMY_PLACEHOLDER)) {
