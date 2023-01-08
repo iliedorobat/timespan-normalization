@@ -144,7 +144,8 @@ public class TimespanRegex {
                     + "(1/4)" + REGEX_OR
                     + "(¼)" + REGEX_OR
                     + "(" + "(inc[\\w]*[\\. ]*)" + "(de){0,1}" + ")" + REGEX_OR
-                    + "(" + "primul[ ]+sfert" + "([ ]+a[l]{0,1}){0,1}" + ")"
+                    + "(" + "primul[ ]+sfert" + "([ ]+a[l]{0,1}){0,1}" + ")" + REGEX_OR
+                    + "(" + "prima treime a" + ")"
                 + ")" + TEXT_END
             + ")";
     public static final String SECOND_QUARTER =
