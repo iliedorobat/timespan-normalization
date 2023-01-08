@@ -107,7 +107,7 @@ public class TimespanRegex {
             + ")";
 
     // E.g.: "sfârșitul sec. xi-începutul sec. xiii p. chr"
-    public static final String START_END = "(sfarsitul|inceputul)?";
+    public static final String START_END = "(sfarsitul|sf\\.|inceputul[ de]*|incep[\\.]*|inceput[ de]*)?";
     public static final String CENTURY_NOTATION = "(" + START_END +  "\\s*(sec[\\w]*)([\\., ]+(al[\\. ]+){0,1})*" + ")";
     public static final String MILLENNIUM_NOTATION = "(" + "(mil[\\w]*)([\\. ]+(al[ ]+){0,1})*" + ")";
 
