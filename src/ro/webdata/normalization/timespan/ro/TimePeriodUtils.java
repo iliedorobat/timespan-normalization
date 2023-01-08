@@ -99,6 +99,11 @@ public class TimePeriodUtils {
      * @return The number that represents the time period (E.g.: 5, 9 etc.)
      */
     public static Integer timePeriodToNumber(String timePeriod, boolean isDate) {
+        // E.g.: "1/2 mil. 5 - sec. i al mil. 4 a.chr."
+        if (timePeriod == null || timePeriod.trim().length() == 0) {
+            return null;
+        }
+
         Integer value = null;
         String clearedTimePeriod = isDate ? TimeUtils.clearDate(timePeriod) : timePeriod;
         clearedTimePeriod = TimeUtils.clearChristumNotation(clearedTimePeriod);

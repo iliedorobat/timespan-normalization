@@ -110,7 +110,12 @@ public class TimeSanitizeUtils {
                 return "281-222 p. chr.";
             case "0803":
                 return "unknown";
-
+            case "1/4 mil. 5 - sec. i al mil. 4 a.chr.":
+                return "1/4 mil. 5 - mil. 4 a.chr.";
+            case "2/2 mil. 5 - sec. i al mil. 4 a.chr.":
+                return "2/2 mil. 5 - mil. 4 a.chr.";
+            case "1/2 mil. 5 - sec. i al mil. 4 a.chr.":
+                return "1/2 mil. 5 - mil. 4 a.chr";
             case "34 sec. xx":
                 return "sec. xx";
             case "i p. chr.":
