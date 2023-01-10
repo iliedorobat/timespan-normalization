@@ -44,27 +44,12 @@ public class LidoXmlTimespanAnalysis {
      * <b>Used in the analysis process</b>
      * @param outputFullPath The full path of the output file
      * @param inputPath The path to input LIDO files
-     * @param excludedFiles List of excluded files (E.g.: "demo.xml")
+     * @param excludeDemoFiles Flag indicating if demo files are excluded or not
      */
-    public static void writeAll(String inputPath, String outputFullPath, ArrayList<String> excludedFiles) {
+    public static void writeAll(String inputPath, String outputFullPath, boolean excludeDemoFiles) {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
         Print.operation("LidoXmlTimespanAnalysis.writeAll is in progress...", EnvConst.SHOULD_PRINT);
-
-        HashMap<String, ArrayList<String>> timespanMap = extractTimespan(inputPath, excludedFiles);
-
-        for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
-            String eventType = entry.getKey();
-            String newOutputFullPath = eventType != null
-                    ? appendFileSuffix(outputFullPath, eventType)
-                    : outputFullPath;
-
-            ArrayList<String> list = entry.getValue();
-            write(list, newOutputFullPath);
-        }
-
-        ArrayList<String> consolidatedTimespanMap = consolidateTimespanMap(timespanMap);
-        write(consolidatedTimespanMap, outputFullPath);
-
+        write(inputPath, outputFullPath, excludeDemoFiles, false);
         Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
     }
 
@@ -73,13 +58,25 @@ public class LidoXmlTimespanAnalysis {
      * <b>Used in the analysis process</b>
      * @param outputFullPath The full path of the output file
      * @param inputPath The path to input LIDO files
-     * @param excludedFiles List of excluded files (E.g.: "demo.xml")
+     * @param excludeDemoFiles Flag indicating if demo files are excluded or not
      */
-    public static void writeUnique(String inputPath, String outputFullPath, ArrayList<String> excludedFiles) {
+    public static void writeUnique(String inputPath, String outputFullPath, boolean excludeDemoFiles) {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
         Print.operation("LidoXmlTimespanAnalysis.writeUnique is in progress...", EnvConst.SHOULD_PRINT);
+        write(inputPath, outputFullPath, excludeDemoFiles, true);
+        Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
+    }
 
-        HashMap<String, ArrayList<String>> timespanMap = extractTimespan(inputPath, excludedFiles);
+    /**
+     * Extract all time expressions from LIDO files<br/>
+     * <b>Used in the analysis process</b>
+     * @param outputFullPath The full path of the output file
+     * @param inputPath The path to input LIDO files
+     * @param excludeDemoFiles Flag indicating if demo files are excluded or not
+     * @param onlyUnique Flag indicating whether only unique time expressions are extracted
+     */
+    private static void write(String inputPath, String outputFullPath, boolean excludeDemoFiles, boolean onlyUnique) {
+        HashMap<String, ArrayList<String>> timespanMap = extractTimespan(inputPath, excludeDemoFiles);
 
         for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
             String eventType = entry.getKey();
@@ -87,17 +84,21 @@ public class LidoXmlTimespanAnalysis {
                     ? appendFileSuffix(outputFullPath, eventType)
                     : outputFullPath;
 
-            Set<String> set = new TreeSet<>(entry.getValue());
-            write(new ArrayList<>(set), newOutputFullPath);
+            ArrayList<String> list = entry.getValue();
+            write(list, newOutputFullPath, onlyUnique);
         }
 
-        Set<String> set = new TreeSet<>(consolidateTimespanMap(timespanMap));
-        write(new ArrayList<>(set), outputFullPath);
-
-        Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
+        ArrayList<String> consolidatedTimespanMap = consolidateTimespanMap(timespanMap);
+        write(consolidatedTimespanMap, outputFullPath, onlyUnique);
     }
 
-    private static void write(ArrayList<String> timespanList, String outputFullPath) {
+    private static void write(ArrayList<String> initTimespanList, String outputFullPath, boolean onlyUnique) {
+        ArrayList<String> timespanList = initTimespanList;
+        if (onlyUnique) {
+            Set<String> set = new TreeSet<>(timespanList);
+            timespanList = new ArrayList<>(set);
+        }
+
         File.write(timespanList, outputFullPath, false);
 
         ArrayList<String> timeExpressions = toTimeExpressions(timespanList);
@@ -272,26 +273,15 @@ public class LidoXmlTimespanAnalysis {
     /**
      * Extract all timespan to a sorted list
      * @param inputPath The path to input LIDO files
-     * @param excludedFiles List of excluded files (E.g.: "demo.xml")
+     * @param excludeDemoFiles Flag indicating if demo files are excluded or not
      */
-    private static HashMap<String, ArrayList<String>> extractTimespan(String inputPath, ArrayList<String> excludedFiles) {
-        ArrayList<String> excludedList = excludedFiles != null
-                ? excludedFiles
-                : new ArrayList<>();
+    private static HashMap<String, ArrayList<String>> extractTimespan(String inputPath, boolean excludeDemoFiles) {
         HashMap<String, ArrayList<String>> timespanMap = new HashMap<>();
-        java.io.File file = new java.io.File(inputPath);
-        String[] fileList = file.list();
+        ArrayList<String> fileList = File.getFileNames(inputPath, File.EXTENSION_XML, excludeDemoFiles);
 
-        if (fileList != null) {
-            for (String fileName : fileList) {
-                if (
-                        fileName.contains(File.EXTENSION_SEPARATOR + File.EXTENSION_XML) &&
-                                !excludedList.contains(fileName)
-                ) {
-                    String filePath = inputPath + File.FILE_SEPARATOR + fileName;
-                    addTimespan(filePath, timespanMap);
-                }
-            }
+        for (String fileName : fileList) {
+            String filePath = inputPath + File.FILE_SEPARATOR + fileName;
+            addTimespan(filePath, timespanMap);
         }
 
         for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
