@@ -43,7 +43,7 @@ public class TimespanAnalysis {
     // Extract all time expressions from LIDO files
     public static void write(String inputPath, String outputFullPath, String fileName, boolean excludeDemoFiles, boolean onlyUnique) {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
-        System.out.println("File: " + fileName + "\n");
+        System.out.println("File: " + (fileName != null ? fileName : "ALL") + "\n");
 
         HashMap<String, ArrayList<String>> timespanMap = TimespanAnalysisUtils.extractTimespan(inputPath, fileName, excludeDemoFiles);
 
