@@ -1,7 +1,7 @@
 package ro.webdata.normalization.timespan;
 
 import ro.webdata.echo.commons.File;
-import ro.webdata.normalization.timespan.ro.LidoXmlTimespanAnalysis;
+import ro.webdata.normalization.timespan.ro.analysis.TimespanAnalysis;
 
 public class Main {
     private static final String LIDO_DATASET_PATH = File.PATH_DATASET_DIR + File.FILE_SEPARATOR + "lido/";
@@ -12,7 +12,10 @@ public class Main {
 
     public static void main(String[] args) {
         // Extract time expressions from LIDO datasets
-        LidoXmlTimespanAnalysis.writeAll(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, null);
-        LidoXmlTimespanAnalysis.writeUnique(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, null);
+       TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false);
+       TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true);
+
+        TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false);
+        TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true);
     }
 }
