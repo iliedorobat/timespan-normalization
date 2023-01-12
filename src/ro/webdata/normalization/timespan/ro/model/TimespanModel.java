@@ -12,7 +12,6 @@ public class TimespanModel {
     private TreeSet<String> dbpediaUris = new TreeSet<>();
     private String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
     private ArrayList<String> types = new ArrayList<>();
-    private ArrayList<String> normalizedTypes = new ArrayList<>();
 
     public TimespanModel(String value) {
         setResidualValue(value);
@@ -37,10 +36,6 @@ public class TimespanModel {
         this.dbpediaUris.addAll(Arrays.asList(matchedList));
     }
 
-    public void addNormalizedType(String type) {
-        this.normalizedTypes.add(type);
-    }
-
     public void addType(String type) {
         this.types.add(type);
     }
@@ -55,10 +50,6 @@ public class TimespanModel {
 
     public String getResidualValue() {
         return this.residualValue;
-    }
-
-    public ArrayList<String> getNormalizedTypes() {
-        return this.normalizedTypes;
     }
 
     public ArrayList<String> getTypes() {

@@ -11,7 +11,6 @@ public class TimeExpression {
     private String sanitizedValue = null;
     private TreeSet<String> normalizedValues = new TreeSet<>();
     private ArrayList<String> types = new ArrayList<>();
-    private ArrayList<String> normalizedTypes = new ArrayList<>();
 
     /**
      * Set the original value, the value whose Christum notation has been
@@ -25,7 +24,6 @@ public class TimeExpression {
         TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(this.sanitizedValue);
         this.normalizedValues = timespanModel.getDBpediaUris();
         this.types = timespanModel.getTypes();
-        this.normalizedTypes = timespanModel.getNormalizedTypes();
 
         if (separator != null)
             this.separator = separator;
@@ -36,8 +34,7 @@ public class TimeExpression {
         return value
                 + separator + sanitizedValue
                 + separator + normalizedValues
-                + separator + types
-                + separator + normalizedTypes;
+                + separator + types;
     }
 
     public String getValue() {

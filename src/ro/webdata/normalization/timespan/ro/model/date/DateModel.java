@@ -3,7 +3,6 @@ package ro.webdata.normalization.timespan.ro.model.date;
 import ro.webdata.echo.commons.Date;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
-import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
 
@@ -15,11 +14,11 @@ import ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
  *      * YMD: "1974-05-05", "1891 decembrie 07", "1738, MAI, 4"
  */
 public class DateModel extends TimePeriodModel {
-    public DateModel(TimespanModel timespanModel, String original, String value, String order) {
-        setDateModel(timespanModel, original, value, order);
+    public DateModel(String original, String value, String order) {
+        setDateModel(original, value, order);
     }
 
-    private void setDateModel(TimespanModel timespanModel, String original, String value, String order) {
+    private void setDateModel(String original, String value, String order) {
         String[] intervalValues = value.split(DateRegex.REGEX_DATE_INTERVAL_SEPARATOR);
 
         if (intervalValues.length == 2) {
@@ -29,8 +28,8 @@ public class DateModel extends TimePeriodModel {
                     getYear(intervalValues[1], intervalValues[0], order),
                     true
             );
-            setDate(timespanModel, original, intervalValues[0], intervalValues[1], order, TimeUtils.END_PLACEHOLDER);
-            setDate(timespanModel, original, intervalValues[0], intervalValues[1], order, TimeUtils.START_PLACEHOLDER);
+            setDate(original, intervalValues[0], intervalValues[1], order, TimeUtils.END_PLACEHOLDER);
+            setDate(original, intervalValues[0], intervalValues[1], order, TimeUtils.START_PLACEHOLDER);
         } else {
             setEra(
                     original,
@@ -38,31 +37,31 @@ public class DateModel extends TimePeriodModel {
                     getYear(value, value, order),
                     true
             );
-            setDate(timespanModel, original, value, value, order, TimeUtils.END_PLACEHOLDER);
-            setDate(timespanModel, original, value, value, order, TimeUtils.START_PLACEHOLDER);
+            setDate(original, value, value, order, TimeUtils.END_PLACEHOLDER);
+            setDate(original, value, value, order, TimeUtils.START_PLACEHOLDER);
         }
     }
 
-    private void setDate(TimespanModel timespanModel, String original, String startDate, String endDate, String order, String position) {
+    private void setDate(String original, String startDate, String endDate, String order, String position) {
         String start = TimeUtils.clearChristumNotation(startDate);
         String end = TimeUtils.clearChristumNotation(endDate);
 
         String mainDate = position.equals(TimeUtils.START_PLACEHOLDER) ? start : end;
         String secondDate = position.equals(TimeUtils.START_PLACEHOLDER) ? end : start;
 
-        setDateTime(timespanModel, original, mainDate, secondDate, order, position);
+        setDateTime(original, mainDate, secondDate, order, position);
     }
 
-    private void setDateTime(TimespanModel timespanModel, String original, String firstDate, String secondDate, String order, String position) {
+    private void setDateTime(String original, String firstDate, String secondDate, String order, String position) {
         String year = getYear(firstDate, secondDate, order);
         String month = getMonth(firstDate, secondDate, order);
         String day = getDay(firstDate, secondDate, order);
 
-        setMillennium(timespanModel, original, year, position);
-        setCentury(timespanModel, original, year, position);
-        setYear(timespanModel, original, year, position);
-        setMonth(timespanModel, original, month, position);
-        setDay(timespanModel, original, day, position);
+        setMillennium(original, year, position);
+        setCentury(original, year, position);
+        setYear(original, year, position);
+        setMonth(original, month, position);
+        setDay(original, day, position);
     }
 
     private static String getYear(String mainDate, String secondDate, String order) {

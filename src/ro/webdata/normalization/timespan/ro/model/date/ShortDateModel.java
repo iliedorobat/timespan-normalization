@@ -3,7 +3,6 @@ package ro.webdata.normalization.timespan.ro.model.date;
 import ro.webdata.echo.commons.Date;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
-import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
 
@@ -13,11 +12,11 @@ import ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
  *      * MY: "octombrie 1639"; "ianuarie 632"; "septembrie - octombrie 1919"; "09 1875"
  */
 public class ShortDateModel extends TimePeriodModel {
-    public ShortDateModel(TimespanModel timespanModel, String original, String value, String order) {
-        setDateModel(timespanModel, original, value, order);
+    public ShortDateModel(String original, String value, String order) {
+        setDateModel(original, value, order);
     }
 
-    private void setDateModel(TimespanModel timespanModel, String original, String value, String order) {
+    private void setDateModel(String original, String value, String order) {
         String[] intervalValues = value.split(ShortDateRegex.REGEX_DATE_INTERVAL_SEPARATOR);
 
         if (intervalValues.length == 2) {
@@ -25,30 +24,30 @@ public class ShortDateModel extends TimePeriodModel {
 
             String endMonth = getMonth(intervalValues[0]);
             String endYear = getYear(intervalValues[0], intervalValues[1], order, TimeUtils.END_PLACEHOLDER);
-            setDate(timespanModel, original, endYear, endMonth, order, TimeUtils.END_PLACEHOLDER);
+            setDate(original, endYear, endMonth, order, TimeUtils.END_PLACEHOLDER);
 
             String startMonth = getMonth(intervalValues[1]);
             String startYear = getYear(intervalValues[0], intervalValues[1], order, TimeUtils.START_PLACEHOLDER);
-            setDate(timespanModel, original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
+            setDate(original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
         } else {
             setEra(original, value, value, true);
 
             String endMonth = getMonth(value);
             String endYear = getYear(value, value, order, TimeUtils.END_PLACEHOLDER);
-            setDate(timespanModel, original, endYear, endMonth, order, TimeUtils.END_PLACEHOLDER);
+            setDate(original, endYear, endMonth, order, TimeUtils.END_PLACEHOLDER);
 
             String startMonth = getMonth(value);
             String startYear = getYear(value, value, order, TimeUtils.START_PLACEHOLDER);
-            setDate(timespanModel, original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
+            setDate(original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
         }
     }
 
-    private void setDate(TimespanModel timespanModel, String original, String year, String month, String order, String position) {
+    private void setDate(String original, String year, String month, String order, String position) {
         if (order.equals(TimeUtils.MY_PLACEHOLDER)) {
-            setMillennium(timespanModel, original, year, position);
-            setCentury(timespanModel, original, year, position);
-            setYear(timespanModel, original, year, position);
-            setMonth(timespanModel, original, month, position);
+            setMillennium(original, year, position);
+            setCentury(original, year, position);
+            setYear(original, year, position);
+            setMonth(original, month, position);
         }
     }
 

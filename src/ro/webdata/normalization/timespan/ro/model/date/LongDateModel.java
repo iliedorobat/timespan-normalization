@@ -3,9 +3,7 @@ package ro.webdata.normalization.timespan.ro.model.date;
 import ro.webdata.echo.commons.Const;
 import ro.webdata.echo.commons.Date;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
-import ro.webdata.normalization.timespan.ro.TimespanType;
 import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
-import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 import ro.webdata.normalization.timespan.ro.regex.date.LongDateRegex;
 
 /**
@@ -19,7 +17,7 @@ public class LongDateModel extends TimePeriodModel {
     private static final String SUFFIX_MONTH = "l:";
     private static final String SUFFIX_DAY = "z:";
 
-    public LongDateModel(TimespanModel timespanModel, String original, String value) {
+    public LongDateModel(String original, String value) {
         String preparedValue = TimeUtils.clearChristumNotation(value);
         String[] values = preparedValue.split(LongDateRegex.DATE_SEPARATOR);
 
@@ -28,14 +26,14 @@ public class LongDateModel extends TimePeriodModel {
             str = str.toLowerCase();
 
             if (str.contains(SUFFIX_CENTURY)) {
-                setCentury(timespanModel, str);
-                setMillennium(timespanModel, str);
+                setCentury(str);
+                setMillennium(str);
             } else if (str.contains(SUFFIX_YEAR)) {
-                setYear(timespanModel, str);
+                setYear(str);
             } else if (str.contains(SUFFIX_MONTH)) {
-                setMonth(timespanModel, str);
+                setMonth(str);
             } else if (str.contains(SUFFIX_DAY)) {
-                setDay(timespanModel, str);
+                setDay(str);
             }
         }
         System.out.println();
@@ -47,14 +45,13 @@ public class LongDateModel extends TimePeriodModel {
         this.eraEnd = era;
     }
 
-    private void setMillennium(TimespanModel timespanModel, String centuryValue) {
+    private void setMillennium(String centuryValue) {
         String centuryStr = centuryValue
                 .replaceAll(SUFFIX_CENTURY, Const.EMPTY_VALUE_PLACEHOLDER)
                 .trim();
         try {
             int century = Integer.parseInt(centuryStr);
             int millennium = TimeUtils.centuryToMillennium(century);
-            timespanModel.addNormalizedType(TimespanType.MILLENNIUM);
             this.millenniumStart = millennium;
             this.millenniumEnd = millennium;
         } catch (NumberFormatException e) {
@@ -62,13 +59,12 @@ public class LongDateModel extends TimePeriodModel {
         }
     }
 
-    private void setCentury(TimespanModel timespanModel, String value) {
+    private void setCentury(String value) {
         String centuryStr = value
                 .replaceAll(SUFFIX_CENTURY, Const.EMPTY_VALUE_PLACEHOLDER)
                 .trim();
         try {
             int century = Integer.parseInt(centuryStr);
-            timespanModel.addNormalizedType(TimespanType.CENTURY);
             this.centuryStart = century;
             this.centuryEnd = century;
         } catch (NumberFormatException e) {
@@ -76,13 +72,12 @@ public class LongDateModel extends TimePeriodModel {
         }
     }
 
-    private void setYear(TimespanModel timespanModel, String value) {
+    private void setYear(String value) {
         String yearStr = value
                 .replaceAll(SUFFIX_YEAR, Const.EMPTY_VALUE_PLACEHOLDER)
                 .trim();
         try {
             int year = Integer.parseInt(yearStr);
-            timespanModel.addNormalizedType(TimespanType.YEAR);
             this.yearStart = year;
             this.yearEnd = year;
         } catch (NumberFormatException e) {
@@ -90,7 +85,7 @@ public class LongDateModel extends TimePeriodModel {
         }
     }
 
-    private void setMonth(TimespanModel timespanModel, String value) {
+    private void setMonth(String value) {
         String monthStr = value
                 .replaceAll(SUFFIX_MONTH, Const.EMPTY_VALUE_PLACEHOLDER)
                 .trim();
@@ -99,7 +94,7 @@ public class LongDateModel extends TimePeriodModel {
         this.monthEnd = month;
     }
 
-    private void setDay(TimespanModel timespanModel, String value) {
+    private void setDay(String value) {
         String dayStr = value
                 .replaceAll(SUFFIX_DAY, Const.EMPTY_VALUE_PLACEHOLDER)
                 .trim();

@@ -5,11 +5,11 @@ import ro.webdata.normalization.timespan.ro.regex.AgeRegex;
 public class AgeModel extends TimePeriodModel {
     private String age;
 
-    public AgeModel(TimespanModel timespanModel, String original, String age, String regex) {
+    public AgeModel(String original, String age, String regex) {
         this.age = mapAge(age, regex);
 
-        setMillennium(timespanModel, original, (Integer) null, null);
-        setCentury(timespanModel, original, (Integer) null, null);
+        setMillennium(original, (Integer) null, null);
+        setCentury(original, (Integer) null, null);
     }
 
     private String mapAge(String age, String regex) {
