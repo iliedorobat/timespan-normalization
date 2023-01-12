@@ -5,6 +5,7 @@ import ro.webdata.echo.commons.Print;
 import ro.webdata.normalization.timespan.commons.EnvConst;
 import ro.webdata.normalization.timespan.ro.TimePeriodUtils;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
+import ro.webdata.normalization.timespan.ro.TimespanType;
 
 public class TimeModel {
     protected String eraStart, eraEnd;
@@ -49,7 +50,7 @@ public class TimeModel {
         }
     }
 
-    protected void setMillennium(String original, String yearStr, String position) {
+    protected void setMillennium(TimespanModel timespanModel, String original, String yearStr, String position) {
         try {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
@@ -58,14 +59,14 @@ public class TimeModel {
                 }
             } else {
                 int millennium = TimeUtils.yearToMillennium(year);
-                setMillennium(original, millennium, position);
+                setMillennium(timespanModel, original, millennium, position);
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
     }
 
-    protected void setMillennium(String original, Integer millennium, String position) {
+    protected void setMillennium(TimespanModel timespanModel, String original, Integer millennium, String position) {
         if (millennium != null) {
             if (millennium > Date.LAST_UPDATE_MILLENNIUM && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
@@ -75,6 +76,8 @@ public class TimeModel {
                 this.millenniumEnd = null;
             } else {
                 if (position != null) {
+                    timespanModel.addNormalizedType(TimespanType.MILLENNIUM);
+
                     if (position.equals(TimeUtils.START_PLACEHOLDER))
                         this.millenniumStart = millennium;
                     else if (position.equals(TimeUtils.END_PLACEHOLDER))
@@ -84,7 +87,7 @@ public class TimeModel {
         }
     }
 
-    protected void setCentury(String original, String yearStr, String position) {
+    protected void setCentury(TimespanModel timespanModel, String original, String yearStr, String position) {
         try {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
@@ -99,14 +102,14 @@ public class TimeModel {
                  */
                 int buffer = year % 100 == 0 ? 0 : 1;
                 int century = (int) (Math.floor(year / 100) + buffer);
-                setCentury(original, century, position);
+                setCentury(timespanModel, original, century, position);
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
     }
 
-    protected void setCentury(String original, Integer century, String position) {
+    protected void setCentury(TimespanModel timespanModel, String original, Integer century, String position) {
         if (century != null) {
             if (century > Date.LAST_UPDATE_CENTURY && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
@@ -116,8 +119,10 @@ public class TimeModel {
                 this.centuryEnd = null;
             } else {
                 if (position != null) {
+                    timespanModel.addNormalizedType(TimespanType.CENTURY);
+
                     int millennium = TimeUtils.centuryToMillennium(century);
-                    setMillennium(original, millennium, position);
+                    setMillennium(timespanModel, original, millennium, position);
 
                     if (position.equals(TimeUtils.START_PLACEHOLDER))
                         this.centuryStart = century;
@@ -128,7 +133,7 @@ public class TimeModel {
         }
     }
 
-    protected void setYear(String original, String yearStr, String position) {
+    protected void setYear(TimespanModel timespanModel, String original, String yearStr, String position) {
         try {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
@@ -136,6 +141,8 @@ public class TimeModel {
                     Print.tooBigYear("setting year from \"" + original + "\"", position, year);
                 }
             } else {
+                timespanModel.addNormalizedType(TimespanType.YEAR);
+
                 if (position.equals(TimeUtils.START_PLACEHOLDER))
                     this.yearStart = year;
                 else if (position.equals(TimeUtils.END_PLACEHOLDER))
@@ -146,14 +153,14 @@ public class TimeModel {
         }
     }
 
-    protected void setMonth(String original, String month, String position) {
+    protected void setMonth(TimespanModel timespanModel, String original, String month, String position) {
         if (position.equals(TimeUtils.START_PLACEHOLDER))
             this.monthStart = month;
         else if (position.equals(TimeUtils.END_PLACEHOLDER))
             this.monthEnd = month;
     }
 
-    protected void setDay(String original, String dayStr, String position) {
+    protected void setDay(TimespanModel timespanModel, String original, String dayStr, String position) {
         try {
             int day = Integer.parseInt(dayStr);
 
