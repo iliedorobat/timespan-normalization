@@ -14,9 +14,9 @@ public class TimePeriodModel extends TimeModel {
     @Override
     public String toString() {
         TreeSet<String> timePeriodSet = new TreeSet<>();
-        TreeSet<String> millenniumSet = getMillenniumSet();
-        TreeSet<String> centurySet = getCenturySet();
-        TreeSet<String> yearSet = getYearSet();
+        TreeSet<String> millenniumSet = getMillenniumSet(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, true);
+        TreeSet<String> centurySet = getCenturySet(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, true);
+        TreeSet<String> yearSet = getYearSet(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, false);
 
         timePeriodSet.addAll(millenniumSet);
         timePeriodSet.addAll(centurySet);
@@ -61,49 +61,29 @@ public class TimePeriodModel extends TimeModel {
         }
     }
 
-    public TreeSet<String> getYearSet() {
-        TreeSet<String> yearSet = new TreeSet<>();
-
-        if (this.yearStart != null && this.yearEnd != null) {
-            pushSameBc(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
-            pushSameAd(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
-            pushBcAd(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
-            pushAdBc(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, "", yearSet, false);
-        }
-
-        return yearSet;
+    public static TreeSet<String> getMillenniumSet(String eraStart, String eraEnd, Integer millenniumStart, Integer millenniumEnd, boolean ordinal) {
+        return getTimeperiodSet(eraStart, eraEnd, millenniumStart, millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, ordinal);
     }
 
-    public TreeSet<String> getCenturySet() {
-        TreeSet<String> centurySet = new TreeSet<>();
-
-        if (this.centuryStart != null && this.centuryEnd != null) {
-            pushSameBc(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet, true);
-            pushSameAd(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet, true);
-            pushBcAd(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet, true);
-            pushAdBc(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, centurySet, true);
-        }
-//        else {
-//            centurySet.add(Namespace.NS_REPO_RESOURCE_TIMESPAN_UNKNOWN_CENTURY);
-//        }
-
-        return centurySet;
+    public static TreeSet<String> getCenturySet(String eraStart, String eraEnd, Integer centuryStart, Integer centuryEnd, boolean ordinal) {
+        return getTimeperiodSet(eraStart, eraEnd, centuryStart, centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, ordinal);
     }
 
-    public TreeSet<String> getMillenniumSet() {
-        TreeSet<String> millenniumSet = new TreeSet<>();
+    public static TreeSet<String> getYearSet(String eraStart, String eraEnd, Integer yearStart, Integer yearEnd, boolean ordinal) {
+        return getTimeperiodSet(eraStart, eraEnd, yearStart, yearEnd, "", ordinal);
+    }
 
-        if (this.millenniumStart != null && this.millenniumEnd != null) {
-            pushSameBc(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet, true);
-            pushSameAd(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet, true);
-            pushBcAd(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet, true);
-            pushAdBc(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, millenniumSet, true);
+    public static TreeSet<String> getTimeperiodSet(String eraStart, String eraEnd, Integer start, Integer end, String timePlaceholder, boolean ordinal) {
+        TreeSet<String> set = new TreeSet<>();
+
+        if (start != null && end != null) {
+            pushSameBc(eraStart, eraEnd, start, end, timePlaceholder, set, ordinal);
+            pushSameAd(eraStart, eraEnd, start, end, timePlaceholder, set, ordinal);
+            pushBcAd(eraStart, eraEnd, start, end, timePlaceholder, set, ordinal);
+            pushAdBc(eraStart, eraEnd, start, end, timePlaceholder, set, ordinal);
         }
-//        else {
-//            millenniumSet.add(Namespace.NS_REPO_RESOURCE_TIMESPAN_UNKNOWN_MILLENNIUM);
-//        }
 
-        return millenniumSet;
+        return set;
     }
 
     /**
@@ -125,7 +105,7 @@ public class TimePeriodModel extends TimeModel {
      *                E.g: "1990" should be used as it is
      *                E.g.: "century ix" should become "9th century"
      */
-    private void pushSameAd(
+    private static void pushSameAd(
             String eraStart,
             String eraEnd,
             Integer timeStart,
@@ -167,7 +147,7 @@ public class TimePeriodModel extends TimeModel {
      *                E.g.: "century ix" should become "9th century"
      *                E.g: "1990" should be used as it is
      */
-    private void pushSameBc(
+    private static void pushSameBc(
             String eraStart,
             String eraEnd,
             Integer timeStart,
@@ -192,7 +172,7 @@ public class TimePeriodModel extends TimeModel {
         }
     }
 
-    private void pushBcAd(
+    private static void pushBcAd(
             String eraStart,
             String eraEnd,
             Integer timeStart,
@@ -230,7 +210,7 @@ public class TimePeriodModel extends TimeModel {
         }
     }
 
-    private void pushAdBc(
+    private static void pushAdBc(
             String eraStart,
             String eraEnd,
             Integer timeStart,
