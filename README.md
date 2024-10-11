@@ -49,7 +49,7 @@ mvn validate && mvn clean package
 
 ## Test the library:
 ```bash
-java -jar target/timespan-normalization-1.3-jar-with-dependencies.jar --value="1/2 sec. 3 a. chr - sec. 2 p. chr."
+java -jar target/timespan-normalization-1.3-jar-with-dependencies.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
 ## Normalize time expressions:

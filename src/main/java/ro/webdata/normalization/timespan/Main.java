@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         List<String> list = Arrays.asList(args);
 
-        if (ParamsUtils.contains(list, "--value")) {
+        if (ParamsUtils.contains(list, "--expression")) {
             Demo.main(args);
         } else {
             // Extract time expressions from LIDO datasets

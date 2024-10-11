@@ -16,7 +16,7 @@ public class Demo {
 
     public static void main(String[] args) {
         List<String> list = Arrays.asList(args);
-        String value = ParamsUtils.getValue(list, "--value");
+        String value = ParamsUtils.getValue(list, "--expression");
         TimeExpression timeExpression = new TimeExpression(value, null);
         System.out.println(timeExpression);
     }
