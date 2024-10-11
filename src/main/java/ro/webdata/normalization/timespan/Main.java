@@ -1,7 +1,11 @@
 package ro.webdata.normalization.timespan;
 
 import ro.webdata.echo.commons.File;
+import ro.webdata.normalization.timespan.commons.ParamsUtils;
 import ro.webdata.normalization.timespan.ro.analysis.TimespanAnalysis;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     private static final String LIDO_DATASET_PATH = File.PATH_DATASET_DIR + File.FILE_SEPARATOR + "lido/";
@@ -11,11 +15,17 @@ public class Main {
             "timespan_unique" + File.EXTENSION_SEPARATOR + File.EXTENSION_TXT;
 
     public static void main(String[] args) {
-        // Extract time expressions from LIDO datasets
-        TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false);
-        TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true);
+        List<String> list = Arrays.asList(args);
 
-        TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false);
-        TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true);
+        if (ParamsUtils.contains(list, "--value")) {
+            Demo.main(args);
+        } else {
+            // Extract time expressions from LIDO datasets
+            TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false);
+            TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true);
+
+            TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false);
+            TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true);
+        }
     }
 }

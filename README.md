@@ -47,15 +47,25 @@ git clone https://github.com/iliedorobat/timespan-normalization.git
 mvn validate && mvn clean package
 ```
 
+## Test the library:
+```bash
+java -jar target/timespan-normalization-1.3-jar-with-dependencies.jar --value="1/2 sec. 3 a. chr - sec. 2 p. chr."
+```
+
+## Normalize time expressions:
+```bash
+java -jar target/timespan-normalization-1.3-jar-with-dependencies.jar
+```
+
 ## Example
 ### Usecase
-```java
+```bash
 TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", null);
 System.out.print(expression);
 ```
 
 ### Result
-```java
+```bash
 input value = 1/2 sec. iii - sec. ii a. chr.
 sanitized value = 1/2 sec. iii - sec. i __BC__
 normalized values = [
