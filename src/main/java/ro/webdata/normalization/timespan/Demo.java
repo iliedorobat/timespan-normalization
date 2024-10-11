@@ -18,7 +18,10 @@ public class Demo {
         List<String> list = Arrays.asList(args);
         String value = ParamsUtils.getValue(list, "--expression");
         TimeExpression timeExpression = new TimeExpression(value, null);
-        System.out.println(timeExpression);
+
+        System.out.println("input value: " + timeExpression.getValue());
+        System.out.println("prepared value: " + timeExpression.getSanitizedValue());
+        System.out.println("centuries: " + timeExpression.getNormalizedValues());
     }
 
     private static void test() {
