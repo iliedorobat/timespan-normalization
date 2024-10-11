@@ -1,5 +1,5 @@
 # Time Expressions Normalization Framework
-Aim: Normalize calendar data expressed in different shapes, years, and phrases by which the centuries and millennia can be identified
+Normalize calendar data expressed in different shapes, years, and phrases by which the centuries and millennia can be identified
 
 Supported Language: Romanian
 
@@ -31,18 +31,23 @@ Supported Language: Romanian
 </table>
 * The values are mentioned in the reference language – Romanian language
 
-## Local setup
-### Requirements
-- JDK 11 or OpenJDK 11.
+## Requirements
+JDK 11+ or OpenJDK 11+<br/>
+Maven 3.x
 
-### Setup
-1. Clone the repository:
+## Setup
+1. Download and install [JDK 11](https://www.oracle.com/nl/java/technologies/javase/jdk11-archive-downloads.html) or [OpenJDK 11](https://openjdk.org/install/) (or newer versions)
+2. Download and install [Maven 3.x](https://maven.apache.org/install.html)
+3. Clone the repository:
 ```bash
 git clone https://github.com/iliedorobat/timespan-normalization.git
 ```
+4. Generate the library:
+```bash
+mvn validate && mvn clean package
+```
 
 ## Example
-
 ### Usecase
 ```java
 TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", null);
