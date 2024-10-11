@@ -1,0 +1,157 @@
+package ro.webdata.normalization.timespan.ro;
+
+import ro.webdata.echo.commons.Const;
+import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+public class TimePeriodUtils {
+    private static final String SPECIAL_CHARS_REGEX = "[\\.,;\\?!]*\\s*";
+    private static final String[] REGEX_LIST = {
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.START_END,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FIRST_HALF,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.SECOND_HALF,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MIDDLE_OF,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FIRST_QUARTER,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.SECOND_QUARTER,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.THIRD_QUARTER,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FORTH_QUARTER,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.CENTURY_NOTATION,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MILLENNIUM_NOTATION,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.AGES_GROUP_SUFFIX,
+            SPECIAL_CHARS_REGEX
+    };
+
+    /**
+     * Get the time period value from the input value
+     * @param value The initial value
+     * @return The prepared value (E.g.: i, ii, iii, iv etc.)
+     */
+    public static String sanitizeTimePeriod(String value) {
+        String preparedValue = value;
+        List<String> groups = getGroupList(preparedValue);
+
+        for (int i = groups.size() - 1; i >= 0; i--) {
+            String group = groups.get(i);
+
+            if (group.length() > 0) {
+                // E.g.: "3/4. sec. 19", "4/4. xviii - 1/4. xix", "sf sec.xix - mijl. sec. xx"
+                if (specialCharsOnly(group) && group.contains(".")) {
+                    group = group.replaceAll("\\.", "");
+                    preparedValue = preparedValue.replaceAll("\\.", Const.EMPTY_VALUE_PLACEHOLDER);
+                }
+
+                preparedValue = preparedValue.replaceAll(group, Const.EMPTY_VALUE_PLACEHOLDER);
+            }
+        }
+
+        preparedValue = preparedValue.replaceAll("\\s*", Const.EMPTY_VALUE_PLACEHOLDER);
+
+        return preparedValue;
+    }
+
+    private static List<String> getGroupList(String value) {
+        Set<String> set = new HashSet<>();
+
+        for (String regex : REGEX_LIST) {
+            Pattern suffixPattern = Pattern.compile(regex);
+            Matcher suffixMatcher = suffixPattern.matcher(value);
+
+            while (suffixMatcher.find()) {
+                String group = suffixMatcher.group();
+
+                if (group.length() > 0) {
+                    if (!isSpace(group)) {
+                        set.add(group.trim());
+                    }
+                }
+            }
+        }
+
+        return set.stream()
+                .sorted(Comparator.comparingInt(String::length))
+                .collect(Collectors.toList());
+    }
+
+    private static boolean isSpace(String regex) {
+        return regex.matches("\\s\\s*");
+    }
+
+    private static boolean specialCharsOnly(String regex) {
+        for (int i = 0; i < regex.length(); i++) {
+            char item = regex.charAt(i);
+
+            if (!SPECIAL_CHARS_REGEX.contains(String.valueOf(item))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Transform a time period into number.
+     * @param timePeriod The original time period (E.g.: 'i', '5' etc.)
+     * @param isDate Flag indicating if the input timePeriod is a date (E.g.: "01.10.1929", "1709, decembrie 24", etc.)
+     * @return The number that represents the time period (E.g.: 5, 9 etc.)
+     */
+    public static Integer timePeriodToNumber(String timePeriod, boolean isDate) {
+        // E.g.: "1/2 mil. 5 - sec. i al mil. 4 a.chr."
+        if (timePeriod == null || timePeriod.trim().length() == 0) {
+            return null;
+        }
+
+        Integer value = null;
+        String clearedTimePeriod = isDate ? TimeUtils.clearDate(timePeriod) : timePeriod;
+        clearedTimePeriod = TimeUtils.clearChristumNotation(clearedTimePeriod);
+
+        try {
+            value = Integer.parseInt(clearedTimePeriod);
+        } catch (Exception e) {
+            value = TimeUtils.romanToInt(clearedTimePeriod);
+        }
+
+        return value;
+    }
+
+    public static Integer getStartTime(String[] intervalValues, String eraStart, boolean isDate) {
+        Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0], isDate);
+        Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1], isDate);
+
+        // E.g.: "prima jum. a sec. xxxxiv - xxxv a.ch."
+        // "xxxxiv" is an invalid roman numeral
+        if (first == null || second == null) {
+            return null;
+        }
+
+        boolean isAD = eraStart != null && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER);
+        if (isAD && first > second) {
+            return second;
+        }
+
+        // E.g. "sec. ii a.chr. - sec. i p.chr."
+        return first;
+    }
+
+    public static Integer getEndTime(String[] intervalValues, String eraStart, boolean isDate) {
+        Integer first = TimePeriodUtils.timePeriodToNumber(intervalValues[0], isDate);
+        Integer second = TimePeriodUtils.timePeriodToNumber(intervalValues[1], isDate);
+
+        // E.g.: "prima jum. a sec. xxxxiv - xxxv a.ch."
+        // "xxxxiv" is an invalid roman numeral
+        if (first == null || second == null) {
+            return null;
+        }
+
+        boolean isAD = eraStart != null && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER);
+        if (isAD && first > second) {
+            return first;
+        }
+
+        // E.g. "sec. ii a.chr. - sec. i p.chr."
+        return second;
+    }
+}
