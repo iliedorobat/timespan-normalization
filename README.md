@@ -1,4 +1,4 @@
-# Time Expressions Normalization Framework
+# Temporal Expression Normalization Framework
 Normalize calendar data expressed in different shapes, years, and phrases by which the centuries and millennia can be identified
 
 Supported Language: Romanian
