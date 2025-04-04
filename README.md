@@ -3,7 +3,7 @@ Normalize calendar data expressed in different shapes, years, and phrases by whi
 
 Supported Language: Romanian
 
-<b>Table I.</b> Types of time expressions which can be handled
+<b>Table I.</b> Types of temporal expressions which can be handled
 <table>
     <tr>
         <th>Type of Time Period</th>
@@ -43,18 +43,18 @@ Maven 3.x
 git clone https://github.com/iliedorobat/timespan-normalization.git
 ```
 4. Generate the library:
-```bash
-mvn validate && mvn clean package
+```bash 
+./gradlew shadowJar
 ```
 
 ## Test the library:
 ```bash
-java -jar target/timespan-normalization-1.3-jar-with-dependencies.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+java -jar build/libs/timespan-normalization-1.4.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
-## Normalize time expressions:
+## Normalize multiple temporal expressions:
 ```bash
-java -jar target/timespan-normalization-1.3-jar-with-dependencies.jar
+java -jar build/libs/timespan-normalization-1.4.jar
 ```
 
 ## Example
