@@ -12,6 +12,18 @@ public class TimeExpression {
     private TreeSet<String> normalizedValues = new TreeSet<>();
     private ArrayList<String> types = new ArrayList<>();
 
+    public static String getHeaders() {
+        ArrayList<String> headers = new ArrayList<>(){{
+            add("initial value");
+            add("sanitized value");
+            add("normalized values");
+            add("timespan types");
+            add("sanitized edge values");
+        }};
+
+        return String.join("|", headers);
+    }
+
     /**
      * Set the original value, the value whose Christum notation has been
      * sanitized and the prepared value (the DBpedia links)

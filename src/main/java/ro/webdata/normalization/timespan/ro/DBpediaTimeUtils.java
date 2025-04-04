@@ -18,7 +18,7 @@ public class DBpediaTimeUtils {
                 return Namespace.NS_DBPEDIA_RESOURCE + TimeUtils.getOrdinal(value) + Const.DBPEDIA_MILLENNIUM_PLACEHOLDER + DBpediaTimeUtils.getEraSuffix(era);
             case TimespanType.DATE:
             case TimespanType.YEAR:
-                return Namespace.NS_DBPEDIA_RESOURCE + String.valueOf(value);
+                return Namespace.NS_DBPEDIA_RESOURCE + String.valueOf(value) + DBpediaTimeUtils.getEraSuffix(era);
             default:
                 return null;
         }
