@@ -102,7 +102,9 @@ public class TimespanAnalysis {
     }
 
     private static ArrayList<String> toTimeExpressions(ArrayList<String> strTimeExpressions) {
-        ArrayList<String> timeExpressions = new ArrayList<>();
+        ArrayList<String> timeExpressions = new ArrayList<>(){{
+            add(TimeExpression.getHeaders());
+        }};
 
         for (String str : strTimeExpressions) {
             TimeExpression timeExpression = new TimeExpression(str, "|");
