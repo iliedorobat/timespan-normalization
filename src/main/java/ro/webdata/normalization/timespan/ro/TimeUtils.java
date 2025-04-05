@@ -43,7 +43,7 @@ public class TimeUtils {
     /** "month, year" pattern placeholder */
     public static String MY_PLACEHOLDER = "MY";
 
-    private static final TreeMap<Integer, String> arabicMap = new TreeMap<>(Collections.reverseOrder());
+    private static final Map<Integer, String> arabicMap = new TreeMap<>(Collections.reverseOrder());
     private static final Map<Character, Integer> romanMap = new HashMap<>(7);
 
     static {

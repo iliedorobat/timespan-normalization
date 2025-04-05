@@ -17,14 +17,14 @@ repositories {
 }
 
 dependencies {
-    implementation files('libs/commons-echo-1.3.jar')
-    implementation files('libs/Dublin-Core-Parser-1.1.jar')
-    implementation files('libs/LIDO-Parser-1.1.jar')
+    implementation files('libs/commons-echo-1.5.jar')
+    implementation files('libs/Dublin-Core-Parser-1.2.jar')
+    implementation files('libs/LIDO-Parser-1.2.jar')
     implementation('org.apache.commons:commons-lang3:3.4')
 }
 
 group = 'ro.webdata.normalization.timespan'
-version = '1.4'
+version = '1.5'
 description = 'timespan-normalization'
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
