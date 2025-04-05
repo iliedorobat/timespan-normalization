@@ -20,8 +20,9 @@ public class Demo {
         TimeExpression timeExpression = new TimeExpression(value, null);
 
         System.out.println("input value: " + timeExpression.getValue());
-        System.out.println("prepared value: " + timeExpression.getSanitizedValue());
-        System.out.println("centuries: " + timeExpression.getNormalizedValues());
+        System.out.println("sanitized value: " + timeExpression.getSanitizedValue());
+        System.out.println("normalized values: " + timeExpression.getNormalizedValues());
+        System.out.println("edges: " + timeExpression.getEdgesValues());
     }
 
     private static void test() {
