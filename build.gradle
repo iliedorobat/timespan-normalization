@@ -18,8 +18,8 @@ repositories {
 
 dependencies {
     implementation files('libs/commons-echo-1.5.jar')
-    implementation files('libs/Dublin-Core-Parser-1.1.jar')
-    implementation files('libs/LIDO-Parser-1.1.jar')
+    implementation files('libs/Dublin-Core-Parser-1.2.jar')
+    implementation files('libs/LIDO-Parser-1.2.jar')
     implementation('org.apache.commons:commons-lang3:3.4')
 }
 
