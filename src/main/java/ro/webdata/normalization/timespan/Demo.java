@@ -22,7 +22,6 @@ public class Demo {
         System.out.println("input value: " + timeExpression.getValue());
         System.out.println("sanitized value: " + timeExpression.getSanitizedValue());
         System.out.println("normalized values: " + timeExpression.getNormalizedValues());
-        System.out.println("edges: " + timeExpression.getEdgesValues());
     }
 
     private static void test() {
