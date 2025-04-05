@@ -8,8 +8,8 @@ public class TimeExpression {
     private String separator = "\n";
     private String value = null;
     private String sanitizedValue = null;
-    private TreeSet<String> edgesValues = new TreeSet<>();
-    private TreeSet<String> normalizedValues = new TreeSet<>();
+    private ArrayList<HashMap<String, String>> edgesValues = new ArrayList<>();
+    private LinkedHashSet<String> normalizedValues = new LinkedHashSet<>();
     private ArrayList<String> types = new ArrayList<>();
 
     public static String getHeaders() {
@@ -35,30 +35,11 @@ public class TimeExpression {
         this.sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
         TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(this.sanitizedValue);
         this.normalizedValues = timespanModel.getDBpediaUris();
-        this.edgesValues = prepareEdgesValues(timespanModel);
+        this.edgesValues = timespanModel.getDBpediaEdgesUris();
         this.types = timespanModel.getTypes();
 
         if (separator != null)
             this.separator = separator;
-    }
-
-    private TreeSet<String> prepareEdgesValues(TimespanModel timespanModel) {
-        HashSet<String> edgesValues = new HashSet<>();
-        ArrayList<HashMap<String, String>> edgesEntries = timespanModel.getDBpediaEdgesUris();
-
-        for (HashMap<String, String> item : edgesEntries) {
-            for (Map.Entry<String, String> entry : item.entrySet()) {
-                String edge = entry.getValue();
-
-                if (edge != null)
-                    edgesValues.add(edge);
-            }
-        }
-
-        ArrayList<String> sorted = new ArrayList<>(edgesValues);
-        Collections.sort(sorted);
-
-        return new TreeSet<>(sorted);
     }
 
     @Override
@@ -78,7 +59,11 @@ public class TimeExpression {
         return sanitizedValue;
     }
 
-    public TreeSet<String> getNormalizedValues() {
+    public LinkedHashSet<String> getNormalizedValues() {
         return normalizedValues;
+    }
+
+    public ArrayList<HashMap<String, String>> getEdgesValues() {
+        return this.edgesValues;
     }
 }

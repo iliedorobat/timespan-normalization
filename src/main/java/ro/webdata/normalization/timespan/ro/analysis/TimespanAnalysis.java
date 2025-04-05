@@ -22,7 +22,7 @@ public class TimespanAnalysis {
      * @param onlyUnique Flag indicating whether only unique time expressions are extracted
      */
     public static void writeDetails(String inputPath, String outputFullPath, boolean excludeDemoFiles, boolean onlyUnique) {
-        ArrayList<String> fileNames = File.getFileNames(inputPath, File.EXTENSION_XML, excludeDemoFiles);
+        List<String> fileNames = File.getFileNames(inputPath, File.EXTENSION_XML, excludeDemoFiles);
 
         for (String fileName : fileNames) {
             write(inputPath, outputFullPath, fileName, excludeDemoFiles, onlyUnique);

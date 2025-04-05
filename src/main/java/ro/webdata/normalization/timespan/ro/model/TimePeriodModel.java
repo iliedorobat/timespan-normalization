@@ -6,17 +6,17 @@ import ro.webdata.normalization.timespan.ro.DBpediaTimeUtils;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.TimespanType;
 
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 public class TimePeriodModel extends TimeModel {
     public TimePeriodModel() {}
 
     @Override
     public String toString() {
-        TreeSet<String> timePeriodSet = new TreeSet<>();
-        TreeSet<String> millenniumSet = getMillenniumSet(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, true);
-        TreeSet<String> centurySet = getCenturySet(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, true);
-        TreeSet<String> yearSet = getYearSet(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, false);
+        LinkedHashSet<String> timePeriodSet = new LinkedHashSet<>();
+        LinkedHashSet<String> millenniumSet = getMillenniumSet(this.eraStart, this.eraEnd, this.millenniumStart, this.millenniumEnd, true);
+        LinkedHashSet<String> centurySet = getCenturySet(this.eraStart, this.eraEnd, this.centuryStart, this.centuryEnd, true);
+        LinkedHashSet<String> yearSet = getYearSet(this.eraStart, this.eraEnd, this.yearStart, this.yearEnd, false);
 
         timePeriodSet.addAll(millenniumSet);
         timePeriodSet.addAll(centurySet);
@@ -61,20 +61,20 @@ public class TimePeriodModel extends TimeModel {
         }
     }
 
-    public static TreeSet<String> getMillenniumSet(String eraStart, String eraEnd, Integer millenniumStart, Integer millenniumEnd, boolean ordinal) {
+    public static LinkedHashSet<String> getMillenniumSet(String eraStart, String eraEnd, Integer millenniumStart, Integer millenniumEnd, boolean ordinal) {
         return getTimeperiodSet(eraStart, eraEnd, millenniumStart, millenniumEnd, Const.DBPEDIA_MILLENNIUM_PLACEHOLDER, ordinal);
     }
 
-    public static TreeSet<String> getCenturySet(String eraStart, String eraEnd, Integer centuryStart, Integer centuryEnd, boolean ordinal) {
+    public static LinkedHashSet<String> getCenturySet(String eraStart, String eraEnd, Integer centuryStart, Integer centuryEnd, boolean ordinal) {
         return getTimeperiodSet(eraStart, eraEnd, centuryStart, centuryEnd, Const.DBPEDIA_CENTURY_PLACEHOLDER, ordinal);
     }
 
-    public static TreeSet<String> getYearSet(String eraStart, String eraEnd, Integer yearStart, Integer yearEnd, boolean ordinal) {
+    public static LinkedHashSet<String> getYearSet(String eraStart, String eraEnd, Integer yearStart, Integer yearEnd, boolean ordinal) {
         return getTimeperiodSet(eraStart, eraEnd, yearStart, yearEnd, "", ordinal);
     }
 
-    public static TreeSet<String> getTimeperiodSet(String eraStart, String eraEnd, Integer start, Integer end, String timePlaceholder, boolean ordinal) {
-        TreeSet<String> set = new TreeSet<>();
+    public static LinkedHashSet<String> getTimeperiodSet(String eraStart, String eraEnd, Integer start, Integer end, String timePlaceholder, boolean ordinal) {
+        LinkedHashSet<String> set = new LinkedHashSet<>();
 
         if (start != null && end != null) {
             pushSameBc(eraStart, eraEnd, start, end, timePlaceholder, set, ordinal);
@@ -111,7 +111,7 @@ public class TimePeriodModel extends TimeModel {
             Integer timeStart,
             Integer timeEnd,
             String timePlaceholder,
-            TreeSet<String> timeSet,
+            LinkedHashSet<String> timeSet,
             boolean ordinal
     ) {
         if (eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)
@@ -153,7 +153,7 @@ public class TimePeriodModel extends TimeModel {
             Integer timeStart,
             Integer timeEnd,
             String timePlaceholder,
-            TreeSet<String> timeSet,
+            LinkedHashSet<String> timeSet,
             boolean ordinal
     ) {
         if (eraStart.equals(TimeUtils.CHRISTUM_BC_PLACEHOLDER)
@@ -178,7 +178,7 @@ public class TimePeriodModel extends TimeModel {
             Integer timeStart,
             Integer timeEnd,
             String timePlaceholder,
-            TreeSet<String> timeSet,
+            LinkedHashSet<String> timeSet,
             boolean ordinal
     ) {
         // sec. VI a.Chr - sec. II-lea p.Chr
@@ -216,7 +216,7 @@ public class TimePeriodModel extends TimeModel {
             Integer timeStart,
             Integer timeEnd,
             String timePlaceholder,
-            TreeSet<String> timeSet,
+            LinkedHashSet<String> timeSet,
             boolean ordinal
     ) {
         // sec. II p.Chr - sec. VI-lea a.Chr

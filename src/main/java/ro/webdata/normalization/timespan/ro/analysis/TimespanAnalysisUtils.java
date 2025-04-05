@@ -27,7 +27,7 @@ public class TimespanAnalysisUtils {
     public static HashMap<String, ArrayList<String>> extractTimespan(String inputPath, String fileName, boolean excludeDemoFiles) {
         HashMap<String, ArrayList<String>> timespanMap = new HashMap<>();
 
-        ArrayList<String> fileNames = getFileNames(inputPath, fileName, excludeDemoFiles);
+        List<String> fileNames = getFileNames(inputPath, fileName, excludeDemoFiles);
         for (String name : fileNames) {
             addTimespan(inputPath, name, timespanMap);
         }
@@ -62,7 +62,7 @@ public class TimespanAnalysisUtils {
      * @param excludeDemoFiles Flag indicating if demo files are excluded or not
      * @return The list of filenames
      */
-    public static ArrayList<String> getFileNames(String path, String fileName, boolean excludeDemoFiles) {
+    public static List<String> getFileNames(String path, String fileName, boolean excludeDemoFiles) {
         if (fileName == null) {
             return File.getFileNames(path, File.EXTENSION_XML, excludeDemoFiles);
         }

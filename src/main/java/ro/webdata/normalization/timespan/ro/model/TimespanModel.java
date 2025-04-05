@@ -5,11 +5,11 @@ import ro.webdata.echo.commons.Const;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 public class TimespanModel {
     private ArrayList<HashMap<String, String>> dbpediaEdgesUris = new ArrayList<>();
-    private TreeSet<String> dbpediaUris = new TreeSet<>();
+    private LinkedHashSet<String> dbpediaUris = new LinkedHashSet<>();
     private String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
     private ArrayList<String> types = new ArrayList<>();
 
@@ -17,7 +17,7 @@ public class TimespanModel {
         setResidualValue(value);
     }
 
-    public TimespanModel(TreeSet<String> dbpediaUris, ArrayList<HashMap<String, String>> dbpediaEdgesUris, String value, ArrayList<String> types) {
+    public TimespanModel(LinkedHashSet<String> dbpediaUris, ArrayList<HashMap<String, String>> dbpediaEdgesUris, String value, ArrayList<String> types) {
         setDBpediaUris(dbpediaUris);
         addDBpediaEdgesUris(dbpediaEdgesUris);
         setResidualValue(value);
@@ -44,7 +44,7 @@ public class TimespanModel {
         return this.dbpediaEdgesUris;
     }
 
-    public TreeSet<String> getDBpediaUris() {
+    public LinkedHashSet<String> getDBpediaUris() {
         return this.dbpediaUris;
     }
 
@@ -56,7 +56,7 @@ public class TimespanModel {
         return this.types;
     }
 
-    private void setDBpediaUris(TreeSet<String> timespanList) {
+    private void setDBpediaUris(LinkedHashSet<String> timespanList) {
         this.dbpediaUris = timespanList;
     }
 
