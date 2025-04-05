@@ -8,12 +8,12 @@ public class TimeExpression {
     private String separator = "\n";
     private String value = null;
     private String sanitizedValue = null;
-    private ArrayList<HashMap<String, String>> edgesValues = new ArrayList<>();
-    private LinkedHashSet<String> normalizedValues = new LinkedHashSet<>();
-    private ArrayList<String> types = new ArrayList<>();
+    private List<Map<String, String>> edgesValues = new ArrayList<>();
+    private Set<String> normalizedValues = new LinkedHashSet<>();
+    private List<String> types = new ArrayList<>();
 
     public static String getHeaders() {
-        ArrayList<String> headers = new ArrayList<>(){{
+        List<String> headers = new ArrayList<>(){{
             add("initial value");
             add("sanitized value");
             add("normalized values");
@@ -59,11 +59,11 @@ public class TimeExpression {
         return sanitizedValue;
     }
 
-    public LinkedHashSet<String> getNormalizedValues() {
+    public Set<String> getNormalizedValues() {
         return normalizedValues;
     }
 
-    public ArrayList<HashMap<String, String>> getEdgesValues() {
+    public List<Map<String, String>> getEdgesValues() {
         return this.edgesValues;
     }
 }

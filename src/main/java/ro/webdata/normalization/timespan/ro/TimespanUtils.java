@@ -25,6 +25,7 @@ import ro.webdata.normalization.timespan.ro.regex.imprecise.DatelessRegex;
 import ro.webdata.normalization.timespan.ro.regex.imprecise.InaccurateYearRegex;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,7 +100,7 @@ public class TimespanUtils {
             TimePeriodModel timePeriod = prepareTimePeriodModel(original, group, regex);
             String matchedItems = timePeriod.toString();
 
-            HashMap<String, String> edgeUris = new HashMap<>(){{
+            Map<String, String> edgeUris = new HashMap<>(){{
                 put("start", timePeriod.toDBpediaStartUri(timespanType));
                 put("end", timePeriod.toDBpediaEndUri(timespanType));
             }};

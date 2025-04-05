@@ -32,47 +32,45 @@ Supported Language: Romanian
 * The values are mentioned in the reference language – Romanian language
 
 ## Requirements
-JDK 11+ or OpenJDK 11+<br/>
-Maven 3.x
+JDK 11+ or OpenJDK 11+
 
 ## Setup
 1. Download and install [JDK 11](https://www.oracle.com/nl/java/technologies/javase/jdk11-archive-downloads.html) or [OpenJDK 11](https://openjdk.org/install/) (or newer versions)
-2. Download and install [Maven 3.x](https://maven.apache.org/install.html)
-3. Clone the repository:
+2. Clone the repository:
 ```bash
-git clone https://github.com/iliedorobat/timespan-normalization.git
+  git clone https://github.com/iliedorobat/timespan-normalization.git
 ```
-4. Generate the library:
+3. Generate the library:
 ```bash 
-./gradlew shadowJar
+  ./gradlew shadowJar
 ```
 
 ## Test the library:
 ```bash
-java -jar build/libs/timespan-normalization-1.4.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/timespan-normalization-1.5.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
 ## Normalize multiple temporal expressions:
 ```bash
-java -jar build/libs/timespan-normalization-1.4.jar
+  java -jar build/libs/timespan-normalization-1.5.jar
 ```
 
 ## Example
 ### Usecase
 ```bash
-TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", null);
-System.out.print(expression);
+    TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", null);
+    System.out.print(expression);
 ```
 
 ### Result
 ```bash
-input value = 1/2 sec. iii - sec. ii a. chr.
-sanitized value = 1/2 sec. iii - sec. i __BC__
-normalized values = [
-        http://dbpedia.org/page/1st_century_BC,
-        http://dbpedia.org/page/2nd_century_BC,
-        http://dbpedia.org/page/3rd_century_BC
-]
+    input value = 1/2 sec. iii - sec. ii a. chr.
+    sanitized value = 1/2 sec. iii - sec. i __BC__
+    normalized values = [
+            http://dbpedia.org/page/1st_century_BC,
+            http://dbpedia.org/page/2nd_century_BC,
+            http://dbpedia.org/page/3rd_century_BC
+    ]
 ```
 
 ## Publications

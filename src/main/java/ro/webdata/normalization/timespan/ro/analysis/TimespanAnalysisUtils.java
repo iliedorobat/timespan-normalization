@@ -24,15 +24,15 @@ public class TimespanAnalysisUtils {
      * @param inputPath The path to input LIDO files
      * @param excludeDemoFiles Flag indicating if demo files are excluded or not
      */
-    public static HashMap<String, ArrayList<String>> extractTimespan(String inputPath, String fileName, boolean excludeDemoFiles) {
-        HashMap<String, ArrayList<String>> timespanMap = new HashMap<>();
+    public static Map<String, List<String>> extractTimespan(String inputPath, String fileName, boolean excludeDemoFiles) {
+        Map<String, List<String>> timespanMap = new HashMap<>();
 
         List<String> fileNames = getFileNames(inputPath, fileName, excludeDemoFiles);
         for (String name : fileNames) {
             addTimespan(inputPath, name, timespanMap);
         }
 
-        for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : timespanMap.entrySet()) {
             Collections.sort(entry.getValue());
         }
 
@@ -44,10 +44,10 @@ public class TimespanAnalysisUtils {
      * @param timespanMap The map containing lists of collecting, finding and production related timestamps
      * @return The consolidated list of timestamps
      */
-    public static ArrayList<String> consolidateTimespanMap(HashMap<String, ArrayList<String>> timespanMap) {
-        ArrayList<String> consolidatedList = new ArrayList<>();
+    public static List<String> consolidateTimespanMap(Map<String, List<String>> timespanMap) {
+        List<String> consolidatedList = new ArrayList<>();
 
-        for (Map.Entry<String, ArrayList<String>> entry : timespanMap.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : timespanMap.entrySet()) {
             consolidatedList.addAll(entry.getValue());
         }
 
@@ -78,7 +78,7 @@ public class TimespanAnalysisUtils {
      * @param fileName The name of the LIDO file
      * @param timespanMap The map containing the list of time expressions per event type
      */
-    private static void addTimespan(String path, String fileName, HashMap<String, ArrayList<String>> timespanMap) {
+    private static void addTimespan(String path, String fileName, Map<String, List<String>> timespanMap) {
         String filePath = path + File.FILE_SEPARATOR + fileName;
         addTimespan(filePath, timespanMap);
     }
@@ -88,15 +88,15 @@ public class TimespanAnalysisUtils {
      * @param filePath The path to the LIDO file
      * @param timespanMap The map containing the list of time expressions per event type
      */
-    private static void addTimespan(String filePath, HashMap<String, ArrayList<String>> timespanMap) {
+    private static void addTimespan(String filePath, Map<String, List<String>> timespanMap) {
         LidoWrap lidoWrap = parserDAO.parseLidoFile(filePath);
-        ArrayList<Lido> lidoList = lidoWrap.getLidoList();
+        List<Lido> lidoList = lidoWrap.getLidoList();
 
         for (Lido lido : lidoList) {
-            ArrayList<DescriptiveMetadata> descriptiveMetadataList = lido.getDescriptiveMetadata();
+            List<DescriptiveMetadata> descriptiveMetadataList = lido.getDescriptiveMetadata();
 
             for (DescriptiveMetadata descriptiveMetadata : descriptiveMetadataList) {
-                ArrayList<EventSet> eventSetList = descriptiveMetadata.getEventWrap().getEventSet();
+                List<EventSet> eventSetList = descriptiveMetadata.getEventWrap().getEventSet();
                 addEventDateTimespan(eventSetList, timespanMap);
             }
         }
@@ -107,7 +107,7 @@ public class TimespanAnalysisUtils {
      * @param eventSetList The list of EventSet items
      * @param timespanMap The map containing the list of time expressions per event type
      */
-    private static void addEventDateTimespan(ArrayList<EventSet> eventSetList, HashMap<String, ArrayList<String>> timespanMap) {
+    private static void addEventDateTimespan(List<EventSet> eventSetList, Map<String, List<String>> timespanMap) {
         for (EventSet eventSet : eventSetList) {
             Event event = eventSet.getEvent();
             EventDate eventDate = event.getEventDate();
@@ -118,7 +118,7 @@ public class TimespanAnalysisUtils {
                     .collect(Collectors.toList());
 
             if (eventDate != null) {
-                ArrayList<DisplayDate> displayDateList = eventDate.getDisplayDate();
+                List<DisplayDate> displayDateList = eventDate.getDisplayDate();
 
                 for (DisplayDate displayDate : displayDateList) {
                     String timespan = displayDate.getText().toLowerCase();
@@ -127,7 +127,7 @@ public class TimespanAnalysisUtils {
                         if (timespanMap.containsKey(eventType)) {
                             timespanMap.get(eventType).add(timespan);
                         } else {
-                            ArrayList<String> arr = new ArrayList<>() {{
+                            List<String> arr = new ArrayList<>() {{
                                 add(timespan);
                             }};
                             timespanMap.put(eventType, arr);

@@ -2,33 +2,30 @@ package ro.webdata.normalization.timespan.ro.model;
 
 import ro.webdata.echo.commons.Const;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 public class TimespanModel {
-    private ArrayList<HashMap<String, String>> dbpediaEdgesUris = new ArrayList<>();
-    private LinkedHashSet<String> dbpediaUris = new LinkedHashSet<>();
+    private List<Map<String, String>> dbpediaEdgesUris = new ArrayList<>();
+    private Set<String> dbpediaUris = new LinkedHashSet<>();
     private String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
-    private ArrayList<String> types = new ArrayList<>();
+    private List<String> types = new ArrayList<>();
 
     public TimespanModel(String value) {
         setResidualValue(value);
     }
 
-    public TimespanModel(LinkedHashSet<String> dbpediaUris, ArrayList<HashMap<String, String>> dbpediaEdgesUris, String value, ArrayList<String> types) {
+    public TimespanModel(Set<String> dbpediaUris, List<Map<String, String>> dbpediaEdgesUris, String value, List<String> types) {
         setDBpediaUris(dbpediaUris);
         addDBpediaEdgesUris(dbpediaEdgesUris);
         setResidualValue(value);
         setTypes(types);
     }
 
-    public void addDbpediaEdgesUri(HashMap<String, String> edgesUri) {
+    public void addDbpediaEdgesUri(Map<String, String> edgesUri) {
         this.dbpediaEdgesUris.add(edgesUri);
     }
 
-    public void addDBpediaEdgesUris(ArrayList<HashMap<String, String>> edgesUris) {
+    public void addDBpediaEdgesUris(List<Map<String, String>> edgesUris) {
         this.dbpediaEdgesUris.addAll(edgesUris);
     }
 
@@ -40,11 +37,11 @@ public class TimespanModel {
         this.types.add(type);
     }
 
-    public ArrayList<HashMap<String, String>> getDBpediaEdgesUris() {
+    public List<Map<String, String>> getDBpediaEdgesUris() {
         return this.dbpediaEdgesUris;
     }
 
-    public LinkedHashSet<String> getDBpediaUris() {
+    public Set<String> getDBpediaUris() {
         return this.dbpediaUris;
     }
 
@@ -52,15 +49,15 @@ public class TimespanModel {
         return this.residualValue;
     }
 
-    public ArrayList<String> getTypes() {
+    public List<String> getTypes() {
         return this.types;
     }
 
-    private void setDBpediaUris(LinkedHashSet<String> timespanList) {
+    private void setDBpediaUris(Set<String> timespanList) {
         this.dbpediaUris = timespanList;
     }
 
-    private void setTypes(ArrayList<String> types) { this.types = types; }
+    private void setTypes(List<String> types) { this.types = types; }
 
     public void setResidualValue(String residualValue) {
         this.residualValue = residualValue;

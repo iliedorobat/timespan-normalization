@@ -11,58 +11,58 @@ public class AgeRegex {
     private static final String TEXT_START = TimespanRegex.TEXT_START;
     private static final String TEXT_END = TimespanRegex.TEXT_END;
 
-    /** http://dbpedia.org/page/Pleistocene */
+    /** <a href="http://dbpedia.org/page/Pleistocene">Pleistocene</a> */
     public static final String PLEISTOCENE_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "pleistocen" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Mesolithic */
+    /** <a href="http://dbpedia.org/page/Mesolithic">Mesolithic</a> */
     public static final String MESOLITHIC_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "epipaleolitic" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Chalcolithic */
+    /** <a href="http://dbpedia.org/page/Chalcolithic">Chalcolithic</a> */
     public static final String CHALCOLITHIC_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "eneolitic" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Neolithic */
+    /** <a href="http://dbpedia.org/page/Neolithic">Neolithic</a> */
     public static final String NEOLITHIC_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "neolitic[\\w]*" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Bronze_Age */
+    /** <a href="http://dbpedia.org/page/Bronze_Age">Bronze_Age</a> */
     public static final String BRONZE_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "bronz" + REGEX_OR + "bronzului" + REGEX_OR + "tarzii" + ")" + TEXT_END + ")";
 
-    /** http://dbpedia.org/page/Aurignacian */
+    /** <a href="http://dbpedia.org/page/Aurignacian">Aurignacian</a> */
     public static final String AURIGNACIAN_CULTURE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "aurignacian" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Hallstatt_culture */
+    /** <a href="http://dbpedia.org/page/Hallstatt_culture">Hallstatt Culture</a> */
     public static final String HALLSTATT_CULTURE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "hallstatt" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Middle_Ages */
+    /** <a href="http://dbpedia.org/page/Middle_Ages">Middle Ages</a> */
     public static final String MIDDLE_AGES = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "(medieval" + REGEX_OR + "medievala)" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Modern_history */
+    /** <a href="http://dbpedia.org/page/Modern_history">Modern History</a> */
     public static final String MODERN_AGES = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "moderna" + ")" + TEXT_END + ")";
 
-    /** http://dbpedia.org/page/Ptolemaic_dynasty */
+    /** <a href="http://dbpedia.org/page/Ptolemaic_dynasty">Ptolemaic Dynasty</a> */
     public static final String PTOLEMAIC_DYNASTY = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "ptolem[\\w]+" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Roman_Empire */
+    /** <a href="http://dbpedia.org/page/Roman_Empire">Roman Empire</a> */
     public static final String ROMAN_EMPIRE_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "romana" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Nerva–Antonine_dynasty */
+    /** <a href="http://dbpedia.org/page/Nerva">Nerva–Antonine Dynasty</a>–Antonine_dynasty */
     public static final String NERVA_ANTONINE_DYNASTY = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "antoninian[\\w]*" + REGEX_OR + "hadrian" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Renaissance */
+    /** <a href="http://dbpedia.org/page/Renaissance">Renaissance</a> */
     public static final String RENAISSANCE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "renastere" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/French_Consulate */
+    /** <a href="http://dbpedia.org/page/French_Consulate">French Consulate</a> */
     public static final String FRENCH_CONSULATE_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "perioada consulatului francez" + ")" + TEXT_END + ")";
 
-    /** http://dbpedia.org/page/World_War_I */
+    /** <a href="http://dbpedia.org/page/World_War_I">World War I</a> */
     public static final String WW_I_PERIOD = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "primul razboi mondial" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/Interwar_period */
+    /** <a href="http://dbpedia.org/page/Interwar_period">Interwar Period</a> */
     public static final String INTERWAR_PERIOD = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "interbelica" + ")" + TEXT_END + ")";
-    /** http://dbpedia.org/page/World_War_II */
+    /** <a href="http://dbpedia.org/page/World_War_II">World War II</a> */
     public static final String WW_II_PERIOD = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "al (doilea" + REGEX_OR + "ii-lea) razboi mondial" + ")" + TEXT_END + ")";
 
