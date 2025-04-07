@@ -168,7 +168,7 @@ public class TimeUtils {
         int sum = 0;
 
         Pattern pattern = Pattern.compile("^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$");
-        Matcher matcher = pattern.matcher(string);
+        Matcher matcher = pattern.matcher(romanChar);
         boolean isValid = matcher.find();
 
         // E.g.: "XIC" (89) is incorrect. The correct number is "LXXXIX" (89).
