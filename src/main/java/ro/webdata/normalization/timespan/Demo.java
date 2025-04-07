@@ -1,8 +1,9 @@
 package ro.webdata.normalization.timespan;
 
+import ro.webdata.echo.commons.File;
 import ro.webdata.normalization.timespan.commons.ParamsUtils;
 import ro.webdata.normalization.timespan.ro.TimeExpression;
-import ro.webdata.echo.commons.File;
+import ro.webdata.normalization.timespan.ro.analysis.LidoXmlAnalysis;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,18 +25,9 @@ public class Demo {
         System.out.println("normalized values: " + timeExpression.getNormalizedValues());
     }
 
-    private static void test() {
-        TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 a. chr - sec. 2 p. chr.", null);
-//        TimeExpression timeExpression = new TimeExpression("1/2 mil. 5 - sec. i al mil. 4 a.chr.", null);
-//        TimeExpression timeExpression = new TimeExpression("4/4 sec.xix. sfârșitul sec.al xix-lea și începutul sec.al xx-lea.", null);
-//        TimeExpression timeExpression = new TimeExpression("402-403, 405-406 a. chr.", null);
-//        TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 - sec. 1 a. chr.", null);
-//        timeExpression = new TimeExpression("epoca modernă", null);
-        System.out.println(timeExpression);
-
-//        printFullTimespan(PATH_OUTPUT_ALL_TIMESPAN_FILE);
+    public static void printUnknownTimeExpressions(String inputFullPath) {
         // 1779; TOTAL: 39427
-//        LidoXmlTimespanAnalysis.printUnknownTimeExpressions(PATH_OUTPUT_ALL_TIMESPAN_FILE);
+        LidoXmlAnalysis.printUnknownTimeExpressions(inputFullPath);
     }
 
     /**
@@ -43,9 +35,9 @@ public class Demo {
      * sanitized and the prepared value (the DBpedia links)<br/>
      * !!! <b>writeTimespan</b> will be used to generate the required text files !!!
      * @param inputFullPath The full path to the text file (E.g.: "timespan_all.txt")
-     *                      which stores the timespan values
+     *                      which stores the timespan values (E.g.: PATH_OUTPUT_ALL_TIMESPAN_FILE)
      */
-    private static void printFullTimespan(String inputFullPath) {
+    public static void printFullTimespan(String inputFullPath) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(inputFullPath));
             String readLine;

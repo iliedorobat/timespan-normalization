@@ -19,7 +19,7 @@ public class Main {
 
         if (ParamsUtils.contains(list, "--expression")) {
             Demo.main(args);
-        } else {
+        } else if (ParamsUtils.contains(list, "--analysis")) {
             // Extract time expressions from LIDO datasets
             TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false);
             TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true);
