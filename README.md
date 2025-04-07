@@ -41,24 +41,39 @@ JDK 11+ or OpenJDK 11+
   git clone https://github.com/iliedorobat/timespan-normalization.git
 ```
 3. Generate the library:
-```bash 
-  ./gradlew shadowJar
+```bash
+  ./gradlew clean shadowJar
 ```
 
 ## Test the library:
 ```bash
-  java -jar build/libs/timespan-normalization-1.5.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/timespan-normalization-1.6.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
 ## Normalize multiple temporal expressions:
 ```bash
-  java -jar build/libs/timespan-normalization-1.5.jar
+  java -jar build/libs/timespan-normalization-1.6.jar --analysis
 ```
 
 ## Example
 ### Usecase
 ```bash
     TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", null);
+    System.out.print(expression);
+
+    TimeExpression timeExpression = new TimeExpression("1/2 mil. 5 - sec. i al mil. 4 a.chr.", null);
+    System.out.print(expression);
+
+    TimeExpression timeExpression = new TimeExpression("4/4 sec.xix. sfârșitul sec.al xix-lea și începutul sec.al xx-lea.", null);
+    System.out.print(expression);
+
+    TimeExpression timeExpression = new TimeExpression("402-403, 405-406 a. chr.", null);
+    System.out.print(expression);
+
+    TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 - sec. 1 a. chr.", null);
+    System.out.print(expression);
+
+    TimeExpression timeExpression = new TimeExpression("epoca modernă", null);
     System.out.print(expression);
 ```
 
