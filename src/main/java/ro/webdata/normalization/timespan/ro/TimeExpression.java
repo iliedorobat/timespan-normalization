@@ -1,16 +1,30 @@
 package ro.webdata.normalization.timespan.ro;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+import ro.webdata.normalization.timespan.ro.model.DBpediaModel;
 import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 
 import java.util.*;
 
 public class TimeExpression {
-    private String separator = "\n";
-    private String value = null;
-    private String sanitizedValue = null;
-    private List<Map<String, String>> edgesValues = new ArrayList<>();
-    private Set<String> normalizedValues = new LinkedHashSet<>();
-    private List<String> types = new ArrayList<>();
+    private static final Gson GSON = new Gson();
+    transient private String separator = "\n";
+
+    @SerializedName("initial")
+    private String value;
+
+    @SerializedName("prepared")
+    private String sanitizedValue;
+
+    @SerializedName("normalizedEdges")
+    private List<Map<String, DBpediaModel>> dbpediaEdges;
+
+    @SerializedName("normalizedValues")
+    private Set<DBpediaModel> dbpediaItems;
+
+    @SerializedName("temporalTypes")
+    private List<String> temporalTypes;
 
     public static String getHeaders() {
         List<String> headers = new ArrayList<>(){{
@@ -34,9 +48,9 @@ public class TimeExpression {
         this.value = value;
         this.sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
         TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(this.sanitizedValue);
-        this.normalizedValues = timespanModel.getDBpediaUris();
-        this.edgesValues = timespanModel.getDBpediaEdgesUris();
-        this.types = timespanModel.getTypes();
+        this.dbpediaItems = timespanModel.getDBpediaItems();
+        this.dbpediaEdges = timespanModel.getDBpediaEdges();
+        this.temporalTypes = timespanModel.getTypes();
 
         if (separator != null)
             this.separator = separator;
@@ -46,9 +60,17 @@ public class TimeExpression {
     public String toString() {
         return value
                 + separator + sanitizedValue
-                + separator + normalizedValues
-                + separator + types
-                + separator + edgesValues;
+                + separator + dbpediaItems
+                + separator + temporalTypes
+                + separator + dbpediaEdges;
+    }
+
+    public String serialize() {
+        if (dbpediaItems.isEmpty()) {
+            return "{}";
+        }
+
+        return GSON.toJson(this);
     }
 
     public String getValue() {
@@ -59,11 +81,15 @@ public class TimeExpression {
         return sanitizedValue;
     }
 
-    public Set<String> getNormalizedValues() {
-        return normalizedValues;
+    public Set<DBpediaModel> getDbpediaItems() {
+        return dbpediaItems;
     }
 
-    public List<Map<String, String>> getEdgesValues() {
-        return this.edgesValues;
+    public List<Map<String, DBpediaModel>> getDbpediaEdges() {
+        return this.dbpediaEdges;
+    }
+
+    public List<String> getTemporalTypes() {
+        return temporalTypes;
     }
 }

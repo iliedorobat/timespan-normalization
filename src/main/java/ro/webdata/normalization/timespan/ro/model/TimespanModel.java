@@ -3,10 +3,11 @@ package ro.webdata.normalization.timespan.ro.model;
 import ro.webdata.echo.commons.Const;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TimespanModel {
-    private List<Map<String, String>> dbpediaEdgesUris = new ArrayList<>();
-    private Set<String> dbpediaUris = new LinkedHashSet<>();
+    private List<Map<String, DBpediaModel>> dbpediaEdges = new ArrayList<>();
+    private Set<DBpediaModel> dbpediaItems = new LinkedHashSet<>();
     private String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
     private List<String> types = new ArrayList<>();
 
@@ -14,35 +15,38 @@ public class TimespanModel {
         setResidualValue(value);
     }
 
-    public TimespanModel(Set<String> dbpediaUris, List<Map<String, String>> dbpediaEdgesUris, String value, List<String> types) {
-        setDBpediaUris(dbpediaUris);
-        addDBpediaEdgesUris(dbpediaEdgesUris);
+    public TimespanModel(Set<DBpediaModel> dbpediaItems, List<Map<String, DBpediaModel>> dbpediaEdges, String value, List<String> types) {
+        setDBpediaItems(dbpediaItems);
+        addDBpediaEdges(dbpediaEdges);
         setResidualValue(value);
         setTypes(types);
     }
 
-    public void addDbpediaEdgesUri(Map<String, String> edgesUri) {
-        this.dbpediaEdgesUris.add(edgesUri);
+    public void addDbpediaEdges(Map<String, DBpediaModel> edges) {
+        this.dbpediaEdges.add(edges);
     }
 
-    public void addDBpediaEdgesUris(List<Map<String, String>> edgesUris) {
-        this.dbpediaEdgesUris.addAll(edgesUris);
+    public void addDBpediaEdges(List<Map<String, DBpediaModel>> edges) {
+        this.dbpediaEdges.addAll(edges);
     }
 
-    public void addDBpediaUris(String[] matchedList) {
-        this.dbpediaUris.addAll(Arrays.asList(matchedList));
+    public void addDBpediaItems(String[] matchedList) {
+        List<DBpediaModel> list = Arrays.stream(matchedList)
+                .map(DBpediaModel::new)
+                .collect(Collectors.toCollection(ArrayList::new));
+        this.dbpediaItems.addAll(list);
     }
 
     public void addType(String type) {
         this.types.add(type);
     }
 
-    public List<Map<String, String>> getDBpediaEdgesUris() {
-        return this.dbpediaEdgesUris;
+    public List<Map<String, DBpediaModel>> getDBpediaEdges() {
+        return this.dbpediaEdges;
     }
 
-    public Set<String> getDBpediaUris() {
-        return this.dbpediaUris;
+    public Set<DBpediaModel> getDBpediaItems() {
+        return this.dbpediaItems;
     }
 
     public String getResidualValue() {
@@ -53,8 +57,8 @@ public class TimespanModel {
         return this.types;
     }
 
-    private void setDBpediaUris(Set<String> timespanList) {
-        this.dbpediaUris = timespanList;
+    private void setDBpediaItems(Set<DBpediaModel> timespanList) {
+        this.dbpediaItems = timespanList;
     }
 
     private void setTypes(List<String> types) { this.types = types; }

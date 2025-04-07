@@ -2,7 +2,6 @@ package ro.webdata.normalization.timespan.ro.model;
 
 import ro.webdata.echo.commons.Collection;
 import ro.webdata.echo.commons.Const;
-import ro.webdata.normalization.timespan.ro.DBpediaTimeUtils;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.TimespanType;
 
@@ -33,12 +32,12 @@ public class TimePeriodModel extends TimeModel {
 
         switch (timespanType) {
             case TimespanType.CENTURY:
-                return DBpediaTimeUtils.prepareUri(eraStart, centuryStart, timespanType);
+                return DBpediaModel.prepareUri(eraStart, centuryStart, timespanType);
             case TimespanType.MILLENNIUM:
-                return DBpediaTimeUtils.prepareUri(eraStart, millenniumStart, timespanType);
+                return DBpediaModel.prepareUri(eraStart, millenniumStart, timespanType);
             case TimespanType.DATE:
             case TimespanType.YEAR:
-                return DBpediaTimeUtils.prepareUri(eraStart, yearStart, timespanType);
+                return DBpediaModel.prepareUri(eraStart, yearStart, timespanType);
             default:
                 return null;
         }
@@ -51,12 +50,12 @@ public class TimePeriodModel extends TimeModel {
 
         switch (timespanType) {
             case TimespanType.CENTURY:
-                return DBpediaTimeUtils.prepareUri(eraEnd, centuryEnd, timespanType);
+                return DBpediaModel.prepareUri(eraEnd, centuryEnd, timespanType);
             case TimespanType.MILLENNIUM:
-                return DBpediaTimeUtils.prepareUri(eraEnd, millenniumEnd, timespanType);
+                return DBpediaModel.prepareUri(eraEnd, millenniumEnd, timespanType);
             case TimespanType.DATE:
             case TimespanType.YEAR:
-                return DBpediaTimeUtils.prepareUri(eraEnd, yearEnd, timespanType);
+                return DBpediaModel.prepareUri(eraEnd, yearEnd, timespanType);
             default:
                 return null;
         }
