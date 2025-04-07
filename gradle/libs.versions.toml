@@ -2,12 +2,14 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
+net-sf-py4j = "0.10.9.9"
 org-apache-commons-commons-lang3 = "3.4"
 ro-webdata-echo-commons-commons-echo = "1.5"
 ro-webdata-parser-xml-dspace-dublin-core-parser = "1.2"
 ro-webdata-parser-xml-lido-lido-parser = "1.2"
 
 [libraries]
+net-sf-py4j = { module = "net.sf.py4j:py4j", version.ref = "net-sf-py4j" }
 org-apache-commons-commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "org-apache-commons-commons-lang3" }
 ro-webdata-echo-commons-commons-echo = { module = "ro.webdata.echo.commons:commons-echo", version.ref = "ro-webdata-echo-commons-commons-echo" }
 ro-webdata-parser-xml-dspace-dublin-core-parser = { module = "ro.webdata.parser.xml.dspace:Dublin-Core-Parser", version.ref = "ro-webdata-parser-xml-dspace-dublin-core-parser" }

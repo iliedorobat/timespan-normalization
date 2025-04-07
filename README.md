@@ -47,12 +47,12 @@ JDK 11+ or OpenJDK 11+
 
 ## Test the library:
 ```bash
-  java -jar build/libs/timespan-normalization-1.5.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/timespan-normalization-1.6.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
 ## Normalize multiple temporal expressions:
 ```bash
-  java -jar build/libs/timespan-normalization-1.5.jar --analysis
+  java -jar build/libs/timespan-normalization-1.6.jar --analysis
 ```
 
 ## Example

@@ -20,11 +20,12 @@ dependencies {
     implementation files('libs/commons-echo-1.5.jar')
     implementation files('libs/Dublin-Core-Parser-1.2.jar')
     implementation files('libs/LIDO-Parser-1.2.jar')
+    implementation('net.sf.py4j:py4j:0.10.9.9')
     implementation('org.apache.commons:commons-lang3:3.4')
 }
 
 group = 'ro.webdata.normalization.timespan'
-version = '1.5'
+version = '1.6'
 description = 'timespan-normalization'
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11

@@ -3,10 +3,7 @@ package ro.webdata.normalization.timespan.ro;
 import org.apache.commons.lang3.StringUtils;
 import ro.webdata.echo.commons.Collection;
 import ro.webdata.echo.commons.Const;
-import ro.webdata.normalization.timespan.ro.model.AgeModel;
-import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
-import ro.webdata.normalization.timespan.ro.model.TimespanModel;
-import ro.webdata.normalization.timespan.ro.model.YearModel;
+import ro.webdata.normalization.timespan.ro.model.*;
 import ro.webdata.normalization.timespan.ro.model.date.DateModel;
 import ro.webdata.normalization.timespan.ro.model.date.LongDateModel;
 import ro.webdata.normalization.timespan.ro.model.date.ShortDateModel;
@@ -100,17 +97,20 @@ public class TimespanUtils {
             TimePeriodModel timePeriod = prepareTimePeriodModel(original, group, regex);
             String matchedItems = timePeriod.toString();
 
-            Map<String, String> edgeUris = new HashMap<>(){{
-                put("start", timePeriod.toDBpediaStartUri(timespanType));
-                put("end", timePeriod.toDBpediaEndUri(timespanType));
+            DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(timespanType));
+            DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(timespanType));
+
+            Map<String, DBpediaModel> edges = new HashMap<>(){{
+                put("start", start);
+                put("end", end);
             }};
-            timespanModel.addDbpediaEdgesUri(edgeUris);
+            timespanModel.addDbpediaEdges(edges);
 
             if (!matchedItems.equals(group) && matchedItems.length() > 0) {
                 String[] matchedList = matchedItems.split(Collection.STRING_LIST_SEPARATOR);
 
                 if (matchedList.length > 0) {
-                    timespanModel.addDBpediaUris(matchedList);
+                    timespanModel.addDBpediaItems(matchedList);
 
                     if (timespanType != null) {
                         timespanModel.addType(timespanType);
