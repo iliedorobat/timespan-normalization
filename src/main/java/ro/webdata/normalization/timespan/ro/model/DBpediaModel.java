@@ -1,23 +1,31 @@
 package ro.webdata.normalization.timespan.ro.model;
 
-import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import ro.webdata.echo.commons.Const;
 import ro.webdata.echo.commons.graph.Namespace;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.TimespanType;
 
 public class DBpediaModel {
-    private static final Gson GSON = new Gson();
+    @SerializedName("uri")
     private String uri;
+
+    @SerializedName("label")
     private String label;
+
+    @SerializedName("matchedValue")
+    private String matchedValue;
+
+    @SerializedName("timespanType")
     private String timespanType;
 
-    public DBpediaModel(String uri, String timespanType) {
+    public DBpediaModel(String uri, String timespanType, String matchedValue) {
         if (uri != null) {
             this.uri = uri;
             this.label = uri
                     .replace(Namespace.NS_DBPEDIA_RESOURCE, "")
                     .replace(Const.UNDERSCORE_PLACEHOLDER, " ");
+            this.matchedValue = matchedValue;
             this.timespanType = timespanType;
         }
     }
