@@ -18,9 +18,9 @@ public class TimespanModel {
         this.dbpediaEdges.add(edges);
     }
 
-    public void addDBpediaItems(String[] matchedList, String timespanType) {
+    public void addDBpediaItems(String[] matchedList, String timespanType, String matchedValue) {
         List<DBpediaModel> list = Arrays.stream(matchedList)
-                .map(value -> new DBpediaModel(value, timespanType))
+                .map(uri -> new DBpediaModel(uri, timespanType, matchedValue))
                 .collect(Collectors.toCollection(ArrayList::new));
         this.dbpediaItems.addAll(list);
     }

@@ -93,28 +93,28 @@ public class TimespanUtils {
         Matcher matcher = pattern.matcher(initialValue);
 
         while (matcher.find()) {
-            String group = matcher.group();
-            TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(group), regex);
+            String matchedValue = matcher.group();
+            TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(matchedValue), regex);
             String matchedItems = timePeriod.toString();
 
-            Map<String, DBpediaModel> edges = TimespanUtils.prepareEdges(timePeriod, timespanType);
+            Map<String, DBpediaModel> edges = TimespanUtils.prepareEdges(timePeriod, timespanType, matchedValue);
             timespanModel.addDbpediaEdges(edges);
 
-            if (!matchedItems.equals(group) && matchedItems.length() > 0) {
+            if (!matchedItems.equals(matchedValue) && matchedItems.length() > 0) {
                 String[] matchedList = matchedItems.split(Collection.STRING_LIST_SEPARATOR);
-                timespanModel.addDBpediaItems(matchedList, timespanType);
-            } else if (matchedItems.equals(group)) {
-                System.err.println("The following group has not been processed: \"" + group + "\"");
+                timespanModel.addDBpediaItems(matchedList, timespanType, matchedValue);
+            } else if (matchedItems.equals(matchedValue)) {
+                System.err.println("The following group has not been processed: \"" + matchedValue + "\"");
             }
         }
 
         timespanModel.setResidualValue(residualValue);
     }
 
-    private static Map<String, DBpediaModel> prepareEdges(TimePeriodModel timePeriod, String timespanType) {
+    private static Map<String, DBpediaModel> prepareEdges(TimePeriodModel timePeriod, String timespanType, String matchedValue) {
         Map<String, DBpediaModel> edges = new HashMap<>();
-        DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(timespanType), timespanType);
-        DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(timespanType), timespanType);
+        DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(timespanType), timespanType, matchedValue);
+        DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(timespanType), timespanType, matchedValue);
 
         edges.put("start", start);
         edges.put("end", end);
