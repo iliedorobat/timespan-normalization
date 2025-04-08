@@ -102,14 +102,7 @@ public class TimespanUtils {
 
             if (!matchedItems.equals(group) && matchedItems.length() > 0) {
                 String[] matchedList = matchedItems.split(Collection.STRING_LIST_SEPARATOR);
-
-                if (matchedList.length > 0) {
-                    timespanModel.addDBpediaItems(matchedList);
-
-                    if (timespanType != null) {
-                        timespanModel.addType(timespanType);
-                    }
-                }
+                timespanModel.addDBpediaItems(matchedList, timespanType);
             } else if (matchedItems.equals(group)) {
                 System.err.println("The following group has not been processed: \"" + group + "\"");
             }
@@ -120,8 +113,8 @@ public class TimespanUtils {
 
     private static Map<String, DBpediaModel> prepareEdges(TimePeriodModel timePeriod, String timespanType) {
         Map<String, DBpediaModel> edges = new HashMap<>();
-        DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(timespanType));
-        DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(timespanType));
+        DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(timespanType), timespanType);
+        DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(timespanType), timespanType);
 
         edges.put("start", start);
         edges.put("end", end);

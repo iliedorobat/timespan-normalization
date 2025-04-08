@@ -20,9 +20,7 @@ public class Demo {
         String value = ParamsUtils.getValue(list, "--expression");
         TimeExpression timeExpression = new TimeExpression(value, null);
 
-        System.out.println("input value: " + timeExpression.getValue());
-        System.out.println("sanitized value: " + timeExpression.getSanitizedValue());
-        System.out.println("normalized values: " + timeExpression.getDbpediaItems());
+        System.out.println(timeExpression.serialize());
     }
 
     public static void printUnknownTimeExpressions(String inputFullPath) {

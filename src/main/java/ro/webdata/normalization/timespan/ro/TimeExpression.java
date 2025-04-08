@@ -23,9 +23,6 @@ public class TimeExpression {
     @SerializedName("normalizedValues")
     private Set<DBpediaModel> dbpediaItems;
 
-    @SerializedName("temporalTypes")
-    private List<String> temporalTypes;
-
     public static String getHeaders() {
         List<String> headers = new ArrayList<>(){{
             add("initial value");
@@ -45,12 +42,13 @@ public class TimeExpression {
      * @param separator Value separator
      */
     public TimeExpression(String value, String separator) {
+        String sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
+        TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(sanitizedValue);
+
         this.value = value;
-        this.sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
-        TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(this.sanitizedValue);
-        this.dbpediaItems = timespanModel.getDBpediaItems();
+        this.sanitizedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
         this.dbpediaEdges = timespanModel.getDBpediaEdges();
-        this.temporalTypes = timespanModel.getTypes();
+        this.dbpediaItems = timespanModel.getDBpediaItems();
 
         if (separator != null)
             this.separator = separator;
@@ -61,7 +59,6 @@ public class TimeExpression {
         return value
                 + separator + sanitizedValue
                 + separator + dbpediaItems
-                + separator + temporalTypes
                 + separator + dbpediaEdges;
     }
 
@@ -87,9 +84,5 @@ public class TimeExpression {
 
     public List<Map<String, DBpediaModel>> getDbpediaEdges() {
         return this.dbpediaEdges;
-    }
-
-    public List<String> getTemporalTypes() {
-        return temporalTypes;
     }
 }

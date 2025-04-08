@@ -10,13 +10,15 @@ public class DBpediaModel {
     private static final Gson GSON = new Gson();
     private String uri;
     private String label;
+    private String timespanType;
 
-    public DBpediaModel(String uri) {
+    public DBpediaModel(String uri, String timespanType) {
         if (uri != null) {
             this.uri = uri;
             this.label = uri
                     .replace(Namespace.NS_DBPEDIA_RESOURCE, "")
                     .replace(Const.UNDERSCORE_PLACEHOLDER, " ");
+            this.timespanType = timespanType;
         }
     }
 
