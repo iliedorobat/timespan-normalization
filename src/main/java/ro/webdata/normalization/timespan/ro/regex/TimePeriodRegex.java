@@ -51,7 +51,7 @@ public class TimePeriodRegex {
             + ")";
     private static final String CENTURY_ROMAN_INTERVAL = CENTURY_ROMAN_OPTIONS + REGEX_INTERVAL_DELIMITER
             + "("
-                +  CENTURY_ROMAN_OPTIONS + REGEX_OR
+                + CENTURY_ROMAN_OPTIONS + REGEX_OR
                 + AGES_ROMAN_NOTATION
             + ")";
 

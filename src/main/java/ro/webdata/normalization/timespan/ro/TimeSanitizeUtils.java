@@ -20,7 +20,6 @@ public class TimeSanitizeUtils {
         sanitized = sanitizeDateTime(sanitized);
         sanitized = sanitizeAges(sanitized);
         sanitized = sanitizeTimePeriods(sanitized);
-        sanitized = TimeUtils.normalizeChristumNotation(sanitized);
 
         return sanitized;
     }
