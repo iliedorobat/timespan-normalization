@@ -83,7 +83,7 @@ public class TimespanUtils {
 
     //TODO: "1/2 mil. 5 - sec. I al mil. 4 a.Chr."
     //TODO: "2 a.chr - 14 p.chr"
-    private static void updateMatchedValues(String original, TimespanModel timespanModel, String regex, String timespanType) {
+    private static void updateMatchedValues(String original, TimespanModel timespanModel, String regex, String temporalType) {
         String initialValue = timespanModel.getResidualValue();
         initialValue = TimeSanitizeUtils.sanitizeValue(initialValue, regex);
         String residualValue = initialValue
@@ -97,12 +97,12 @@ public class TimespanUtils {
             TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(matchedValue), regex);
             String matchedItems = timePeriod.toString();
 
-            Map<String, DBpediaModel> edges = TimespanUtils.prepareEdges(timePeriod, timespanType, matchedValue);
+            Map<String, DBpediaModel> edges = TimespanUtils.prepareEdges(timePeriod, temporalType, matchedValue);
             timespanModel.addDbpediaEdges(edges);
 
             if (!matchedItems.equals(matchedValue) && matchedItems.length() > 0) {
                 String[] matchedList = matchedItems.split(Collection.STRING_LIST_SEPARATOR);
-                timespanModel.addDBpediaItems(matchedList, timespanType, matchedValue);
+                timespanModel.addDBpediaItems(matchedList, temporalType, matchedValue);
             } else if (matchedItems.equals(matchedValue)) {
                 System.err.println("The following group has not been processed: \"" + matchedValue + "\"");
             }
@@ -111,10 +111,10 @@ public class TimespanUtils {
         timespanModel.setResidualValue(residualValue);
     }
 
-    private static Map<String, DBpediaModel> prepareEdges(TimePeriodModel timePeriod, String timespanType, String matchedValue) {
+    private static Map<String, DBpediaModel> prepareEdges(TimePeriodModel timePeriod, String temporalType, String matchedValue) {
         Map<String, DBpediaModel> edges = new HashMap<>();
-        DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(timespanType), timespanType, matchedValue);
-        DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(timespanType), timespanType, matchedValue);
+        DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(temporalType), temporalType, matchedValue);
+        DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(temporalType), temporalType, matchedValue);
 
         edges.put("start", start);
         edges.put("end", end);
