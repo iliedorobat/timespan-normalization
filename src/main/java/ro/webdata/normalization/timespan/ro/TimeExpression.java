@@ -26,9 +26,8 @@ public class TimeExpression {
     public static String getHeaders() {
         List<String> headers = new ArrayList<>(){{
             add("initial value");
-            add("sanitized value");
+            add("prepared value");
             add("normalized values");
-            add("timespan types");
             add("sanitized edge values");
         }};
 
