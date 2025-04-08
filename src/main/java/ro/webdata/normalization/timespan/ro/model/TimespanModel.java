@@ -26,8 +26,8 @@ public class TimespanModel {
         this.dbpediaEdges.add(edges);
     }
 
-    public void addDBpediaEdges(List<Map<String, DBpediaModel>> edges) {
-        this.dbpediaEdges.addAll(edges);
+    public void addDBpediaEdges(List<Map<String, DBpediaModel>> edgesList) {
+        this.dbpediaEdges.addAll(edgesList);
     }
 
     public void addDBpediaItems(String[] matchedList) {

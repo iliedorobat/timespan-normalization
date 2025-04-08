@@ -94,16 +94,10 @@ public class TimespanUtils {
 
         while (matcher.find()) {
             String group = matcher.group();
-            TimePeriodModel timePeriod = prepareTimePeriodModel(original, group, regex);
+            TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(group), regex);
             String matchedItems = timePeriod.toString();
 
-            DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(timespanType));
-            DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(timespanType));
-
-            Map<String, DBpediaModel> edges = new HashMap<>(){{
-                put("start", start);
-                put("end", end);
-            }};
+            Map<String, DBpediaModel> edges = TimespanUtils.prepareEdges(timePeriod, timespanType);
             timespanModel.addDbpediaEdges(edges);
 
             if (!matchedItems.equals(group) && matchedItems.length() > 0) {
@@ -122,6 +116,17 @@ public class TimespanUtils {
         }
 
         timespanModel.setResidualValue(residualValue);
+    }
+
+    private static Map<String, DBpediaModel> prepareEdges(TimePeriodModel timePeriod, String timespanType) {
+        Map<String, DBpediaModel> edges = new HashMap<>();
+        DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(timespanType));
+        DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(timespanType));
+
+        edges.put("start", start);
+        edges.put("end", end);
+
+        return edges;
     }
 
     /**

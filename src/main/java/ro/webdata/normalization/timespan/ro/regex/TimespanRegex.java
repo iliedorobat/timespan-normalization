@@ -12,8 +12,8 @@ public class TimespanRegex {
 
     public static final String REGEX_OR = "|";
     public static final String CASE_INSENSITIVE = "(?i)";
-    private static final String CHRISTUM_AD_NAME = TimeUtils.CHRISTUM_AD_PLACEHOLDER;
-    private static final String CHRISTUM_BC_NAME = TimeUtils.CHRISTUM_BC_PLACEHOLDER;
+    private static final String CHRISTUM_AD_NAME = TimespanRegex.AGE_AD;
+    private static final String CHRISTUM_BC_NAME = TimespanRegex.AGE_BC;
     public static final String AD_BC_OPTIONAL = "("
                 + "[ ]*" + "(" + CHRISTUM_BC_NAME + REGEX_OR + CHRISTUM_AD_NAME + ")"
             + "){0,1}";
