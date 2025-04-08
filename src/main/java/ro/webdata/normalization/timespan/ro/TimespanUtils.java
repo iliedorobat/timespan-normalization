@@ -94,6 +94,10 @@ public class TimespanUtils {
 
         while (matcher.find()) {
             String matchedValue = matcher.group();
+            if (matchedValue != null) {
+                matchedValue = matchedValue.trim();
+            }
+
             TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(matchedValue), regex);
             String matchedItems = timePeriod.toString();
 
