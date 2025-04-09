@@ -25,37 +25,37 @@ public class TimePeriodModel extends TimeModel {
         return Collection.treeSetToDbpediaString(timePeriodSet);
     }
 
-    public String toDBpediaStartUri(String temporalType) {
-        if (temporalType == null) {
+    public String toDBpediaStartUri(String matchedType) {
+        if (matchedType == null) {
             return null;
         }
 
-        switch (temporalType) {
+        switch (matchedType) {
             case TimespanType.CENTURY:
-                return DBpediaModel.prepareUri(eraStart, centuryStart, temporalType);
+                return DBpediaModel.prepareUri(eraStart, centuryStart, matchedType);
             case TimespanType.MILLENNIUM:
-                return DBpediaModel.prepareUri(eraStart, millenniumStart, temporalType);
+                return DBpediaModel.prepareUri(eraStart, millenniumStart, matchedType);
             case TimespanType.DATE:
             case TimespanType.YEAR:
-                return DBpediaModel.prepareUri(eraStart, yearStart, temporalType);
+                return DBpediaModel.prepareUri(eraStart, yearStart, matchedType);
             default:
                 return null;
         }
     }
 
-    public String toDBpediaEndUri(String temporalType) {
-        if (temporalType == null) {
+    public String toDBpediaEndUri(String matchedType) {
+        if (matchedType == null) {
             return null;
         }
 
-        switch (temporalType) {
+        switch (matchedType) {
             case TimespanType.CENTURY:
-                return DBpediaModel.prepareUri(eraEnd, centuryEnd, temporalType);
+                return DBpediaModel.prepareUri(eraEnd, centuryEnd, matchedType);
             case TimespanType.MILLENNIUM:
-                return DBpediaModel.prepareUri(eraEnd, millenniumEnd, temporalType);
+                return DBpediaModel.prepareUri(eraEnd, millenniumEnd, matchedType);
             case TimespanType.DATE:
             case TimespanType.YEAR:
-                return DBpediaModel.prepareUri(eraEnd, yearEnd, temporalType);
+                return DBpediaModel.prepareUri(eraEnd, yearEnd, matchedType);
             default:
                 return null;
         }
