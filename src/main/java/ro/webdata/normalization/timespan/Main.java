@@ -21,11 +21,11 @@ public class Main {
         System.out.println("Gateway Server Started...");
     }
 
-    public void stopServer() {
+    public void stopServer(int ms) {
         new Thread(() -> {
             try {
                 // Give Python time to disconnect to avoid the Py4J network error
-                Thread.sleep(500);
+                Thread.sleep(ms);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

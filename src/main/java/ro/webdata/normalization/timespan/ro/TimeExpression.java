@@ -10,17 +10,15 @@ import java.util.*;
 public class TimeExpression {
     private static final Gson GSON = new Gson();
     transient private String separator = "\n";
+    transient private String sanitizedValue;
 
     @SerializedName("initial")
     private String value;
 
-    @SerializedName("prepared")
-    private String sanitizedValue;
-
-    @SerializedName("normalizedEdges")
+    @SerializedName("edges")
     private List<Map<String, DBpediaModel>> dbpediaEdges;
 
-    @SerializedName("normalizedValues")
+    @SerializedName("periods")
     private Set<DBpediaModel> dbpediaItems;
 
     public static String getHeaders() {
