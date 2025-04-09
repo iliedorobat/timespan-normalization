@@ -117,8 +117,16 @@ public class TimespanUtils {
 
     private static Map<String, DBpediaModel> prepareEdges(TimePeriodModel timePeriod, String matchedType, String matchedValue) {
         Map<String, DBpediaModel> edges = new HashMap<>();
-        DBpediaModel start = new DBpediaModel(timePeriod.toDBpediaStartUri(matchedType), matchedType, matchedValue);
-        DBpediaModel end = new DBpediaModel(timePeriod.toDBpediaEndUri(matchedType), matchedType, matchedValue);
+        String startUri = timePeriod.toDBpediaStartUri(matchedType);
+        String endUri = timePeriod.toDBpediaEndUri(matchedType);
+
+        // E.g.: "începutul mil.al XX-lea"
+        if (startUri == null || endUri == null) {
+            return null;
+        }
+
+        DBpediaModel start = new DBpediaModel(startUri, matchedType, matchedValue);
+        DBpediaModel end = new DBpediaModel(endUri, matchedType, matchedValue);
 
         edges.put("start", start);
         edges.put("end", end);

@@ -69,7 +69,7 @@ public class DBpediaModel {
 
     @Override
     public int hashCode() {
-        return uri.hashCode();
+        return uri.hashCode() + matchedValue.hashCode();
     }
 
     private static String getEraSuffix(String value) {

@@ -15,7 +15,9 @@ public class TimespanModel {
     }
 
     public void addDbpediaEdges(Map<String, DBpediaModel> edges) {
-        this.dbpediaEdges.add(edges);
+        if (edges != null) {
+            this.dbpediaEdges.add(edges);
+        }
     }
 
     public void addDBpediaItems(String[] matchedList, String matchedType, String matchedValue) {
