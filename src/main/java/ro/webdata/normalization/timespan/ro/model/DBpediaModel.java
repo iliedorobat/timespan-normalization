@@ -16,28 +16,28 @@ public class DBpediaModel {
     @SerializedName("matchedValue")
     private String matchedValue;
 
-    @SerializedName("temporalType")
-    private String temporalType;
+    @SerializedName("matchedType")
+    private String matchedType;
 
-    public DBpediaModel(String uri, String temporalType, String matchedValue) {
+    public DBpediaModel(String uri, String matchedType, String matchedValue) {
         if (uri != null) {
             this.uri = uri;
             this.label = uri
                     .replace(Namespace.NS_DBPEDIA_RESOURCE, "")
                     .replace(Const.UNDERSCORE_PLACEHOLDER, " ");
             this.matchedValue = matchedValue;
-            this.temporalType = temporalType;
+            this.matchedType = matchedType;
         }
     }
 
-    public static String prepareUri(String era, Integer value, String temporalType) {
+    public static String prepareUri(String era, Integer value, String matchedType) {
         // E.g.: "1/2 mil. 5 - sec. i al mil. 4 a.chr."
         // E.g.: "09 1875"
         if (value == null) {
             return null;
         }
 
-        switch (temporalType) {
+        switch (matchedType) {
             case TimespanType.CENTURY:
                 return Namespace.NS_DBPEDIA_RESOURCE + TimeUtils.getOrdinal(value) + Const.DBPEDIA_CENTURY_PLACEHOLDER + DBpediaModel.getEraSuffix(era);
             case TimespanType.MILLENNIUM:
