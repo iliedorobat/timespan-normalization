@@ -7,6 +7,17 @@ import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 
 import java.util.*;
 
+// FIXME:
+//  1880-1890 (nedatat)
+//  1884 martie 28/aprilie 09
+//  1893-1902 (nedatat)
+//  1903-1914 (nedatat)
+//  1907 (nedatat)
+//  1910 (nedatat)
+//  1912-1914 (nedatat)
+//  an 1  an 21  etc.
+//  mileniile v-iva. chr.
+//  octombrie 23, 1777
 public class TimeExpression {
     private static final Gson GSON = new Gson();
     transient private String separator = "\n";
