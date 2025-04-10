@@ -37,7 +37,7 @@ public class TimePeriodUtils {
         for (int i = groups.size() - 1; i >= 0; i--) {
             String group = groups.get(i);
 
-            if (group.length() > 0) {
+            if (!group.isEmpty()) {
                 // E.g.: "3/4. sec. 19", "4/4. xviii - 1/4. xix", "sf sec.xix - mijl. sec. xx"
                 if (specialCharsOnly(group) && group.contains(".")) {
                     group = group.replaceAll("\\.", "");
@@ -63,7 +63,7 @@ public class TimePeriodUtils {
             while (suffixMatcher.find()) {
                 String group = suffixMatcher.group();
 
-                if (group.length() > 0) {
+                if (!group.isEmpty()) {
                     if (!isSpace(group)) {
                         set.add(group.trim());
                     }

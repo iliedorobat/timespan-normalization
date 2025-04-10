@@ -94,17 +94,18 @@ public class TimespanUtils {
 
         while (matcher.find()) {
             String matchedValue = matcher.group();
-            if (matchedValue != null) {
-                matchedValue = matchedValue.trim();
+            if (matchedValue == null) {
+                continue;
             }
 
+            matchedValue = matchedValue.trim();
             TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(matchedValue), regex);
             String matchedItems = timePeriod.toString();
 
             Map<String, DBpediaModel> edges = TimespanUtils.prepareEdges(timePeriod, matchedType, matchedValue);
             timespanModel.addDbpediaEdges(edges);
 
-            if (!matchedItems.equals(matchedValue) && matchedItems.length() > 0) {
+            if (!matchedItems.isEmpty() && !matchedItems.equals(matchedValue)) {
                 String[] matchedList = matchedItems.split(Collection.STRING_LIST_SEPARATOR);
                 timespanModel.addDBpediaItems(matchedList, matchedType, matchedValue);
             } else if (matchedItems.equals(matchedValue)) {

@@ -4,7 +4,7 @@
 [versions]
 net-sf-py4j = "0.10.9.9"
 org-apache-commons-commons-lang3 = "3.4"
-ro-webdata-echo-commons-commons-echo = "1.5"
+ro-webdata-echo-commons-commons-echo = "1.6"
 ro-webdata-parser-xml-dspace-dublin-core-parser = "1.2"
 ro-webdata-parser-xml-lido-lido-parser = "1.2"
 

@@ -1,7 +1,9 @@
 package ro.webdata.normalization.timespan.ro.model;
 
 import ro.webdata.echo.commons.Date;
-import ro.webdata.echo.commons.Print;
+import ro.webdata.echo.commons.error.TooBigCenturyException;
+import ro.webdata.echo.commons.error.TooBigMillenniumException;
+import ro.webdata.echo.commons.error.TooBigYearException;
 import ro.webdata.normalization.timespan.commons.EnvConst;
 import ro.webdata.normalization.timespan.ro.TimePeriodUtils;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
@@ -54,7 +56,7 @@ public class TimeModel {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
-                    Print.tooBigYear("setting millennium from \"" + original + "\"", position, year);
+                    TooBigMillenniumException.printMessage("setting millennium from \"" + original + "\"", position, year);
                 }
             } else {
                 int millennium = TimeUtils.yearToMillennium(year);
@@ -69,7 +71,7 @@ public class TimeModel {
         if (millennium != null) {
             if (millennium > Date.LAST_UPDATE_MILLENNIUM && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
-                    Print.tooBigMillennium("setting millennium from \"" + original + "\"", position, millennium);
+                    TooBigMillenniumException.printMessage("setting millennium from \"" + original + "\"", position, millennium);
                 }
                 this.millenniumStart = null;
                 this.millenniumEnd = null;
@@ -89,7 +91,7 @@ public class TimeModel {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
-                    Print.tooBigYear("setting century from \"" + original + "\"", position, year);
+                    TooBigYearException.printMessage("setting century from \"" + original + "\"", position, year);
                 }
             } else {
                 /**
@@ -110,7 +112,7 @@ public class TimeModel {
         if (century != null) {
             if (century > Date.LAST_UPDATE_CENTURY && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
-                    Print.tooBigCentury("setting century from \"" + original + "\"", position, century);
+                    TooBigCenturyException.printMessage("setting century from \"" + original + "\"", position, century);
                 }
                 this.centuryStart = null;
                 this.centuryEnd = null;
@@ -133,7 +135,7 @@ public class TimeModel {
             int year = Integer.parseInt(TimeUtils.clearDate(yearStr));
             if (year > Date.LAST_UPDATE_YEAR && eraStart.equals(TimeUtils.CHRISTUM_AD_PLACEHOLDER)) {
                 if (EnvConst.PRINT_ERROR) {
-                    Print.tooBigYear("setting year from \"" + original + "\"", position, year);
+                    TooBigYearException.printMessage("setting year from \"" + original + "\"", position, year);
                 }
             } else {
                 if (position.equals(TimeUtils.START_PLACEHOLDER))
