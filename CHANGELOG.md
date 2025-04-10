@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 1.6
 - Bump commons-echo to 1.6
 - Added py4j gateway server
+- Added historicalOnly flag to allow users to standardize both historical and future temporal expressions
 - Added serialization mechanism for TimeExpression instances
 - Removed the normalization of temporal expressions from the sanitization method
 

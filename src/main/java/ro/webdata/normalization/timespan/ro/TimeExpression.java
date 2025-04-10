@@ -49,9 +49,9 @@ public class TimeExpression {
      * @param value The original value
      * @param separator Value separator
      */
-    public TimeExpression(String value, String separator) {
+    public TimeExpression(String value, boolean historicalOnly, String separator) {
         String sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
-        TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(sanitizedValue);
+        TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(sanitizedValue, historicalOnly);
 
         this.value = value;
         this.sanitizedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);

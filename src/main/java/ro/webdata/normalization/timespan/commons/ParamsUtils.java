@@ -37,4 +37,10 @@ public class ParamsUtils {
 
         return null;
     }
+
+    public static boolean historicalOnly(List<String> pairs) {
+        String value = getValue(pairs, "--historicalOnly");
+
+        return Boolean.parseBoolean(value);
+    }
 }

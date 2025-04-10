@@ -18,7 +18,8 @@ public class Demo {
     public static void main(String[] args) {
         List<String> list = Arrays.asList(args);
         String value = ParamsUtils.getValue(list, "--expression");
-        TimeExpression timeExpression = new TimeExpression(value, null);
+        boolean historicalOnly = ParamsUtils.historicalOnly(list);
+        TimeExpression timeExpression = new TimeExpression(value, historicalOnly, null);
 
         System.out.println(timeExpression.serialize());
     }
@@ -34,15 +35,17 @@ public class Demo {
      * !!! <b>writeTimespan</b> will be used to generate the required text files !!!
      * @param inputFullPath The full path to the text file (E.g.: "timespan_all.txt")
      *                      which stores the timespan values (E.g.: PATH_OUTPUT_ALL_TIMESPAN_FILE)
+     * @param historicalOnly Flag which specifies whether the Framework will only handle historical
+     *                       dates (future dates will be ignored)
      */
-    public static void printFullTimespan(String inputFullPath) {
+    public static void printFullTimespan(String inputFullPath, boolean historicalOnly) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(inputFullPath));
             String readLine;
 
             while((readLine = br.readLine()) != null) {
                 if (!readLine.isEmpty()) {
-                    System.out.println(new TimeExpression(readLine, "|"));
+                    System.out.println(new TimeExpression(readLine, historicalOnly, "|"));
                 }
             }
         } catch (IOException e) {

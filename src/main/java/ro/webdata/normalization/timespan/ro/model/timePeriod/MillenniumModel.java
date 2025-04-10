@@ -6,11 +6,11 @@ import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 
 public class MillenniumModel extends TimePeriodModel {
-    public MillenniumModel(String original, String value) {
-        setMillenniumModel(original, value);
+    public MillenniumModel(String original, String value, boolean historicalOnly) {
+        setMillenniumModel(original, value, historicalOnly);
     }
 
-    public void setMillenniumModel(String original, String value) {
+    public void setMillenniumModel(String original, String value, boolean historicalOnly) {
         String preparedValue = TimePeriodUtils.sanitizeTimePeriod(value);
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
@@ -20,21 +20,21 @@ public class MillenniumModel extends TimePeriodModel {
             Integer endValue = TimePeriodUtils.getEndTime(intervalValues, this.eraStart, false);
             Integer startValue = TimePeriodUtils.getStartTime(intervalValues, this.eraStart, false);
 
-            setMillenniumDate(original, endValue, TimeUtils.END_PLACEHOLDER);
-            setMillenniumDate(original, startValue, TimeUtils.START_PLACEHOLDER);
+            setMillenniumDate(original, endValue, TimeUtils.END_PLACEHOLDER, historicalOnly);
+            setMillenniumDate(original, startValue, TimeUtils.START_PLACEHOLDER, historicalOnly);
         } else {
             setEra(original, value, value, false);
 
             Integer millenniumValue = TimePeriodUtils.timePeriodToNumber(preparedValue, false);
 
-            setMillenniumDate(original, millenniumValue, TimeUtils.END_PLACEHOLDER);
-            setMillenniumDate(original, millenniumValue, TimeUtils.START_PLACEHOLDER);
+            setMillenniumDate(original, millenniumValue, TimeUtils.END_PLACEHOLDER, historicalOnly);
+            setMillenniumDate(original, millenniumValue, TimeUtils.START_PLACEHOLDER, historicalOnly);
         }
     }
 
-    private void setMillenniumDate(String original, Integer millennium, String position) {
+    private void setMillenniumDate(String original, Integer millennium, String position, boolean historicalOnly) {
         if (millennium != null) {
-            setMillennium(original, millennium, position);
+            setMillennium(original, millennium, position, historicalOnly);
         }
     }
 }
