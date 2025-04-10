@@ -6,11 +6,11 @@ import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 
 public class CenturyModel extends TimePeriodModel {
-    public CenturyModel(String original, String value) {
-        setCenturyModel(original, value);
+    public CenturyModel(String original, String value, boolean historicalOnly) {
+        setCenturyModel(original, value, historicalOnly);
     }
 
-    public void setCenturyModel(String original, String value) {
+    public void setCenturyModel(String original, String value, boolean historicalOnly) {
         String preparedValue = TimePeriodUtils.sanitizeTimePeriod(value);
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
@@ -20,21 +20,21 @@ public class CenturyModel extends TimePeriodModel {
             Integer endValue = TimePeriodUtils.getEndTime(intervalValues, this.eraStart, false);
             Integer startValue = TimePeriodUtils.getStartTime(intervalValues, this.eraStart, false);
 
-            setCenturyDate(original, endValue, TimeUtils.END_PLACEHOLDER);
-            setCenturyDate(original, startValue, TimeUtils.START_PLACEHOLDER);
+            setCenturyDate(original, endValue, TimeUtils.END_PLACEHOLDER, historicalOnly);
+            setCenturyDate(original, startValue, TimeUtils.START_PLACEHOLDER, historicalOnly);
         } else {
             setEra(original, preparedValue, preparedValue, false);
 
             Integer centuryValue = TimePeriodUtils.timePeriodToNumber(preparedValue, false);
 
-            setCenturyDate(original, centuryValue, TimeUtils.END_PLACEHOLDER);
-            setCenturyDate(original, centuryValue, TimeUtils.START_PLACEHOLDER);
+            setCenturyDate(original, centuryValue, TimeUtils.END_PLACEHOLDER, historicalOnly);
+            setCenturyDate(original, centuryValue, TimeUtils.START_PLACEHOLDER, historicalOnly);
         }
     }
 
-    private void setCenturyDate(String original, Integer century, String position) {
+    private void setCenturyDate(String original, Integer century, String position, boolean historicalOnly) {
         if (century != null) {
-            setCentury(original, century, position);
+            setCentury(original, century, position, historicalOnly);
         }
     }
 }

@@ -47,33 +47,39 @@ JDK 11+ or OpenJDK 11+
 
 ## Test the library:
 ```bash
+  # Parse only historical dates
+  java -jar build/libs/timespan-normalization-1.6.jar --historicalOnly=true --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  # Include future dates
   java -jar build/libs/timespan-normalization-1.6.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
 ## Normalize multiple temporal expressions:
 ```bash
+  # Parse only historical dates
+  java -jar build/libs/timespan-normalization-1.6.jar --historicalOnly=true --analysis
+  # Include future dates
   java -jar build/libs/timespan-normalization-1.6.jar --analysis
 ```
 
 ## Example
 ### Usecase
 ```bash
-    TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", null);
+    TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", true, null);
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("1/2 mil. 5 - sec. i al mil. 4 a.chr.", null);
+    TimeExpression timeExpression = new TimeExpression("1/2 mil. 5 - sec. i al mil. 4 a.chr.", true, null);
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("4/4 sec.xix. sfârșitul sec.al xix-lea și începutul sec.al xx-lea.", null);
+    TimeExpression timeExpression = new TimeExpression("4/4 sec.xix. sfârșitul sec.al xix-lea și începutul sec.al xx-lea.", true, null);
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("402-403, 405-406 a. chr.", null);
+    TimeExpression timeExpression = new TimeExpression("402-403, 405-406 a. chr.", true, null);
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 - sec. 1 a. chr.", null);
+    TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 - sec. 1 a. chr.", true, null);
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("epoca modernă", null);
+    TimeExpression timeExpression = new TimeExpression("epoca modernă", true, null);
     System.out.print(expression);
 ```
 

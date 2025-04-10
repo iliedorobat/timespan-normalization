@@ -12,11 +12,11 @@ import ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
  *      * MY: "octombrie 1639"; "ianuarie 632"; "septembrie - octombrie 1919"; "09 1875"
  */
 public class ShortDateModel extends TimePeriodModel {
-    public ShortDateModel(String original, String value, String order) {
-        setDateModel(original, value, order);
+    public ShortDateModel(String original, String value, String order, boolean historicalOnly) {
+        setDateModel(original, value, order, historicalOnly);
     }
 
-    private void setDateModel(String original, String value, String order) {
+    private void setDateModel(String original, String value, String order, boolean historicalOnly) {
         String[] intervalValues = value.split(ShortDateRegex.REGEX_DATE_INTERVAL_SEPARATOR);
 
         if (intervalValues.length == 2) {
@@ -24,30 +24,30 @@ public class ShortDateModel extends TimePeriodModel {
 
             String endMonth = getMonth(intervalValues[0]);
             String endYear = getYear(intervalValues[0], intervalValues[1], order, TimeUtils.END_PLACEHOLDER);
-            setDate(original, endYear, endMonth, order, TimeUtils.END_PLACEHOLDER);
+            setDate(original, endYear, endMonth, order, TimeUtils.END_PLACEHOLDER, historicalOnly);
 
             String startMonth = getMonth(intervalValues[1]);
             String startYear = getYear(intervalValues[0], intervalValues[1], order, TimeUtils.START_PLACEHOLDER);
-            setDate(original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
+            setDate(original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER, historicalOnly);
         } else {
             setEra(original, value, value, true);
 
             String endMonth = getMonth(value);
             String endYear = getYear(value, value, order, TimeUtils.END_PLACEHOLDER);
-            setDate(original, endYear, endMonth, order, TimeUtils.END_PLACEHOLDER);
+            setDate(original, endYear, endMonth, order, TimeUtils.END_PLACEHOLDER, historicalOnly);
 
             String startMonth = getMonth(value);
             String startYear = getYear(value, value, order, TimeUtils.START_PLACEHOLDER);
-            setDate(original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER);
+            setDate(original, startYear, startMonth, order, TimeUtils.START_PLACEHOLDER, historicalOnly);
         }
     }
 
-    private void setDate(String original, String year, String month, String order, String position) {
+    private void setDate(String original, String year, String month, String order, String position, boolean historicalOnly) {
         if (order.equals(TimeUtils.MY_PLACEHOLDER)) {
-            setMillennium(original, year, position);
-            setCentury(original, year, position);
-            setYear(original, year, position);
-            setMonth(original, month, position);
+            setMillennium(original, year, position, historicalOnly);
+            setCentury(original, year, position, historicalOnly);
+            setYear(original, year, position, historicalOnly);
+            setMonth(original, month, position, historicalOnly);
         }
     }
 
