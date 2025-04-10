@@ -41,7 +41,7 @@ public class Demo {
             String readLine;
 
             while((readLine = br.readLine()) != null) {
-                if (readLine.length() > 0) {
+                if (!readLine.isEmpty()) {
                     System.out.println(new TimeExpression(readLine, "|"));
                 }
             }

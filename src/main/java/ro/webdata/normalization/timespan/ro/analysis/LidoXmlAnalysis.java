@@ -75,7 +75,7 @@ public class LidoXmlAnalysis {
             String readLine;
 
             while ((readLine = br.readLine()) != null) {
-                if (readLine.length() > 0) {
+                if (!readLine.isEmpty()) {
                     boolean check = isMatching(readLine, list);
                     if (!check)
                         System.out.println(readLine);
@@ -124,7 +124,7 @@ public class LidoXmlAnalysis {
             String readLine;
 
             while ((readLine = br.readLine()) != null) {
-                if (readLine.length() > 0) {
+                if (!readLine.isEmpty()) {
                     boolean check = isMatching(readLine, list);
                     if (check)
                         count++;
