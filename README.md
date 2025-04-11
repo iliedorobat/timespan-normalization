@@ -38,7 +38,7 @@ JDK 11+ or OpenJDK 11+
 1. Download and install [JDK 11](https://www.oracle.com/nl/java/technologies/javase/jdk11-archive-downloads.html) or [OpenJDK 11](https://openjdk.org/install/) (or newer versions)
 2. Clone the repository:
 ```bash
-  git clone https://github.com/iliedorobat/timespan-normalization.git
+  git clone https://github.com/iliedorobat/temporal-normalization.git
 ```
 3. Generate the library:
 ```bash
@@ -48,17 +48,17 @@ JDK 11+ or OpenJDK 11+
 ## Test the library:
 ```bash
   # Parse only historical dates
-  java -jar build/libs/timespan-normalization-1.6.jar --historicalOnly=true --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/temporal-normalization-1.6.jar --historicalOnly=true --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
   # Include future dates
-  java -jar build/libs/timespan-normalization-1.6.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/temporal-normalization-1.6.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
 ## Normalize multiple temporal expressions:
 ```bash
   # Parse only historical dates
-  java -jar build/libs/timespan-normalization-1.6.jar --historicalOnly=true --analysis
+  java -jar build/libs/temporal-normalization-1.6.jar --historicalOnly=true --analysis
   # Include future dates
-  java -jar build/libs/timespan-normalization-1.6.jar --analysis
+  java -jar build/libs/temporal-normalization-1.6.jar --analysis
 ```
 
 ## Example

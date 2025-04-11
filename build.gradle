@@ -25,7 +25,7 @@ dependencies {
 
 group = 'ro.webdata.normalization.timespan'
 version = '1.6'
-description = 'timespan-normalization'
+description = 'temporal-normalization'
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
 
@@ -43,7 +43,7 @@ jar {
 }
 
 shadowJar {
-    archiveBaseName.set('timespan-normalization')
+    archiveBaseName.set('temporal-normalization')
     archiveVersion.set(version)
     archiveClassifier.set('')
 }
