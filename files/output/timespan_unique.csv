@@ -1,4 +1,4 @@
-initial value|prepared value|normalized values|sanitized edge values
+input value|prepared value|normalized values|normalized edge values
 (1)838|(1)838|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/19th_century, https://dbpedia.org/page/1838]|[{start=https://dbpedia.org/page/1838, end=https://dbpedia.org/page/1838}]
 (1)911|(1)911|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/20th_century, https://dbpedia.org/page/1911]|[{start=https://dbpedia.org/page/1911, end=https://dbpedia.org/page/1911}]
 (1)912|(1)912|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/20th_century, https://dbpedia.org/page/1912]|[{start=https://dbpedia.org/page/1912, end=https://dbpedia.org/page/1912}]

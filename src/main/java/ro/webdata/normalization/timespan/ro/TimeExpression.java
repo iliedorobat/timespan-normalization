@@ -23,24 +23,18 @@ public class TimeExpression {
     transient private String separator = "\n";
     transient private String sanitizedValue;
 
-    @SerializedName("initial")
-    private String value;
+    @SerializedName("inputValue")
+    private String inputValue;
 
-    @SerializedName("edges")
-    private List<Map<String, DBpediaModel>> dbpediaEdges;
-
-    @SerializedName("periods")
-    private Set<DBpediaModel> dbpediaItems;
-
-    // TODO:
-    transient private List<TimespanModel> timespanModels;
+    @SerializedName("timeSeries")
+    private List<TimespanModel> timespanModels;
 
     public static String getHeaders() {
         List<String> headers = new ArrayList<>(){{
-            add("initial value");
+            add("input value");
             add("prepared value");
             add("normalized values");
-            add("sanitized edge values");
+            add("normalized edge values");
         }};
 
         return String.join("|", headers);
@@ -49,23 +43,32 @@ public class TimeExpression {
     /**
      * Set the original value, the value whose Christum notation has been
      * sanitized and the prepared value (the DBpedia links)
-     * @param value The original value
+     * @param inputValue The original value
      * @param separator Value separator
      */
-    public TimeExpression(String value, boolean historicalOnly, String separator) {
-        String sanitizedValue = TimeSanitizeUtils.sanitizeValue(value);
-        this.timespanModels = TimespanUtils.prepareTimespanModels(sanitizedValue, historicalOnly);
+    public TimeExpression(String inputValue, boolean historicalOnly, String separator) {
+        String sanitizedValue = TimeSanitizeUtils.sanitizeValue(inputValue);
 
-        this.value = value;
+        this.inputValue = inputValue;
         this.sanitizedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
-        this.dbpediaEdges = this.getDBpediaEdges();
-        this.dbpediaItems = this.getDBpediaItems();
+        this.timespanModels = TimespanUtils.prepareTimespanModels(sanitizedValue, historicalOnly);
 
         if (separator != null)
             this.separator = separator;
     }
 
-    // TODO: remove
+    @Override
+    public String toString() {
+        return inputValue
+                + separator + sanitizedValue
+                + separator + this.getDBpediaItems()
+                + separator + this.getDBpediaEdges();
+    }
+
+    public String serialize() {
+        return GSON.toJson(this);
+    }
+
     private List<Map<String, DBpediaModel>> getDBpediaEdges() {
         List<Map<String, DBpediaModel>> edges = new ArrayList<>();
 
@@ -76,7 +79,6 @@ public class TimeExpression {
         return edges;
     }
 
-    // TODO: remove
     private Set<DBpediaModel> getDBpediaItems() {
         Set<DBpediaModel> items = new LinkedHashSet<>();
 
@@ -85,21 +87,5 @@ public class TimeExpression {
         }
 
         return items;
-    }
-
-    @Override
-    public String toString() {
-        return value
-                + separator + sanitizedValue
-                + separator + dbpediaItems
-                + separator + dbpediaEdges;
-    }
-
-    public String serialize() {
-        if (dbpediaItems.isEmpty()) {
-            return "{}";
-        }
-
-        return GSON.toJson(this);
     }
 }

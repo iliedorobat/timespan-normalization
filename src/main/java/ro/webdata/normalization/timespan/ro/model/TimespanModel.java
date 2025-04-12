@@ -1,14 +1,19 @@
 package ro.webdata.normalization.timespan.ro.model;
 
+import com.google.gson.annotations.SerializedName;
 import ro.webdata.echo.commons.Const;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class TimespanModel {
+    private transient String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
+
+    @SerializedName("edges")
     private Map<String, DBpediaModel> dbpediaEdges = new HashMap<>();
+
+    @SerializedName("periods")
     private Set<DBpediaModel> dbpediaItems = new LinkedHashSet<>();
-    private String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
 
     public TimespanModel(TimePeriodModel timePeriod, String[] matchedList, String matchedValue, String matchedType, String residualValue) {
         setDbpediaEdges(timePeriod, matchedType, matchedValue);
