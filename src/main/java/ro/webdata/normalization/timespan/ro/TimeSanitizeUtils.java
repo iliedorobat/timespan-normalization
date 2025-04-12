@@ -11,12 +11,10 @@ public class TimeSanitizeUtils {
      * Sanitize some values that appear rarely and a regex operation
      * would be time-consuming
      * @param value The input value
-     * @param regex The related regular expression
      * @return The sanitized value
      */
-    public static String sanitizeValue(String value, String regex) {
+    public static String sanitizeValue(String value) {
         String sanitized = StringUtils.stripAccents(value);
-        sanitized = clearJunks(sanitized, regex);
         sanitized = sanitizeDateTime(sanitized);
         sanitized = sanitizeAges(sanitized);
         sanitized = sanitizeTimePeriods(sanitized);
@@ -34,7 +32,7 @@ public class TimeSanitizeUtils {
      * @return The cleaned value
      */
     //TODO: check all the regexes to find if they lead to some junk values
-    private static String clearJunks(String value, String regex) {
+    public static String clearJunks(String value, String regex) {
         // Avoid adding junks that could be interpreted by other regexes.
         // E.g.: "anul 13=1800/1801" will lead to "anul 13=" junk value
         if (regex != null && regex.equals(YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL)) {

@@ -1,6 +1,5 @@
 package ro.webdata.normalization.timespan.ro;
 
-import org.apache.commons.lang3.StringUtils;
 import ro.webdata.echo.commons.Collection;
 import ro.webdata.echo.commons.Const;
 import ro.webdata.normalization.timespan.ro.model.*;
@@ -21,8 +20,8 @@ import ro.webdata.normalization.timespan.ro.regex.date.ShortDateRegex;
 import ro.webdata.normalization.timespan.ro.regex.imprecise.DatelessRegex;
 import ro.webdata.normalization.timespan.ro.regex.imprecise.InaccurateYearRegex;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,56 +40,56 @@ public class TimespanUtils {
      * </ol>
      * @param original The original value taken from "lido:displayDate" record
      */
-    public static TimespanModel prepareTimespanModel(String original, boolean historicalOnly) {
-        String value = StringUtils.stripAccents(original);
-        TimespanModel timespanModel = new TimespanModel(value);
-        updateMatchedValues(original, timespanModel, historicalOnly, UnknownRegex.UNKNOWN, TimespanType.UNKNOWN);
+    public static List<TimespanModel> prepareTimespanModels(String original, boolean historicalOnly) {
+        String residualValue = TimeSanitizeUtils.sanitizeValue(original);
+        List<TimespanModel> timespanModels = new ArrayList<>();
 
-        updateMatchedValues(original, timespanModel, historicalOnly, DateRegex.DATE_DMY_INTERVAL, TimespanType.DATE);
-        updateMatchedValues(original, timespanModel, historicalOnly, DateRegex.DATE_YMD_INTERVAL, TimespanType.DATE);
-        updateMatchedValues(original, timespanModel, historicalOnly, ShortDateRegex.DATE_MY_INTERVAL, TimespanType.DATE);
-        updateMatchedValues(original, timespanModel, historicalOnly, DateRegex.DATE_DMY_OPTIONS, TimespanType.DATE);
-        updateMatchedValues(original, timespanModel, historicalOnly, DateRegex.DATE_YMD_OPTIONS, TimespanType.DATE);
-        updateMatchedValues(original, timespanModel, historicalOnly, ShortDateRegex.DATE_MY_OPTIONS, TimespanType.DATE);
-        updateMatchedValues(original, timespanModel, historicalOnly, LongDateRegex.LONG_DATE_OPTIONS, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, UnknownRegex.UNKNOWN, TimespanType.UNKNOWN);
 
-        updateMatchedValues(original, timespanModel, historicalOnly, TimePeriodRegex.CENTURY_INTERVAL, TimespanType.CENTURY);
-        updateMatchedValues(original, timespanModel, historicalOnly, TimePeriodRegex.CENTURY_OPTIONS, TimespanType.CENTURY);
-        updateMatchedValues(original, timespanModel, historicalOnly, TimePeriodRegex.MILLENNIUM_INTERVAL, TimespanType.MILLENNIUM);
-        updateMatchedValues(original, timespanModel, historicalOnly, TimePeriodRegex.MILLENNIUM_OPTIONS, TimespanType.MILLENNIUM);
-        updateMatchedValues(original, timespanModel, historicalOnly, TimePeriodRegex.OTHER_CENTURY_ROMAN_INTERVAL, TimespanType.CENTURY);
-        updateMatchedValues(original, timespanModel, historicalOnly, TimePeriodRegex.OTHER_CENTURY_ROMAN_OPTIONS, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DateRegex.DATE_DMY_INTERVAL, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DateRegex.DATE_YMD_INTERVAL, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, ShortDateRegex.DATE_MY_INTERVAL, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DateRegex.DATE_DMY_OPTIONS, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DateRegex.DATE_YMD_OPTIONS, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, ShortDateRegex.DATE_MY_OPTIONS, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, LongDateRegex.LONG_DATE_OPTIONS, TimespanType.DATE);
+
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.CENTURY_INTERVAL, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.CENTURY_OPTIONS, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.MILLENNIUM_INTERVAL, TimespanType.MILLENNIUM);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.MILLENNIUM_OPTIONS, TimespanType.MILLENNIUM);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.OTHER_CENTURY_ROMAN_INTERVAL, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.OTHER_CENTURY_ROMAN_OPTIONS, TimespanType.CENTURY);
         for (int i = 0; i < AgeRegex.AGE_OPTIONS.length; i++) {
-            updateMatchedValues(original, timespanModel, historicalOnly, AgeRegex.AGE_OPTIONS[i], TimespanType.EPOCH);
+            residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, AgeRegex.AGE_OPTIONS[i], TimespanType.EPOCH);
         }
 
-        updateMatchedValues(original, timespanModel, historicalOnly, DatelessRegex.DATELESS, TimespanType.UNKNOWN);
-        updateMatchedValues(original, timespanModel, historicalOnly, InaccurateYearRegex.AFTER_INTERVAL, TimespanType.YEAR);
-        updateMatchedValues(original, timespanModel, historicalOnly, InaccurateYearRegex.BEFORE_INTERVAL, TimespanType.YEAR);
-        updateMatchedValues(original, timespanModel, historicalOnly, InaccurateYearRegex.APPROX_AGES_INTERVAL, TimespanType.YEAR);
-        updateMatchedValues(original, timespanModel, historicalOnly, InaccurateYearRegex.AFTER, TimespanType.YEAR);
-        updateMatchedValues(original, timespanModel, historicalOnly, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DatelessRegex.DATELESS, TimespanType.UNKNOWN);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.AFTER_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.BEFORE_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.APPROX_AGES_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.AFTER, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
 
-        updateMatchedValues(original, timespanModel, historicalOnly, YearRegex.YEAR_INTERVAL, TimespanType.YEAR);
-        updateMatchedValues(original, timespanModel, historicalOnly, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
-        updateMatchedValues(original, timespanModel, historicalOnly, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
-        updateMatchedValues(original, timespanModel, historicalOnly, YearRegex.YEAR_OPTIONS, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, YearRegex.YEAR_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, YearRegex.YEAR_OPTIONS, TimespanType.YEAR);
         // This call need to be made after all the years processing !!!
-        updateMatchedValues(original, timespanModel, historicalOnly, YearRegex.UNKNOWN_YEARS, TimespanType.UNKNOWN);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, YearRegex.UNKNOWN_YEARS, TimespanType.UNKNOWN);
 
-        return timespanModel;
+        return timespanModels;
     }
 
     //TODO: "1/2 mil. 5 - sec. I al mil. 4 a.Chr."
     //TODO: "2 a.chr - 14 p.chr"
-    private static void updateMatchedValues(String original, TimespanModel timespanModel, boolean historicalOnly, String regex, String matchedType) {
-        String initialValue = timespanModel.getResidualValue();
-        initialValue = TimeSanitizeUtils.sanitizeValue(initialValue, regex);
-        String residualValue = initialValue
-                .replaceAll(regex, Const.EMPTY_VALUE_PLACEHOLDER);
+    private static String updateMatchedValues(String original, List<TimespanModel> timespanModels, boolean historicalOnly, String regex, String matchedType) {
+        String residualValue = TimeSanitizeUtils.clearJunks(original, regex);
 
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(initialValue);
+        Matcher matcher = pattern.matcher(residualValue);
+
+        residualValue = residualValue.replaceAll(regex, Const.EMPTY_VALUE_PLACEHOLDER);
 
         while (matcher.find()) {
             String matchedValue = matcher.group();
@@ -102,37 +101,17 @@ public class TimespanUtils {
             TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(matchedValue), historicalOnly, regex);
             String matchedItems = timePeriod.toString();
 
-            Map<String, DBpediaModel> edges = TimespanUtils.prepareEdges(timePeriod, matchedType, matchedValue);
-            timespanModel.addDbpediaEdges(edges);
-
             if (!matchedItems.isEmpty() && !matchedItems.equals(matchedValue)) {
                 String[] matchedList = matchedItems.split(Collection.STRING_LIST_SEPARATOR);
-                timespanModel.addDBpediaItems(matchedList, matchedType, matchedValue);
+                timespanModels.add(
+                        new TimespanModel(timePeriod, matchedList, matchedValue, matchedType, residualValue)
+                );
             } else if (matchedItems.equals(matchedValue)) {
                 System.err.println("The following group has not been processed: \"" + matchedValue + "\"");
             }
         }
-
-        timespanModel.setResidualValue(residualValue);
-    }
-
-    private static Map<String, DBpediaModel> prepareEdges(TimePeriodModel timePeriod, String matchedType, String matchedValue) {
-        Map<String, DBpediaModel> edges = new HashMap<>();
-        String startUri = timePeriod.toDBpediaStartUri(matchedType);
-        String endUri = timePeriod.toDBpediaEndUri(matchedType);
-
-        // E.g.: "începutul mil.al XX-lea"
-        if (startUri == null || endUri == null) {
-            return null;
-        }
-
-        DBpediaModel start = new DBpediaModel(startUri, matchedType, matchedValue);
-        DBpediaModel end = new DBpediaModel(endUri, matchedType, matchedValue);
-
-        edges.put("start", start);
-        edges.put("end", end);
-
-        return edges;
+        
+        return residualValue;
     }
 
     /**

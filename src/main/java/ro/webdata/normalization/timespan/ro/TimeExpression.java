@@ -32,6 +32,9 @@ public class TimeExpression {
     @SerializedName("periods")
     private Set<DBpediaModel> dbpediaItems;
 
+    // TODO:
+    transient private List<TimespanModel> timespanModels;
+
     public static String getHeaders() {
         List<String> headers = new ArrayList<>(){{
             add("initial value");
@@ -50,16 +53,38 @@ public class TimeExpression {
      * @param separator Value separator
      */
     public TimeExpression(String value, boolean historicalOnly, String separator) {
-        String sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
-        TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(sanitizedValue, historicalOnly);
+        String sanitizedValue = TimeSanitizeUtils.sanitizeValue(value);
+        this.timespanModels = TimespanUtils.prepareTimespanModels(sanitizedValue, historicalOnly);
 
         this.value = value;
         this.sanitizedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
-        this.dbpediaEdges = timespanModel.getDBpediaEdges();
-        this.dbpediaItems = timespanModel.getDBpediaItems();
+        this.dbpediaEdges = this.getDBpediaEdges();
+        this.dbpediaItems = this.getDBpediaItems();
 
         if (separator != null)
             this.separator = separator;
+    }
+
+    // TODO: remove
+    private List<Map<String, DBpediaModel>> getDBpediaEdges() {
+        List<Map<String, DBpediaModel>> edges = new ArrayList<>();
+
+        for (TimespanModel timespanModel : this.timespanModels) {
+            edges.add(timespanModel.getDBpediaEdges());
+        }
+
+        return edges;
+    }
+
+    // TODO: remove
+    private Set<DBpediaModel> getDBpediaItems() {
+        Set<DBpediaModel> items = new LinkedHashSet<>();
+
+        for (TimespanModel timespanModel : this.timespanModels) {
+            items.addAll(timespanModel.getDBpediaItems());
+        }
+
+        return items;
     }
 
     @Override
@@ -76,21 +101,5 @@ public class TimeExpression {
         }
 
         return GSON.toJson(this);
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public String getSanitizedValue() {
-        return sanitizedValue;
-    }
-
-    public Set<DBpediaModel> getDbpediaItems() {
-        return dbpediaItems;
-    }
-
-    public List<Map<String, DBpediaModel>> getDbpediaEdges() {
-        return this.dbpediaEdges;
     }
 }

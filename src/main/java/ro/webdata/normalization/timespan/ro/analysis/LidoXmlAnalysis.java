@@ -1,6 +1,5 @@
 package ro.webdata.normalization.timespan.ro.analysis;
 
-import org.apache.commons.lang3.StringUtils;
 import ro.webdata.normalization.timespan.ro.TimeSanitizeUtils;
 import ro.webdata.normalization.timespan.ro.regex.AgeRegex;
 import ro.webdata.normalization.timespan.ro.regex.TimePeriodRegex;
@@ -159,8 +158,8 @@ public class LidoXmlAnalysis {
      * @return true/false
      */
     private static boolean isMatching(String value, String regex) {
-        String preparedValue = StringUtils.stripAccents(value);
-        preparedValue = TimeSanitizeUtils.sanitizeValue(preparedValue, regex);
+        String preparedValue = TimeSanitizeUtils.clearJunks(value, regex);
+        preparedValue = TimeSanitizeUtils.sanitizeValue(preparedValue);
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(preparedValue);
         return matcher.find();
