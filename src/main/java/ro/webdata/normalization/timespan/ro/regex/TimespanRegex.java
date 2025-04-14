@@ -59,9 +59,8 @@ public class TimespanRegex {
     public static final String AGE_BC = TEXT_START
             + CASE_INSENSITIVE
             + "("
-                + "i.hr." + REGEX_OR
-                + "(" + "i[\\.]{0,1}e[\\.]{0,1}n[\\.]{0,1}" + ")" + REGEX_OR
-                + "(" + "[abi][\\. ]*" + REGEX_CHRISTUM + ")"
+                + "(" + "[iî][\\.]{0,1}e[\\.]{0,1}n[\\.]{0,1}" + ")" + REGEX_OR
+                + "(" + "[abiî][\\. ]*" + REGEX_CHRISTUM + ")"
             + ")" + TEXT_END;
     private static final String CHRISTUM_NOTATION = "(" + TimespanRegex.AGE_AD + REGEX_OR + TimespanRegex.AGE_BC + ")";
 
@@ -102,10 +101,14 @@ public class TimespanRegex {
                 + "){0,1}"
             + ")";
 
+    private static final String ARTICLE_AL = "(?:al[\\.\\s]*)?";
+    private static final String START = "(?:sf[aâ]r[sșş]it(?:u(?:l)?)?|sf[\\.\\s]{0,6})?";
+    private static final String END = "([iî]nceput(?:u(?:l)?|ului)?(?:\\s+de)?)?";
+
     // E.g.: "sfârșitul sec. xi-începutul sec. xiii p. chr"
-    public static final String START_END = "(sfarsitul|sf\\.|inceputul[ de]*|incep[\\.]*|inceput[ de]*)?";
-    public static final String CENTURY_NOTATION = "(" + START_END +  "\\s*(sec[\\w]*)([\\., ]+(al[\\. ]+){0,1})*" + ")";
-    public static final String MILLENNIUM_NOTATION = "(" + "(mil[\\w]*)([\\. ]+(al[ ]+){0,1})*" + ")";
+    public static final String START_END = START + END;
+    public static final String CENTURY_NOTATION = "(" + START_END +  "\\s*(?:(secol|secoi)(?:ele|ului|ul)?|sec)[\\.\\s]*" + ARTICLE_AL + ")";
+    public static final String MILLENNIUM_NOTATION = "(" + START_END + "\\s*(?:mileni(?:ile|ului|ul)?|mil)[\\.\\s]*" + ARTICLE_AL + ")";
 
     private static final String FIRST_HALF_STRING_REGEX = "(" + "prim[a]*[\\. ]+(jum|part)" + ")";
     private static final String SECOND_HALF_STRING_REGEX =  "(" + "a[ ]+(doua|(ii[-a]*))[\\. ]+(jum|part)" + ")";

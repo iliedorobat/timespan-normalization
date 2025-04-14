@@ -89,8 +89,6 @@ public class TimespanUtils {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(residualValue);
 
-        residualValue = residualValue.replaceAll(regex, Const.EMPTY_VALUE_PLACEHOLDER);
-
         while (matcher.find()) {
             String matchedValue = matcher.group();
             if (matchedValue == null) {
@@ -110,6 +108,8 @@ public class TimespanUtils {
                 System.err.println("The following group has not been processed: \"" + matchedValue + "\"");
             }
         }
+
+        residualValue = residualValue.replaceAll(regex, Const.EMPTY_VALUE_PLACEHOLDER);
         
         return residualValue;
     }
