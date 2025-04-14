@@ -7,6 +7,7 @@ package ro.webdata.normalization.timespan.ro.regex;
 public class AgeRegex {
     private AgeRegex() {}
 
+    private static final String ANY_WORDS = TimespanRegex.ANY_WORDS;
     private static final String REGEX_OR = TimespanRegex.REGEX_OR;
     private static final String TEXT_START = TimespanRegex.TEXT_START;
     private static final String TEXT_END = TimespanRegex.TEXT_END;
@@ -22,7 +23,7 @@ public class AgeRegex {
             + "(" + TEXT_START + "(" + "eneolitic" + ")" + TEXT_END + ")";
     /** <a href="http://dbpedia.org/page/Neolithic">Neolithic</a> */
     public static final String NEOLITHIC_AGE = TimespanRegex.CASE_INSENSITIVE
-            + "(" + TEXT_START + "(" + "neolitic[\\w]*" + ")" + TEXT_END + ")";
+            + "(" + TEXT_START + "(" + "neolitic" + ANY_WORDS + ")" + TEXT_END + ")";
     /** <a href="http://dbpedia.org/page/Bronze_Age">Bronze_Age</a> */
     public static final String BRONZE_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "bronz" + REGEX_OR + "bronzului" + REGEX_OR + "tarzii" + ")" + TEXT_END + ")";
@@ -42,13 +43,13 @@ public class AgeRegex {
 
     /** <a href="http://dbpedia.org/page/Ptolemaic_dynasty">Ptolemaic Dynasty</a> */
     public static final String PTOLEMAIC_DYNASTY = TimespanRegex.CASE_INSENSITIVE
-            + "(" + TEXT_START + "(" + "ptolem[\\w]+" + ")" + TEXT_END + ")";
+            + "(" + TEXT_START + "(" + "ptolem" + ANY_WORDS + ")" + TEXT_END + ")";
     /** <a href="http://dbpedia.org/page/Roman_Empire">Roman Empire</a> */
     public static final String ROMAN_EMPIRE_AGE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "romana" + ")" + TEXT_END + ")";
     /** <a href="http://dbpedia.org/page/Nerva">Nerva–Antonine Dynasty</a>–Antonine_dynasty */
     public static final String NERVA_ANTONINE_DYNASTY = TimespanRegex.CASE_INSENSITIVE
-            + "(" + TEXT_START + "(" + "antoninian[\\w]*" + REGEX_OR + "hadrian" + ")" + TEXT_END + ")";
+            + "(" + TEXT_START + "(" + "antoninian" + ANY_WORDS + REGEX_OR + "hadrian" + ")" + TEXT_END + ")";
     /** <a href="http://dbpedia.org/page/Renaissance">Renaissance</a> */
     public static final String RENAISSANCE = TimespanRegex.CASE_INSENSITIVE
             + "(" + TEXT_START + "(" + "renastere" + ")" + TEXT_END + ")";

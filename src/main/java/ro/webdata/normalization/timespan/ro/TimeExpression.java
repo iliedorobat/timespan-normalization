@@ -2,6 +2,7 @@ package ro.webdata.normalization.timespan.ro;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.StringUtils;
 import ro.webdata.normalization.timespan.ro.model.DBpediaModel;
 import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 
@@ -21,7 +22,7 @@ import java.util.*;
 public class TimeExpression {
     private static final Gson GSON = new Gson();
     transient private String separator = "\n";
-    transient private String sanitizedValue;
+    transient private String preparedValue;
 
     @SerializedName("inputValue")
     private String inputValue;
@@ -47,11 +48,13 @@ public class TimeExpression {
      * @param separator Value separator
      */
     public TimeExpression(String inputValue, boolean historicalOnly, String separator) {
-        String sanitizedValue = TimeSanitizeUtils.sanitizeValue(inputValue);
-
         this.inputValue = inputValue;
-        this.sanitizedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
-        this.timespanModels = TimespanUtils.prepareTimespanModels(sanitizedValue, historicalOnly);
+        this.preparedValue = TimeUtils.normalizeChristumNotation(
+                StringUtils.stripAccents(
+                    TimeSanitizeUtils.sanitizeValue(inputValue)
+            )
+        );
+        this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly);
 
         if (separator != null)
             this.separator = separator;
@@ -60,7 +63,7 @@ public class TimeExpression {
     @Override
     public String toString() {
         return inputValue
-                + separator + sanitizedValue
+                + separator + preparedValue
                 + separator + this.getDBpediaItems()
                 + separator + this.getDBpediaEdges();
     }

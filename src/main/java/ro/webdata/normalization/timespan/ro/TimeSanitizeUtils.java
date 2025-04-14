@@ -1,8 +1,7 @@
 package ro.webdata.normalization.timespan.ro;
 
-import ro.webdata.normalization.timespan.ro.regex.YearRegex;
-import org.apache.commons.lang3.StringUtils;
 import ro.webdata.echo.commons.Const;
+import ro.webdata.normalization.timespan.ro.regex.YearRegex;
 
 public class TimeSanitizeUtils {
     private TimeSanitizeUtils() {}
@@ -14,8 +13,7 @@ public class TimeSanitizeUtils {
      * @return The sanitized value
      */
     public static String sanitizeValue(String value) {
-        String sanitized = StringUtils.stripAccents(value);
-        sanitized = sanitizeDateTime(sanitized);
+        String sanitized = sanitizeDateTime(value);
         sanitized = sanitizeAges(sanitized);
         sanitized = sanitizeTimePeriods(sanitized);
 

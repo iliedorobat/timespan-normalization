@@ -8,6 +8,8 @@ package ro.webdata.normalization.timespan.ro.regex;
 public class TimespanRegex {
     private TimespanRegex() {}
 
+    public static final String ANY_WORD = "[\\wăâîşșţțĂÂÎŞȘŢȚ]+";
+    public static final String ANY_WORDS = "[\\wăâîşșţțĂÂÎŞȘŢȚ]*";
     public static final String REGEX_OR = "|";
     public static final String CASE_INSENSITIVE = "(?i)";
     public static final String AD_BC_OPTIONAL = "("
@@ -111,8 +113,8 @@ public class TimespanRegex {
     public static final String MILLENNIUM_NOTATION = "(" + START_END + "\\s*(?:mileni(?:ile|ului|ul)?|mil)[\\.\\s]*" + ARTICLE_AL + ")";
 
     private static final String FIRST_HALF_STRING_REGEX = "(" + "prim[a]*[\\. ]+(jum|part)" + ")";
-    private static final String SECOND_HALF_STRING_REGEX =  "(" + "a[ ]+(doua|(ii[-a]*))[\\. ]+(jum|part)" + ")";
-    private static final String REGEX_A_AL_POSTFIX = "(" + "[\\w]*[\\.]*([\\. ]+(a|al))*" + ")";
+    private static final String SECOND_HALF_STRING_REGEX =  "(" + "a[ ]+(doua|(ii[-a]*))[\\. ]+(jum|part)" + ANY_WORDS + ")";
+    private static final String REGEX_A_AL_POSTFIX = "(" + ANY_WORDS + "[\\.]*([\\. ]+(a|al))*" + ")";
 
     public static final String FIRST_HALF =
             "("
@@ -131,7 +133,7 @@ public class TimespanRegex {
             + ")";
     public static final String MIDDLE_OF =
             "("
-                + TEXT_START + "(jumatatea|(mij[\\w]*)|mj\\.)" + TEXT_END
+                + TEXT_START + "(jum|(mij" + ANY_WORDS + ")|mj\\.)" + TEXT_END
             + ")";
 
     /**
@@ -142,7 +144,7 @@ public class TimespanRegex {
                 + TEXT_START + "("
                     + "(1/4)" + REGEX_OR
                     + "(¼)" + REGEX_OR
-                    + "(" + "(inc[\\w]*[\\. ]*)" + "(de){0,1}" + ")" + REGEX_OR
+                    + "(" + "(inc" + ANY_WORDS + "[\\. ]*)" + "(de){0,1}" + ")" + REGEX_OR
                     + "(" + "primul[ ]+sfert" + "([ ]+a[l]{0,1}){0,1}" + ")" + REGEX_OR
                     + "(" + "prima treime a" + ")"
                 + ")" + TEXT_END
