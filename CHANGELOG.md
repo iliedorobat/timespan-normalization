@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ---
 
+## 1.7
+- Added support for preserving diacritics of transformed values
+
 ## 1.6
 - Bump commons-echo to 1.6
 - Added py4j gateway server
