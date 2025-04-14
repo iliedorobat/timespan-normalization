@@ -51,47 +51,49 @@ public class TimespanUtils {
         String residualValue = TimeSanitizeUtils.sanitizeValue(original);
         List<TimespanModel> timespanModels = new ArrayList<>();
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, UnknownRegex.UNKNOWN, TimespanType.UNKNOWN);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, UnknownRegex.UNKNOWN, TimespanType.UNKNOWN);
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DateRegex.DATE_DMY_INTERVAL, TimespanType.DATE);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DateRegex.DATE_YMD_INTERVAL, TimespanType.DATE);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, ShortDateRegex.DATE_MY_INTERVAL, TimespanType.DATE);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DateRegex.DATE_DMY_OPTIONS, TimespanType.DATE);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DateRegex.DATE_YMD_OPTIONS, TimespanType.DATE);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, ShortDateRegex.DATE_MY_OPTIONS, TimespanType.DATE);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, LongDateRegex.LONG_DATE_OPTIONS, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DateRegex.DATE_DMY_INTERVAL, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DateRegex.DATE_YMD_INTERVAL, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, ShortDateRegex.DATE_MY_INTERVAL, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DateRegex.DATE_DMY_OPTIONS, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DateRegex.DATE_YMD_OPTIONS, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, ShortDateRegex.DATE_MY_OPTIONS, TimespanType.DATE);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, LongDateRegex.LONG_DATE_OPTIONS, TimespanType.DATE);
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.CENTURY_INTERVAL, TimespanType.CENTURY);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.CENTURY_OPTIONS, TimespanType.CENTURY);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.MILLENNIUM_INTERVAL, TimespanType.MILLENNIUM);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.MILLENNIUM_OPTIONS, TimespanType.MILLENNIUM);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.OTHER_CENTURY_ROMAN_INTERVAL, TimespanType.CENTURY);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, TimePeriodRegex.OTHER_CENTURY_ROMAN_OPTIONS, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.CENTURY_INTERVAL, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.CENTURY_OPTIONS, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.MILLENNIUM_INTERVAL, TimespanType.MILLENNIUM);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.MILLENNIUM_OPTIONS, TimespanType.MILLENNIUM);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.OTHER_CENTURY_ROMAN_INTERVAL, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.OTHER_CENTURY_ROMAN_OPTIONS, TimespanType.CENTURY);
         for (int i = 0; i < AgeRegex.AGE_OPTIONS.length; i++) {
-            residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, AgeRegex.AGE_OPTIONS[i], TimespanType.EPOCH);
+            residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, AgeRegex.AGE_OPTIONS[i], TimespanType.EPOCH);
         }
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, DatelessRegex.DATELESS, TimespanType.UNKNOWN);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.AFTER_INTERVAL, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.BEFORE_INTERVAL, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.APPROX_AGES_INTERVAL, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.AFTER, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS, TimespanType.UNKNOWN);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.AFTER_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.BEFORE_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.APPROX_AGES_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.AFTER, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, YearRegex.YEAR_INTERVAL, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, YearRegex.YEAR_OPTIONS, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_OPTIONS, TimespanType.YEAR);
         // This call need to be made after all the years processing !!!
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, YearRegex.UNKNOWN_YEARS, TimespanType.UNKNOWN);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.UNKNOWN_YEARS, TimespanType.UNKNOWN);
 
         return timespanModels;
     }
 
     //TODO: "1/2 mil. 5 - sec. I al mil. 4 a.Chr."
     //TODO: "2 a.chr - 14 p.chr"
-    private static String updateMatchedValues(String original, List<TimespanModel> timespanModels, boolean historicalOnly, String regex, String matchedType) {
-        String residualValue = TimeSanitizeUtils.clearJunks(original, regex);
+    private static String updateMatchedValues(String original, List<TimespanModel> timespanModels, boolean historicalOnly, boolean sanitize, String regex, String matchedType) {
+        String residualValue = sanitize
+                ? TimeSanitizeUtils.clearJunks(original, regex)
+                : original;
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(residualValue);
