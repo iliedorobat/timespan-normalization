@@ -45,13 +45,14 @@ public class Main {
             Demo.main(args);
         } else if (ParamsUtils.contains(list, "--analysis")) {
             boolean historicalOnly = ParamsUtils.historicalOnly(list);
+            boolean sanitize = ParamsUtils.sanitize(list);
 
             // Extract time expressions from LIDO datasets
-            TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false, historicalOnly);
-            TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true, historicalOnly);
+            TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false, historicalOnly, sanitize);
+            TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true, historicalOnly, sanitize);
 
-            TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false, historicalOnly);
-            TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true, historicalOnly);
+            TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false, historicalOnly, sanitize);
+            TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true, historicalOnly, sanitize);
         }
     }
 }

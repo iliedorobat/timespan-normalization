@@ -23,20 +23,19 @@ public class LongDateModel extends TimePeriodModel {
 
         setEra(value);
         for (String str : values) {
-            str = str.toLowerCase();
+            String comparator = str.toLowerCase();
 
-            if (str.contains(SUFFIX_CENTURY)) {
+            if (comparator.contains(SUFFIX_CENTURY)) {
                 setCentury(str);
                 setMillennium(str);
-            } else if (str.contains(SUFFIX_YEAR)) {
+            } else if (comparator.contains(SUFFIX_YEAR)) {
                 setYear(str);
-            } else if (str.contains(SUFFIX_MONTH)) {
+            } else if (comparator.contains(SUFFIX_MONTH)) {
                 setMonth(str);
-            } else if (str.contains(SUFFIX_DAY)) {
+            } else if (comparator.contains(SUFFIX_DAY)) {
                 setDay(str);
             }
         }
-        System.out.println();
     }
 
     private void setEra(String value) {

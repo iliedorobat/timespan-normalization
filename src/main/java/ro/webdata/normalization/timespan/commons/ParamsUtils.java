@@ -43,4 +43,10 @@ public class ParamsUtils {
 
         return Boolean.parseBoolean(value);
     }
+
+    public static boolean sanitize(List<String> pairs) {
+        String value = getValue(pairs, "--sanitize");
+
+        return Boolean.parseBoolean(value);
+    }
 }

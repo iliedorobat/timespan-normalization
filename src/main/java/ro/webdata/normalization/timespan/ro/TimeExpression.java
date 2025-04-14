@@ -2,6 +2,7 @@ package ro.webdata.normalization.timespan.ro;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.StringUtils;
 import ro.webdata.normalization.timespan.ro.model.DBpediaModel;
 import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 
@@ -9,88 +10,83 @@ import java.util.*;
 
 // FIXME:
 //  1880-1890 (nedatat)
-//  1884 martie 28/aprilie 09
 //  1893-1902 (nedatat)
 //  1903-1914 (nedatat)
 //  1907 (nedatat)
 //  1910 (nedatat)
 //  1912-1914 (nedatat)
 //  an 1  an 21  etc.
-//  mileniile v-iva. chr.
-//  octombrie 23, 1777
 public class TimeExpression {
     private static final Gson GSON = new Gson();
-    transient private String separator = "\n";
-    transient private String sanitizedValue;
+    private static final String SEPARATOR = "|";
+    transient private String preparedValue;
 
-    @SerializedName("initial")
-    private String value;
+    @SerializedName("inputValue")
+    private String inputValue;
 
-    @SerializedName("edges")
-    private List<Map<String, DBpediaModel>> dbpediaEdges;
-
-    @SerializedName("periods")
-    private Set<DBpediaModel> dbpediaItems;
+    @SerializedName("timeSeries")
+    private List<TimespanModel> timespanModels;
 
     public static String getHeaders() {
         List<String> headers = new ArrayList<>(){{
-            add("initial value");
+            add("input value");
             add("prepared value");
             add("normalized values");
-            add("sanitized edge values");
+            add("normalized edge values");
         }};
 
-        return String.join("|", headers);
+        return String.join(SEPARATOR, headers);
     }
 
     /**
      * Set the original value, the value whose Christum notation has been
      * sanitized and the prepared value (the DBpedia links)
-     * @param value The original value
-     * @param separator Value separator
+     * @param inputValue The original value
+     * @param historicalOnly Flag which specifies whether the Framework will only handle
+     *                       historical dates (future dates will be ignored)
+     * @param sanitize Flag specifying if the custom method TimeSanitizeUtils.sanitizeValue
+     *                 will be used to sanitize values. Use "true" only if you use this
+     *                 framework on LIDO datasets.
      */
-    public TimeExpression(String value, boolean historicalOnly, String separator) {
-        String sanitizedValue = TimeSanitizeUtils.sanitizeValue(value, null);
-        TimespanModel timespanModel = TimespanUtils.prepareTimespanModel(sanitizedValue, historicalOnly);
+    public TimeExpression(String inputValue, boolean historicalOnly, boolean sanitize) {
+        String sanitizedValue = sanitize
+                ? TimeSanitizeUtils.sanitizeValue(inputValue)
+                : inputValue;
 
-        this.value = value;
-        this.sanitizedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
-        this.dbpediaEdges = timespanModel.getDBpediaEdges();
-        this.dbpediaItems = timespanModel.getDBpediaItems();
-
-        if (separator != null)
-            this.separator = separator;
+        this.inputValue = inputValue;
+        this.preparedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
+        this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly, sanitize);
     }
 
     @Override
     public String toString() {
-        return value
-                + separator + sanitizedValue
-                + separator + dbpediaItems
-                + separator + dbpediaEdges;
+        return inputValue
+                + SEPARATOR + preparedValue
+                + SEPARATOR + this.getDBpediaItems()
+                + SEPARATOR + this.getDBpediaEdges();
     }
 
     public String serialize() {
-        if (dbpediaItems.isEmpty()) {
-            return "{}";
-        }
-
         return GSON.toJson(this);
     }
 
-    public String getValue() {
-        return value;
+    private List<Map<String, DBpediaModel>> getDBpediaEdges() {
+        List<Map<String, DBpediaModel>> edges = new ArrayList<>();
+
+        for (TimespanModel timespanModel : this.timespanModels) {
+            edges.add(timespanModel.getDBpediaEdges());
+        }
+
+        return edges;
     }
 
-    public String getSanitizedValue() {
-        return sanitizedValue;
-    }
+    private Set<DBpediaModel> getDBpediaItems() {
+        Set<DBpediaModel> items = new LinkedHashSet<>();
 
-    public Set<DBpediaModel> getDbpediaItems() {
-        return dbpediaItems;
-    }
+        for (TimespanModel timespanModel : this.timespanModels) {
+            items.addAll(timespanModel.getDBpediaItems());
+        }
 
-    public List<Map<String, DBpediaModel>> getDbpediaEdges() {
-        return this.dbpediaEdges;
+        return items;
     }
 }

@@ -45,24 +45,32 @@ JDK 11+ or OpenJDK 11+
   ./gradlew clean shadowJar
 ```
 
-## Test the library:
+## Usage
+### Input Parameters
+- <b>--expression="SOME_TEXT"</b> takes the text to be parsed.
+- <b>--historicalOnly=true</b> specifies whether the Framework will only handle historical dates
+(future dates will be ignored).
+- <b>--sanitize=true</b> specifies if the custom method TimeSanitizeUtils.sanitizeValue will
+be used to sanitize values. Use "true" only if you  use this framework on LIDO datasets.
+
+### Test the library:
 ```bash
   # Parse only historical dates
-  java -jar build/libs/temporal-normalization-1.6.jar --historicalOnly=true --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/temporal-normalization-1.7.jar --historicalOnly=true --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
   # Include future dates
-  java -jar build/libs/temporal-normalization-1.6.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/temporal-normalization-1.7.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
-## Normalize multiple temporal expressions:
+### Normalize multiple temporal expressions:
 ```bash
   # Parse only historical dates
-  java -jar build/libs/temporal-normalization-1.6.jar --historicalOnly=true --analysis
+  java -jar build/libs/temporal-normalization-1.7.jar --historicalOnly=true --analysis
   # Include future dates
-  java -jar build/libs/temporal-normalization-1.6.jar --analysis
+  java -jar build/libs/temporal-normalization-1.7.jar --analysis
 ```
 
 ## Example
-### Usecase
+### Use case
 ```bash
     TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", true, null);
     System.out.print(expression);

@@ -1,33 +1,27 @@
 package ro.webdata.normalization.timespan.ro.model;
 
+import com.google.gson.annotations.SerializedName;
 import ro.webdata.echo.commons.Const;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class TimespanModel {
-    private List<Map<String, DBpediaModel>> dbpediaEdges = new ArrayList<>();
+    private transient String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
+
+    @SerializedName("edges")
+    private Map<String, DBpediaModel> dbpediaEdges = new HashMap<>();
+
+    @SerializedName("periods")
     private Set<DBpediaModel> dbpediaItems = new LinkedHashSet<>();
-    private String residualValue = Const.EMPTY_VALUE_PLACEHOLDER;
 
-    public TimespanModel(String value) {
-        setResidualValue(value);
+    public TimespanModel(TimePeriodModel timePeriod, String[] matchedList, String matchedValue, String matchedType, String residualValue) {
+        setDbpediaEdges(timePeriod, matchedType, matchedValue);
+        setDBpediaItems(matchedList, matchedType, matchedValue);
+        setResidualValue(residualValue);
     }
 
-    public void addDbpediaEdges(Map<String, DBpediaModel> edges) {
-        if (edges != null) {
-            this.dbpediaEdges.add(edges);
-        }
-    }
-
-    public void addDBpediaItems(String[] matchedList, String matchedType, String matchedValue) {
-        List<DBpediaModel> list = Arrays.stream(matchedList)
-                .map(uri -> new DBpediaModel(uri, matchedType, matchedValue))
-                .collect(Collectors.toCollection(ArrayList::new));
-        this.dbpediaItems.addAll(list);
-    }
-
-    public List<Map<String, DBpediaModel>> getDBpediaEdges() {
+    public Map<String, DBpediaModel> getDBpediaEdges() {
         return this.dbpediaEdges;
     }
 
@@ -39,8 +33,30 @@ public class TimespanModel {
         return this.residualValue;
     }
 
-    private void setDBpediaItems(Set<DBpediaModel> timespanList) {
-        this.dbpediaItems = timespanList;
+    public void setDbpediaEdges(TimePeriodModel timePeriod, String matchedType, String matchedValue) {
+        Map<String, DBpediaModel> edges = new HashMap<>();
+        String startUri = timePeriod.toDBpediaStartUri(matchedType);
+        String endUri = timePeriod.toDBpediaEndUri(matchedType);
+
+        // E.g.: "începutul mil.al XX-lea"
+        if (startUri == null || endUri == null) {
+            return;
+        }
+
+        DBpediaModel start = new DBpediaModel(startUri, matchedType, matchedValue);
+        DBpediaModel end = new DBpediaModel(endUri, matchedType, matchedValue);
+
+        edges.put("start", start);
+        edges.put("end", end);
+
+        this.dbpediaEdges = edges;
+    }
+
+    public void setDBpediaItems(String[] matchedList, String matchedType, String matchedValue) {
+        List<DBpediaModel> list = Arrays.stream(matchedList)
+                .map(uri -> new DBpediaModel(uri, matchedType, matchedValue))
+                .collect(Collectors.toCollection(ArrayList::new));
+        this.dbpediaItems.addAll(list);
     }
 
     public void setResidualValue(String residualValue) {

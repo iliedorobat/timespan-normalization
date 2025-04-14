@@ -22,12 +22,15 @@ public class TimespanAnalysis {
      * @param onlyUnique Flag indicating whether only unique time expressions are extracted
      * @param historicalOnly Flag which specifies whether the Framework will only handle historical
      *                       dates (future dates will be ignored)
+     * @param sanitize Flag specifying if the custom method TimeSanitizeUtils.sanitizeValue
+     *                 will be used to sanitize values. Use "true" only if you use this
+     *                 framework on LIDO datasets.
      */
-    public static void writeDetails(String inputPath, String outputFullPath, boolean excludeDemoFiles, boolean onlyUnique, boolean historicalOnly) {
+    public static void writeDetails(String inputPath, String outputFullPath, boolean excludeDemoFiles, boolean onlyUnique, boolean historicalOnly, boolean sanitize) {
         List<String> fileNames = File.getFileNames(inputPath, File.EXTENSION_XML, excludeDemoFiles);
 
         for (String fileName : fileNames) {
-            write(inputPath, outputFullPath, fileName, excludeDemoFiles, onlyUnique, historicalOnly);
+            write(inputPath, outputFullPath, fileName, excludeDemoFiles, onlyUnique, historicalOnly, sanitize);
         }
     }
 
@@ -39,13 +42,16 @@ public class TimespanAnalysis {
      * @param onlyUnique Flag indicating whether only unique time expressions are extracted
      * @param historicalOnly Flag which specifies whether the Framework will only handle historical
      *                       dates (future dates will be ignored)
+     * @param sanitize Flag specifying if the custom method TimeSanitizeUtils.sanitizeValue
+     *                 will be used to sanitize values. Use "true" only if you use this
+     *                 framework on LIDO datasets.
      */
-    public static void write(String inputPath, String outputFullPath, boolean excludeDemoFiles, boolean onlyUnique, boolean historicalOnly) {
-        write(inputPath, outputFullPath, null, excludeDemoFiles, onlyUnique, historicalOnly);
+    public static void write(String inputPath, String outputFullPath, boolean excludeDemoFiles, boolean onlyUnique, boolean historicalOnly, boolean sanitize) {
+        write(inputPath, outputFullPath, null, excludeDemoFiles, onlyUnique, historicalOnly, sanitize);
     }
 
     // Extract all time expressions from LIDO files
-    public static void write(String inputPath, String outputFullPath, String fileName, boolean excludeDemoFiles, boolean onlyUnique, boolean historicalOnly) {
+    public static void write(String inputPath, String outputFullPath, String fileName, boolean excludeDemoFiles, boolean onlyUnique, boolean historicalOnly, boolean sanitize) {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
         System.out.println("File: " + (fileName != null ? fileName : "ALL") + "\n");
 
@@ -54,12 +60,12 @@ public class TimespanAnalysis {
         for (Map.Entry<String, List<String>> entry : timespanMap.entrySet()) {
             String path = prepareOutputPath(outputFullPath, fileName, entry.getKey());
             List<String> list = entry.getValue();
-            write(list, path, onlyUnique, historicalOnly);
+            write(list, path, onlyUnique, historicalOnly, sanitize);
         }
 
         String path = prepareFilePath(outputFullPath, fileName);
         List<String> consolidatedTimespanMap = TimespanAnalysisUtils.consolidateTimespanMap(timespanMap);
-        write(consolidatedTimespanMap, path, onlyUnique, historicalOnly);
+        write(consolidatedTimespanMap, path, onlyUnique, historicalOnly, sanitize);
 
         Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
     }
@@ -75,7 +81,7 @@ public class TimespanAnalysis {
     }
 
     // Extract all time expressions from LIDO files
-    private static void write(List<String> initTimespanList, String outputFullPath, boolean onlyUnique, boolean historicalOnly) {
+    private static void write(List<String> initTimespanList, String outputFullPath, boolean onlyUnique, boolean historicalOnly, boolean sanitize) {
         List<String> timespanList = initTimespanList;
         if (onlyUnique) {
             Set<String> set = new TreeSet<>(timespanList);
@@ -84,7 +90,7 @@ public class TimespanAnalysis {
 
         File.write(timespanList, outputFullPath, false);
 
-        List<String> timeExpressions = toTimeExpressions(timespanList, historicalOnly);
+        List<String> timeExpressions = toTimeExpressions(timespanList, historicalOnly, sanitize);
         String csvOutputFullPath = outputFullPath.replaceAll("\\.[a-zA-Z]*", File.EXTENSION_SEPARATOR + File.EXTENSION_CSV);
         File.write(timeExpressions, csvOutputFullPath, false);
     }
@@ -105,13 +111,13 @@ public class TimespanAnalysis {
         return newFilePath + File.EXTENSION_SEPARATOR + extension;
     }
 
-    private static List<String> toTimeExpressions(List<String> strTimeExpressions, boolean historicalOnly) {
+    private static List<String> toTimeExpressions(List<String> strTimeExpressions, boolean historicalOnly, boolean sanitize) {
         List<String> timeExpressions = new ArrayList<>(){{
             add(TimeExpression.getHeaders());
         }};
 
         for (String str : strTimeExpressions) {
-            TimeExpression timeExpression = new TimeExpression(str, historicalOnly, "|");
+            TimeExpression timeExpression = new TimeExpression(str, historicalOnly, sanitize);
             timeExpressions.add(timeExpression.toString());
         }
 

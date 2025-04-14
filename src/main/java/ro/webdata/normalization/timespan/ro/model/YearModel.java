@@ -6,7 +6,7 @@ import ro.webdata.normalization.timespan.ro.regex.YearRegex;
 
 public class YearModel extends TimePeriodModel {
     // Used to separate the minus sign from the dash separator "-2 - -14 p.chr"; "-2 p.chr - -14 p.chr"
-    private static final String REGEX_AGE_SEPARATOR = "(?<=[\\w\\W&&[^ -]])[ ]*-[ ]*";
+    private static final String REGEX_AGE_SEPARATOR = "(?<=[\\wăâîşșţțĂÂÎŞȘŢȚ\\W&&[^ -]])[ ]*-[ ]*";
 
     public YearModel(String original, String value, boolean historicalOnly) {
         setYearModel(original, value, historicalOnly);

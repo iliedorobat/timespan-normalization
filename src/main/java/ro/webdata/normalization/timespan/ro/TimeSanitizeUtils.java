@@ -1,8 +1,7 @@
 package ro.webdata.normalization.timespan.ro;
 
-import ro.webdata.normalization.timespan.ro.regex.YearRegex;
-import org.apache.commons.lang3.StringUtils;
 import ro.webdata.echo.commons.Const;
+import ro.webdata.normalization.timespan.ro.regex.YearRegex;
 
 public class TimeSanitizeUtils {
     private TimeSanitizeUtils() {}
@@ -11,13 +10,10 @@ public class TimeSanitizeUtils {
      * Sanitize some values that appear rarely and a regex operation
      * would be time-consuming
      * @param value The input value
-     * @param regex The related regular expression
      * @return The sanitized value
      */
-    public static String sanitizeValue(String value, String regex) {
-        String sanitized = StringUtils.stripAccents(value);
-        sanitized = clearJunks(sanitized, regex);
-        sanitized = sanitizeDateTime(sanitized);
+    public static String sanitizeValue(String value) {
+        String sanitized = sanitizeDateTime(value);
         sanitized = sanitizeAges(sanitized);
         sanitized = sanitizeTimePeriods(sanitized);
 
@@ -34,7 +30,7 @@ public class TimeSanitizeUtils {
      * @return The cleaned value
      */
     //TODO: check all the regexes to find if they lead to some junk values
-    private static String clearJunks(String value, String regex) {
+    public static String clearJunks(String value, String regex) {
         // Avoid adding junks that could be interpreted by other regexes.
         // E.g.: "anul 13=1800/1801" will lead to "anul 13=" junk value
         if (regex != null && regex.equals(YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL)) {
@@ -61,7 +57,7 @@ public class TimeSanitizeUtils {
                 return "11 martie 1528 - 13 martie 1528";
             case "6 octombrie1904":
                 return "6 octombrie 1904";
-            case "30 mai si 5 august 1796":
+            case "30 mai și 5 august 1796":
                 return "30 mai 1796; 5 august 1796";
             case "1861septembrie 25":
                 return "25 septembrie 1861";
@@ -81,7 +77,7 @@ public class TimeSanitizeUtils {
      * @return The sanitized value
      */
     private static String sanitizeAges(String value) {
-        if (value.equals("1880 (proprietarul avea 90 de ani in 1970)"))
+        if (value.equals("1880 (proprietarul avea 90 de ani în 1970)"))
             return "1880";
 
         return value;
@@ -97,12 +93,16 @@ public class TimeSanitizeUtils {
         switch (value) {
             case "15(6)3":
                 return "1563";
-            case "a doua jumatate a sec. i a.chr. (-43 - -29); a doua jum. a sec.xix (montura inel)":
-                return "a doua jumatate a sec. i a.chr. (43 - 29 a.chr.); a doua jum. a sec.xix (montura inel)";
-            case "instituit in decembrie 1915 - desfiintat in 1973":
+            case "1884 martie 28/aprilie 09":
+                return "1884";
+            case "octombrie 23, 1777":
+                return "23 octombrie 1777";
+            case "a doua jumatate a sec. i a.chr. (-43 - -29); a doua jum. a sec.xix (montură inel)":
+                return "a doua jumatate a sec. i a.chr. (43 - 29 a.chr.); a doua jum. a sec.xix (montură inel)";
+            case "instituit în decembrie 1915 - desființat în 1973":
                 return "1915 - 1973";
-            case "prima jumatate a secolului xviii (rest de datare 174...)":
-                return "prima jumatate a secolului xviii";
+            case "prima jumătate a secolului xviii (rest de datare 174...)":
+                return "prima jumătate a secolului xviii";
             case "sec. xviii - xix 18(40)":
                 return "sec. xviii - xix";
             case "281-222 (232?) p. chr.":
@@ -159,6 +159,8 @@ public class TimeSanitizeUtils {
             case "sex. xix":
             case "secolul al-xix -lea":
                 return "sec. xix";
+            case "sex. xvii - a ii jumătate":
+                return "a doua jumătate a sec. xvii";
             case "sec. xix/2/2":
                 return "2/2 sec. xix";
             case "xi - ix a.hr.":
@@ -175,18 +177,28 @@ public class TimeSanitizeUtils {
             case "4/4ec. xix":
             case "4/4 secolul al xix/lea":
                 return "4/4 sec. xix";
-            case "sfarsitul sexc. xix":
-                return "sfarsitul sec. xix";
+            case "sfârșitul sexc. xix":
+                return "sfârșitul sec. xix";
             case "xx":
             case "anii 30-40 secolul xx":
             case "anii 30 ai secolului xx":
-            case "prima jumatate a anului '30":
+            case "prima jumătate a anului '30":
             case "mijlocul anilor '20":
-            case "a doua jumatate a anilor '20":
-            case "a doua jumatate a anilor '30":
+            case "a doua jumătate a anilor '20":
+            case "a doua jumătate a anilor '30":
                 return "sec. xx";
             case "mijlocul secolului al doilea a.chr.":
                 return "mijlocul sec. ii a.ch.";
+            case "mileniile v-iva. chr.":
+                return "mileniile v-iv a. chr.";
+            case "decembrie 01 fara an":
+            case "mesiața dec., dni 10, leat 7156":
+            case "mesiața ghen., dni 18, leat 7158":
+            case "mesiața iolie, 20 dni, leat 7156":
+            case "mesiața iunie, dni 12, v leat 7105 (1597)":
+            case "mesiața mr., dni 22, leat 7189":
+            case "mesiața oct., dni 28, vleat 7152":
+                return "";
             default:
                 return value;
         }

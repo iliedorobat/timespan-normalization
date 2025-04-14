@@ -19,8 +19,9 @@ public class Demo {
         List<String> list = Arrays.asList(args);
         String value = ParamsUtils.getValue(list, "--expression");
         boolean historicalOnly = ParamsUtils.historicalOnly(list);
-        TimeExpression timeExpression = new TimeExpression(value, historicalOnly, null);
+        boolean sanitize = ParamsUtils.sanitize(list);
 
+        TimeExpression timeExpression = new TimeExpression(value, historicalOnly, sanitize);
         System.out.println(timeExpression.serialize());
     }
 
@@ -37,15 +38,18 @@ public class Demo {
      *                      which stores the timespan values (E.g.: PATH_OUTPUT_ALL_TIMESPAN_FILE)
      * @param historicalOnly Flag which specifies whether the Framework will only handle historical
      *                       dates (future dates will be ignored)
+     * @param sanitize Flag specifying if the custom method TimeSanitizeUtils.sanitizeValue
+     *                 will be used to sanitize values. Use "true" only if you use this
+     *                 framework on LIDO datasets.
      */
-    public static void printFullTimespan(String inputFullPath, boolean historicalOnly) {
+    public static void printFullTimespan(String inputFullPath, boolean historicalOnly, boolean sanitize) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(inputFullPath));
             String readLine;
 
             while((readLine = br.readLine()) != null) {
                 if (!readLine.isEmpty()) {
-                    System.out.println(new TimeExpression(readLine, historicalOnly, "|"));
+                    System.out.println(new TimeExpression(readLine, historicalOnly, sanitize));
                 }
             }
         } catch (IOException e) {
