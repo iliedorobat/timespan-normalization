@@ -42,6 +42,15 @@ public class TimeExpression {
      * Set the original value, the value whose Christum notation has been
      * sanitized and the prepared value (the DBpedia links)
      * @param inputValue The original value
+     */
+    public TimeExpression(String inputValue) {
+        this(inputValue, false, false);
+    }
+
+    /**
+     * Set the original value, the value whose Christum notation has been
+     * sanitized and the prepared value (the DBpedia links)
+     * @param inputValue The original value
      * @param historicalOnly Flag which specifies whether the Framework will only handle
      *                       historical dates (future dates will be ignored)
      * @param sanitize Flag specifying if the custom method TimeSanitizeUtils.sanitizeValue
