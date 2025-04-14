@@ -10,18 +10,15 @@ import java.util.*;
 
 // FIXME:
 //  1880-1890 (nedatat)
-//  1884 martie 28/aprilie 09
 //  1893-1902 (nedatat)
 //  1903-1914 (nedatat)
 //  1907 (nedatat)
 //  1910 (nedatat)
 //  1912-1914 (nedatat)
 //  an 1  an 21  etc.
-//  mileniile v-iva. chr.
-//  octombrie 23, 1777
 public class TimeExpression {
     private static final Gson GSON = new Gson();
-    transient private String separator = "\n";
+    private static final String SEPARATOR = "|";
     transient private String preparedValue;
 
     @SerializedName("inputValue")
@@ -45,27 +42,30 @@ public class TimeExpression {
      * Set the original value, the value whose Christum notation has been
      * sanitized and the prepared value (the DBpedia links)
      * @param inputValue The original value
-     * @param separator Value separator
+     * @param historicalOnly Flag which specifies whether the Framework will only handle
+     *                       historical dates (future dates will be ignored)
+     * @param sanitize Flag specifying if the custom method TimeSanitizeUtils.sanitizeValue
+     *                 will be used to sanitize values. Use "true" only if you use this
+     *                 framework on LIDO datasets.
      */
-    public TimeExpression(String inputValue, boolean historicalOnly, String separator) {
+    public TimeExpression(String inputValue, boolean historicalOnly, boolean sanitize) {
+        String sanitizedValue = sanitize
+                ? TimeSanitizeUtils.sanitizeValue(inputValue)
+                : inputValue;
+
         this.inputValue = inputValue;
         this.preparedValue = TimeUtils.normalizeChristumNotation(
-                StringUtils.stripAccents(
-                    TimeSanitizeUtils.sanitizeValue(inputValue)
-            )
+                StringUtils.stripAccents(sanitizedValue)
         );
         this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly);
-
-        if (separator != null)
-            this.separator = separator;
     }
 
     @Override
     public String toString() {
         return inputValue
-                + separator + preparedValue
-                + separator + this.getDBpediaItems()
-                + separator + this.getDBpediaEdges();
+                + SEPARATOR + preparedValue
+                + SEPARATOR + this.getDBpediaItems()
+                + SEPARATOR + this.getDBpediaEdges();
     }
 
     public String serialize() {

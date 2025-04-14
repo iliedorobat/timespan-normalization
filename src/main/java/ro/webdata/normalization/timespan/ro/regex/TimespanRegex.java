@@ -104,16 +104,17 @@ public class TimespanRegex {
             + ")";
 
     private static final String ARTICLE_AL = "(?:al[\\.\\s]*)?";
-    private static final String START = "(?:sf[aâ]r[sșş]it(?:u(?:l)?)?|sf[\\.\\s]{0,6})?";
-    private static final String END = "([iî]nceput(?:u(?:l)?|ului)?(?:\\s+de)?)?";
+    private static final String START = "((?:[iî]nceput(?:u(?:l)?|ului)?|[iî]nc\\.?)(?:\\s+de)?)?";
+    private static final String END = "(?:sf[aâ]r[sșş]it(?:u(?:l)?)?|sf[\\.\\s]{0,6})?";
 
     // E.g.: "sfârșitul sec. xi-începutul sec. xiii p. chr"
-    public static final String START_END = START + END;
+    public static final String START_END = END + START;
     public static final String CENTURY_NOTATION = "(" + START_END +  "\\s*(?:(secol|secoi)(?:ele|ului|ul)?|sec)[\\.\\s]*" + ARTICLE_AL + ")";
     public static final String MILLENNIUM_NOTATION = "(" + START_END + "\\s*(?:mileni(?:ile|ului|ul)?|mil)[\\.\\s]*" + ARTICLE_AL + ")";
 
-    private static final String FIRST_HALF_STRING_REGEX = "(" + "prim[a]*[\\. ]+(jum|part)" + ")";
-    private static final String SECOND_HALF_STRING_REGEX =  "(" + "a[ ]+(doua|(ii[-a]*))[\\. ]+(jum|part)" + ANY_WORDS + ")";
+    private static final String HALF = "jum([aă]tate(a)?)?";
+    private static final String FIRST_HALF_STRING_REGEX = "(" + "prim[a]*[\\. ]+(" + HALF + "|part)" + ")";
+    private static final String SECOND_HALF_STRING_REGEX =  "(" + "a[ ]+(doua|(ii[-a]*))[\\. ]+(" + HALF + "|part)" + ANY_WORDS + ")";
     private static final String REGEX_A_AL_POSTFIX = "(" + ANY_WORDS + "[\\.]*([\\. ]+(a|al))*" + ")";
 
     public static final String FIRST_HALF =
@@ -133,7 +134,7 @@ public class TimespanRegex {
             + ")";
     public static final String MIDDLE_OF =
             "("
-                + TEXT_START + "(jum|(mij" + ANY_WORDS + ")|mj\\.)" + TEXT_END
+                + TEXT_START + "(" + HALF + "|(mij" + ANY_WORDS + ")|mj\\.)" + TEXT_END
             + ")";
 
     /**
@@ -144,7 +145,7 @@ public class TimespanRegex {
                 + TEXT_START + "("
                     + "(1/4)" + REGEX_OR
                     + "(¼)" + REGEX_OR
-                    + "(" + "(inc" + ANY_WORDS + "[\\. ]*)" + "(de){0,1}" + ")" + REGEX_OR
+                    + "(" + "([iî]nc" + ANY_WORDS + "[\\. ]*)" + "(de){0,1}" + ")" + REGEX_OR
                     + "(" + "primul[ ]+sfert" + "([ ]+a[l]{0,1}){0,1}" + ")" + REGEX_OR
                     + "(" + "prima treime a" + ")"
                 + ")" + TEXT_END
