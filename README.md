@@ -47,10 +47,10 @@ JDK 11+ or OpenJDK 11+
 
 ## Usage
 ### Input Parameters
-- <b>--expression="SOME_TEXT"</b> takes the text to be parsed.
-- <b>--historicalOnly=true</b> specifies whether the Framework will only handle historical dates
+- <b>expression="SOME_TEXT"</b> takes the text to be parsed.
+- <b>historicalOnly=true</b> specifies whether the Framework will only handle historical dates
 (future dates will be ignored).
-- <b>--sanitize=true</b> specifies if the custom method TimeSanitizeUtils.sanitizeValue will
+- <b>sanitize=true</b> specifies if the custom method TimeSanitizeUtils.sanitizeValue will
 be used to sanitize values. Use "true" only if you  use this framework on LIDO datasets.
 
 ### Test the library:
@@ -72,22 +72,22 @@ be used to sanitize values. Use "true" only if you  use this framework on LIDO d
 ## Example
 ### Use case
 ```bash
-    TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.", true, null);
+    TimeExpression expression = new TimeExpression("1/2 sec. iii - sec. i a. chr.");
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("1/2 mil. 5 - sec. i al mil. 4 a.chr.", true, null);
+    TimeExpression timeExpression = new TimeExpression("1/2 mil. 5 - sec. i al mil. 4 a.chr.");
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("4/4 sec.xix. sfârșitul sec.al xix-lea și începutul sec.al xx-lea.", true, null);
+    TimeExpression timeExpression = new TimeExpression("4/4 sec.xix. sfârșitul sec.al xix-lea și începutul sec.al xx-lea.");
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("402-403, 405-406 a. chr.", true, null);
+    TimeExpression timeExpression = new TimeExpression("402-403, 405-406 a. chr.");
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 - sec. 1 a. chr.", true, null);
+    TimeExpression timeExpression = new TimeExpression("1/2 sec. 3 - sec. 1 a. chr.");
     System.out.print(expression);
 
-    TimeExpression timeExpression = new TimeExpression("epoca modernă", true, null);
+    TimeExpression timeExpression = new TimeExpression("epoca modernă");
     System.out.print(expression);
 ```
 
