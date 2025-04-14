@@ -29,7 +29,6 @@ public class TimespanUtils {
     private TimespanUtils() {}
 
     /**
-     * TODO: doc<br/>
      * In the matching process the first matched value need to be the interval type,
      * followed by the ordinal values, respecting the following order:
      * <ol>
@@ -37,10 +36,18 @@ public class TimespanUtils {
      *     <li>Map every date-like value</li>
      *     <li>Map every century and millennium age-like value</li>
      *     <li>Map every epoch-like value</li>
+     *     <li>Map unprecise years</li>
+     *     <li>Map years</li>
+     *     <li>Map unknown years</li>
      * </ol>
      * @param original The original value taken from "lido:displayDate" record
+     * @param historicalOnly Flag which specifies whether the Framework will only handle
+     *                       historical dates (future dates will be ignored)
+     * @param sanitize Flag specifying if the custom method TimeSanitizeUtils.sanitizeValue
+     *                 will be used to sanitize values. Use "true" only if you use this
+     *                 framework on LIDO datasets.
      */
-    public static List<TimespanModel> prepareTimespanModels(String original, boolean historicalOnly) {
+    public static List<TimespanModel> prepareTimespanModels(String original, boolean historicalOnly, boolean sanitize) {
         String residualValue = TimeSanitizeUtils.sanitizeValue(original);
         List<TimespanModel> timespanModels = new ArrayList<>();
 

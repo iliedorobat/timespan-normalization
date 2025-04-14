@@ -35,7 +35,7 @@ public class TimeExpression {
             add("normalized edge values");
         }};
 
-        return String.join("|", headers);
+        return String.join(SEPARATOR, headers);
     }
 
     /**
@@ -54,10 +54,8 @@ public class TimeExpression {
                 : inputValue;
 
         this.inputValue = inputValue;
-        this.preparedValue = TimeUtils.normalizeChristumNotation(
-                StringUtils.stripAccents(sanitizedValue)
-        );
-        this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly);
+        this.preparedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
+        this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly, sanitize);
     }
 
     @Override
