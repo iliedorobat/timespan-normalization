@@ -63,7 +63,8 @@ public class LidoXmlAnalysis {
                 InaccurateYearRegex.BEFORE,
                 InaccurateYearRegex.APPROX_AGES_OPTIONS,
 
-                YearRegex.YEAR_INTERVAL,
+                YearRegex.YEAR_INTERVAL_BASE,
+                YearRegex.YEAR_INTERVAL_EXTRA,
                 YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL,
                 YearRegex.YEAR_OPTIONS,
                 YearRegex.UNKNOWN_YEARS

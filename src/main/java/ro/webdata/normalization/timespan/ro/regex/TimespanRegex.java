@@ -11,7 +11,8 @@ public class TimespanRegex {
     public static final String ANY_WORD = "[\\wăâîşșţțĂÂÎŞȘŢȚ]+";
     public static final String ANY_WORDS = "[\\wăâîşșţțĂÂÎŞȘŢȚ]*";
     public static final String REGEX_OR = "|";
-    public static final String CASE_INSENSITIVE = "(?i)";
+    // u => unicode folding
+    public static final String CASE_INSENSITIVE = "(?iu)";
     public static final String AD_BC_OPTIONAL = "("
                 + "[ ]*" + "(" + TimespanRegex.AGE_BC + REGEX_OR + TimespanRegex.AGE_AD + ")"
             + "){0,1}";
@@ -19,9 +20,14 @@ public class TimespanRegex {
     public static final String REGEX_PUNCTUATION = "[\\.,;\\?!\\- ]";
     public static final String REGEX_PUNCTUATION_UNLIMITED = REGEX_PUNCTUATION + "*";
     // "-" is different char from "–" !!!
-    public static final String REGEX_INTERVAL_DELIMITER = "([ ]*[\\-\\–][ ]*)";
+    public static final String REGEX_INTERVAL_DELIMITER = "\\s*(?:-|–)\\s*";
     // "-" is different char from "–" !!!
-    public static final String REGEX_DATE_INTERVAL_SEPARATOR = "([ ]+[\\-\\–][ ]+)";
+    public static final String REGEX_INTERVAL_DELIMITER_EXTRA = "\\s*(?:-|–|([sşș]i))\\s*";
+    public static final String REGEX_INTERVAL_PREFIX = "(?:[iî]ntre" + REGEX_OR + "[iî]n\\s*interval(?:ul|u)?)";
+    /** @deprecated
+     * TODO: use REGEX_INTERVAL_DELIMITER?
+     * */
+    public static final String REGEX_DATE_INTERVAL_SEPARATOR = REGEX_INTERVAL_DELIMITER;
     public static final String REGEX_DATE_SEPARATOR = "[\\./\\- ]+";
     /**
      * Regex for marking the start of the text

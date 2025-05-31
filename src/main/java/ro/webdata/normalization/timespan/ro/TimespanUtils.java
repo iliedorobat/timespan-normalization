@@ -2,7 +2,10 @@ package ro.webdata.normalization.timespan.ro;
 
 import ro.webdata.echo.commons.Collection;
 import ro.webdata.echo.commons.Const;
-import ro.webdata.normalization.timespan.ro.model.*;
+import ro.webdata.normalization.timespan.ro.model.AgeModel;
+import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
+import ro.webdata.normalization.timespan.ro.model.TimespanModel;
+import ro.webdata.normalization.timespan.ro.model.YearModel;
 import ro.webdata.normalization.timespan.ro.model.date.DateModel;
 import ro.webdata.normalization.timespan.ro.model.date.LongDateModel;
 import ro.webdata.normalization.timespan.ro.model.date.ShortDateModel;
@@ -78,11 +81,12 @@ public class TimespanUtils {
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.AFTER, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL_EXTRA, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL_BASE, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_OPTIONS, TimespanType.YEAR);
-        // This call need to be made after all the years processing !!!
+        // This call must be made after all processing performed on calendar years!!!
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.UNKNOWN_YEARS, TimespanType.UNKNOWN);
 
         return timespanModels;
@@ -168,10 +172,11 @@ public class TimespanUtils {
             case YearRegex.UNKNOWN_YEARS:
             case UnknownRegex.UNKNOWN:
                 return new DatelessModel(original, value, historicalOnly);
-            case YearRegex.YEAR_INTERVAL:
+            case YearRegex.YEAR_INTERVAL_BASE:
+            case YearRegex.YEAR_INTERVAL_EXTRA:
             case YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL:
             case YearRegex.YEAR_OPTIONS:
-                return new YearModel(original, value, historicalOnly);
+                return new YearModel(original, value, historicalOnly, regex);
             default:
                 return null;
         }

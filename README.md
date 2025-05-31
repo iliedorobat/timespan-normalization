@@ -56,17 +56,17 @@ be used to sanitize values. Use "true" only if you  use this framework on LIDO d
 ### Test the library:
 ```bash
   # Parse only historical dates
-  java -jar build/libs/temporal-normalization-1.7.jar --historicalOnly=true --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/temporal-normalization-1.8.jar --historicalOnly=true --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
   # Include future dates
-  java -jar build/libs/temporal-normalization-1.7.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/temporal-normalization-1.8.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
 ### Normalize multiple temporal expressions:
 ```bash
   # Parse only historical dates
-  java -jar build/libs/temporal-normalization-1.7.jar --historicalOnly=true --analysis
+  java -jar build/libs/temporal-normalization-1.8.jar --historicalOnly=true --analysis
   # Include future dates
-  java -jar build/libs/temporal-normalization-1.7.jar --analysis
+  java -jar build/libs/temporal-normalization-1.8.jar --analysis
 ```
 
 ## Example

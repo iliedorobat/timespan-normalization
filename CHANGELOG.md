@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ---
 
+## 1.8
+- Added support for intervals like "Între 2004 și 2008", "Între 2004 - 2008", "În intervalul 2004 și 2008", etc.
+
 ## 1.7
 - Added support for preserving diacritics of transformed values
 
