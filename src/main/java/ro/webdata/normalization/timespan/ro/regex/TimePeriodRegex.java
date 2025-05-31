@@ -1,33 +1,13 @@
 package ro.webdata.normalization.timespan.ro.regex;
 
+import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.*;
+
 /**
  * Regular expressions for those time intervals that are stored
  * as ages (centuries and millenniums)
  */
 public class TimePeriodRegex {
     private TimePeriodRegex() {}
-
-    private static final String REGEX_OR = TimespanRegex.REGEX_OR;
-    private static final String REGEX_PUNCTUATION_UNLIMITED = TimespanRegex.REGEX_PUNCTUATION_UNLIMITED;
-    private static final String REGEX_INTERVAL_DELIMITER = TimespanRegex.REGEX_INTERVAL_DELIMITER;
-
-    private static final String CASE_INSENSITIVE = TimespanRegex.CASE_INSENSITIVE;
-    private static final String TEXT_START = TimespanRegex.TEXT_START;
-    private static final String TEXT_END = TimespanRegex.TEXT_END;
-
-    private static final String AGES_ARABIC_NOTATION = TimespanRegex.AGES_ARABIC_NOTATION;
-    private static final String AGES_ROMAN_NOTATION = TimespanRegex.AGES_ROMAN_NOTATION;
-    private static final String CENTURY_NOTATION = TimespanRegex.CENTURY_NOTATION;
-    private static final String MILLENNIUM_NOTATION = TimespanRegex.MILLENNIUM_NOTATION;
-
-    private static final String FIRST_HALF = TimespanRegex.FIRST_HALF;
-    private static final String SECOND_HALF = TimespanRegex.SECOND_HALF;
-    private static final String MIDDLE_OF = TimespanRegex.MIDDLE_OF;
-
-    private static final String FIRST_QUARTER = TimespanRegex.FIRST_QUARTER;
-    private static final String SECOND_QUARTER = TimespanRegex.SECOND_QUARTER;
-    private static final String THIRD_QUARTER = TimespanRegex.THIRD_QUARTER;
-    private static final String FORTH_QUARTER = TimespanRegex.FORTH_QUARTER;
 
     // CENTURY TIME PERIOD (ROMAN NOTATION)
     private static final String CENTURY_ROMAN = CENTURY_NOTATION + REGEX_PUNCTUATION_UNLIMITED + AGES_ROMAN_NOTATION;

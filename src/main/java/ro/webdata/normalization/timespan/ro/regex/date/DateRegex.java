@@ -2,18 +2,14 @@ package ro.webdata.normalization.timespan.ro.regex.date;
 
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 
+import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.*;
+
 /**
  * Regular expressions for those time intervals that are stored
  * as a date (having a year, a month and a day)
  */
 public class DateRegex {
     private DateRegex() {}
-
-    // REGEX_DATE_INTERVAL_SEPARATOR needs to be "([ ]+-[ ]+)"
-    public static final String REGEX_DATE_INTERVAL_SEPARATOR = TimespanRegex.REGEX_DATE_INTERVAL_SEPARATOR;
-    private static final String REGEX_OR = TimespanRegex.REGEX_OR;
-    private static final String TEXT_START = TimespanRegex.TEXT_START;
-    private static final String TEXT_END = TimespanRegex.TEXT_END;
 
     // d{3,} allows avoiding the month-day pattern (E.g.: "noiembrie 22")
     private static final String DATE_DMY_DOT =
@@ -60,9 +56,9 @@ public class DateRegex {
 
     private static final String DATE_DMY_TEXT =
             "("
-                + "\\d{1,2}[, ]+"
+                + "\\d{1,2}[,\\s]+"
                 + TimespanRegex.MONTHS_RO
-                + "[, ]+\\d{3,}"
+                + "[,\\s]+\\d{3,}"
                 + TimespanRegex.AD_BC_OPTIONAL
             + ")";  // E.g.: "9 iulie 1807"
     public static final String DATE_DMY_TEXT_PARTIAL =
@@ -70,7 +66,7 @@ public class DateRegex {
                 + "\\d{1,2}[, ]+"
                 + TimespanRegex.MONTHS_RO
                 + "("
-                    + "[, ]+\\d{3,}"
+                    + "[,\\s]+\\d{3,}"
                     + TimespanRegex.AD_BC_OPTIONAL
                 + ")*"
             + ")";  // E.g.: "10 iunie - 15 octombrie 1382"
@@ -79,13 +75,13 @@ public class DateRegex {
             "("
                 + "\\d{3,}[-]{1}\\d{2}[-]{1}\\d{1,2}"
                 + TimespanRegex.AD_BC_OPTIONAL
-            + ")";           // E.g.: "1698-10-15"
+            + ")";  // E.g.: "1698-10-15"
 
     private static final String DATE_YMD_TEXT =
             "("
-                + "\\d{3,}[, ]+"
+                + "\\d{3,}[,\\s]+"
                 + TimespanRegex.MONTHS_RO
-                + "[, ]+\\d{1,2}"
+                + "[,\\s]+\\d{1,2}"
                 + TimespanRegex.AD_BC_OPTIONAL
             + ")";  // E.g.: "1752 aprilie 25"
 
@@ -117,13 +113,13 @@ public class DateRegex {
     public static final String DATE_DMY_INTERVAL = TimespanRegex.CASE_INSENSITIVE
             + "("
                 + DATE_DMY_INTERVAL_START
-                + REGEX_DATE_INTERVAL_SEPARATOR
+                + REGEX_INTERVAL_DELIMITER
                 + DATE_DMY_INTERVAL_END
             + ")";
     public static final String DATE_YMD_INTERVAL = TimespanRegex.CASE_INSENSITIVE
             + "("
                 + DATE_YMD_INTERVAL_START
-                + REGEX_DATE_INTERVAL_SEPARATOR
+                + REGEX_INTERVAL_DELIMITER
                 + DATE_YMD_INTERVAL_END
             + ")";
 

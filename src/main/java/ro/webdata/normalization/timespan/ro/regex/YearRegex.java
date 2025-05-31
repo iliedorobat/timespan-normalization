@@ -1,15 +1,10 @@
 package ro.webdata.normalization.timespan.ro.regex;
 
-import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.REGEX_INTERVAL_DELIMITER_EXTRA;
-import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.REGEX_OR;
+import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.*;
 
 public class YearRegex {
     private YearRegex() {}
 
-    private static final String TEXT_START = TimespanRegex.TEXT_START;
-    private static final String TEXT_END = TimespanRegex.TEXT_END;
-    private static final String CASE_INSENSITIVE = TimespanRegex.CASE_INSENSITIVE;
-    private static final String REGEX_INTERVAL_PREFIX = TimespanRegex.REGEX_INTERVAL_PREFIX;
     private static final String BRACKETS_START =
             "("
                 + "?<=[\\[\\(]"
@@ -18,9 +13,6 @@ public class YearRegex {
             "("
                 + "?=[\\]\\)]"
             + ")";
-
-    private static final String REGEX_INTERVAL_DELIMITER = TimespanRegex.REGEX_INTERVAL_DELIMITER;
-    private static final String AD_BC_OPTIONAL = TimespanRegex.AD_BC_OPTIONAL;
 
     public static final String YEAR_OR_SEPARATOR =
             "("
@@ -53,7 +45,7 @@ public class YearRegex {
                 + YEAR_AD_BC
             + ")";
 
-    public static final String YEAR_INTERVAL_BASE = TEXT_START
+    public static final String YEAR_INTERVAL_BASE = CASE_INSENSITIVE + TEXT_START
             + "("
                 + YEAR_AD_BC
                 + REGEX_INTERVAL_DELIMITER
@@ -62,11 +54,11 @@ public class YearRegex {
 
     public static final String YEAR_3_4_DIGITS_SPECIAL_PREFIX =
             "("
-                + "anul[ ]*\\d{1,2}="
+                + "anul\\s*\\d{1,2}="
             + ")";
 
     // "anul 13=1800/1801"; "110/109 a. chr."; "112 sau 111 î.chr."
-    public static final String YEAR_3_4_DIGITS_SPECIAL_INTERVAL = TEXT_START
+    public static final String YEAR_3_4_DIGITS_SPECIAL_INTERVAL = CASE_INSENSITIVE + TEXT_START
             + "("
                 + "\\d{3,4}" + AD_BC_OPTIONAL
                 + YEAR_OR_SEPARATOR

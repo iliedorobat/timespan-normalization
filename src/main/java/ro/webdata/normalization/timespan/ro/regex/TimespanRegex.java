@@ -8,27 +8,20 @@ package ro.webdata.normalization.timespan.ro.regex;
 public class TimespanRegex {
     private TimespanRegex() {}
 
-    public static final String ANY_WORD = "[\\wăâîşșţțĂÂÎŞȘŢȚ]+";
     public static final String ANY_WORDS = "[\\wăâîşșţțĂÂÎŞȘŢȚ]*";
     public static final String REGEX_OR = "|";
-    // u => unicode folding
     public static final String CASE_INSENSITIVE = "(?iu)";
     public static final String AD_BC_OPTIONAL = "("
-                + "[ ]*" + "(" + TimespanRegex.AGE_BC + REGEX_OR + TimespanRegex.AGE_AD + ")"
+                + "\\s*" + "(" + TimespanRegex.AGE_BC + REGEX_OR + TimespanRegex.AGE_AD + ")"
             + "){0,1}";
 
-    public static final String REGEX_PUNCTUATION = "[\\.,;\\?!\\- ]";
+    public static final String REGEX_PUNCTUATION = "[\\.,;\\?!\\-\\s]";
     public static final String REGEX_PUNCTUATION_UNLIMITED = REGEX_PUNCTUATION + "*";
-    // "-" is different char from "–" !!!
+    // The separator must always be of the shape "(\\s+-\\s+)"
     public static final String REGEX_INTERVAL_DELIMITER = "\\s*(?:-|–)\\s*";
-    // "-" is different char from "–" !!!
     public static final String REGEX_INTERVAL_DELIMITER_EXTRA = "\\s*(?:-|–|([sşș]i))\\s*";
     public static final String REGEX_INTERVAL_PREFIX = "(?:[iî]ntre" + REGEX_OR + "[iî]n\\s*interval(?:ul|u)?)";
-    /** @deprecated
-     * TODO: use REGEX_INTERVAL_DELIMITER?
-     * */
-    public static final String REGEX_DATE_INTERVAL_SEPARATOR = REGEX_INTERVAL_DELIMITER;
-    public static final String REGEX_DATE_SEPARATOR = "[\\./\\- ]+";
+    public static final String REGEX_DATE_SEPARATOR = "[\\./\\-\\s]+";
     /**
      * Regex for marking the start of the text
      */
@@ -120,7 +113,7 @@ public class TimespanRegex {
 
     private static final String HALF = "jum([aă]tate(a)?)?";
     private static final String FIRST_HALF_STRING_REGEX = "(" + "prim[a]*[\\. ]+(" + HALF + "|part)" + ")";
-    private static final String SECOND_HALF_STRING_REGEX =  "(" + "a[ ]+(doua|(ii[-a]*))[\\. ]+(" + HALF + "|part)" + ANY_WORDS + ")";
+    private static final String SECOND_HALF_STRING_REGEX =  "(" + "a\\s+(doua|(ii[-a]*))[\\. ]+(" + HALF + "|part)" + ANY_WORDS + ")";
     private static final String REGEX_A_AL_POSTFIX = "(" + ANY_WORDS + "[\\.]*([\\. ]+(a|al))*" + ")";
 
     public static final String FIRST_HALF =
@@ -152,7 +145,7 @@ public class TimespanRegex {
                     + "(1/4)" + REGEX_OR
                     + "(¼)" + REGEX_OR
                     + "(" + "([iî]nc" + ANY_WORDS + "[\\. ]*)" + "(de){0,1}" + ")" + REGEX_OR
-                    + "(" + "primul[ ]+sfert" + "([ ]+a[l]{0,1}){0,1}" + ")" + REGEX_OR
+                    + "(" + "primul\\s+sfert" + "(\\s+a[l]{0,1}){0,1}" + ")" + REGEX_OR
                     + "(" + "prima treime a" + ")"
                 + ")" + TEXT_END
             + ")";
@@ -178,7 +171,7 @@ public class TimespanRegex {
             "("
                 + TEXT_START + "("
                     + "(4/4)" + REGEX_OR
-                    + "(" + "(ultimul[ ]+sfert)" + "([ ]+(a[l]{0,1}|de)*){0,1}" + ")"
+                    + "(" + "(ultimul\\s+sfert)" + "(\\s+(a[l]{0,1}|de)*){0,1}" + ")"
                 + ")"
             + ")";
 }
