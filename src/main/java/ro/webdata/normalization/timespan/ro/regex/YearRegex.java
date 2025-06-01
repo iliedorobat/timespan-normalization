@@ -37,18 +37,18 @@ public class YearRegex {
                 + TEXT_END
             + ")";
 
-    public static final String YEAR_INTERVAL_EXTRA =  CASE_INSENSITIVE + TEXT_START
-            + "("
-                + REGEX_INTERVAL_PREFIX + "\\s*"
-                + YEAR_AD_BC
-                + REGEX_INTERVAL_DELIMITER_EXTRA
-                + YEAR_AD_BC
-            + ")";
-
     public static final String YEAR_INTERVAL_BASE = CASE_INSENSITIVE + TEXT_START
             + "("
                 + YEAR_AD_BC
                 + REGEX_INTERVAL_DELIMITER
+                + YEAR_AD_BC
+            + ")";
+
+    public static final String YEAR_INTERVAL_PREFIXED =  CASE_INSENSITIVE + TEXT_START
+            + "("
+                + REGEX_INTERVAL_PREFIX
+                + YEAR_AD_BC
+                + REGEX_INTERVAL_CONJUNCTION
                 + YEAR_AD_BC
             + ")";
 

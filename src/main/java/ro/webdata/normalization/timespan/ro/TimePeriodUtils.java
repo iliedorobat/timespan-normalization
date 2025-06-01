@@ -22,6 +22,7 @@ public class TimePeriodUtils {
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.CENTURY_LABEL,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MILLENNIUM_LABEL,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.AGES_GROUP_SUFFIX,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.ARTICLE_AL,
             SPECIAL_CHARS_REGEX
     };
 

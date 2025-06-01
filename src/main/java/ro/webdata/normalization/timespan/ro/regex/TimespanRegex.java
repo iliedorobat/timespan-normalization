@@ -19,8 +19,8 @@ public class TimespanRegex {
     public static final String REGEX_PUNCTUATION_UNLIMITED = REGEX_PUNCTUATION + "*";
     // The separator must always be of the shape "(\\s+-\\s+)"
     public static final String REGEX_INTERVAL_DELIMITER = "\\s*(?:-|–)\\s*";
-    public static final String REGEX_INTERVAL_DELIMITER_EXTRA = "\\s*(?:-|–|([sşș]i))\\s*";
-    public static final String REGEX_INTERVAL_PREFIX = "(?:[iî]ntre" + REGEX_OR + "[iî]n\\s*interval(?:ul|u)?)";
+    public static final String REGEX_INTERVAL_CONJUNCTION = "\\s*(?:-|–|([sşș]i))\\s*";
+    public static final String REGEX_INTERVAL_PREFIX = "(?:[iî]ntre" + REGEX_OR + "[iî]n\\s*interval(?:ul|u)?)\\s*";
     public static final String REGEX_DATE_SEPARATOR = "[\\./\\-\\s]+";
     /**
      * Regex for marking the start of the text
@@ -93,8 +93,7 @@ public class TimespanRegex {
     public static final String AGES_ROMAN_GROUP = "("
                 + TEXT_START + "[ivxlcdm]+" + TEXT_END
             + ")";
-    public static final String AGES_ROMAN_NOTATION = CASE_INSENSITIVE
-            + "("
+    public static final String AGES_ROMAN_NOTATION = "("
                 + AGES_ROMAN_GROUP
                 + AGES_GROUP_SUFFIX
                 + "("
@@ -102,7 +101,7 @@ public class TimespanRegex {
                 + "){0,1}"
             + ")";
 
-    private static final String ARTICLE_AL = "(?:al[\\.\\s]*)?";
+    public static final String ARTICLE_AL = "(?:al[\\.\\s]*)?";
     private static final String START = "((?:[iî]nceput(?:u(?:l)?|ului)?|[iî]nc\\.?)(?:\\s+de)?)?";
     private static final String END = "(?:sf[aâ]r[sșş]it(?:u(?:l)?)?|sf[\\.\\s]{0,6})?";
 

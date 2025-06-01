@@ -4,7 +4,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ---
 
 ## 1.8
-- Added support for intervals like "Între 2004 și 2008", "Între 2004 - 2008", "În intervalul 2004 și 2008", etc.
+- Added support for a greater range of intervals, such as but not limited to the following:
+  - "Între x și y"
+    - "Între 2004 și 2008"
+    - "Între sec. al 2-lea a. chr. și al 21-lea"
+    - "Între mijl. sec. al xix-lea și xxi"
+  - "Între x - y"
+    - "Între 2004 - 2008"
+    - "Între sec. al 2-lea a. chr. - al 21-lea"
+  - "În intervalul x și y"
+    - "În intervalul 2004 și 2008"
+    - "În intervalul mijl. mil. i a. chr. și al ii-lea"
 
 ## 1.7
 - Added support for preserving diacritics of transformed values

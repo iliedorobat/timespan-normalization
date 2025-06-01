@@ -10,12 +10,12 @@ public class YearModel extends TimePeriodModel {
     // Used to separate the minus sign from the dash separator "-2 - -14 p.chr"; "-2 p.chr - -14 p.chr"
     private static final String REGEX_AGE_SEPARATOR = "(?<=[\\wăâîşșţțĂÂÎŞȘŢȚ\\W&&[^ -]])[ ]*-[ ]*";
 
-    public YearModel(String original, String value, boolean historicalOnly, String regex) {
-        setYearModel(original, value, historicalOnly, regex);
+    public YearModel(String original, String value, String regex, boolean historicalOnly) {
+        setYearModel(original, value, regex, historicalOnly);
     }
 
-    private void setYearModel(String original, String value, boolean historicalOnly, String regex) {
-        String preparedValue = getPreparedValue(value, regex);
+    private void setYearModel(String original, String value, String regex, boolean historicalOnly) {
+        String preparedValue = prepareValue(value, regex);
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
@@ -36,10 +36,10 @@ public class YearModel extends TimePeriodModel {
         }
     }
 
-    private String getPreparedValue(String value, String regex) {
-        if (regex.equals(YearRegex.YEAR_INTERVAL_EXTRA)) {
+    private String prepareValue(String value, String regex) {
+        if (regex.equals(YearRegex.YEAR_INTERVAL_PREFIXED)) {
             String preparedValue = value.replaceAll(CASE_INSENSITIVE + REGEX_INTERVAL_PREFIX, "").trim();
-            return preparedValue.replaceAll(CASE_INSENSITIVE + REGEX_INTERVAL_DELIMITER_EXTRA, " - ");
+            return preparedValue.replaceAll(CASE_INSENSITIVE + REGEX_INTERVAL_CONJUNCTION, " - ");
         }
 
         return value.replaceAll(CASE_INSENSITIVE + YearRegex.YEAR_OR_SEPARATOR, " - ");

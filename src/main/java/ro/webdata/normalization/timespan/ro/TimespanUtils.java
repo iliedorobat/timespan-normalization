@@ -64,9 +64,11 @@ public class TimespanUtils {
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, ShortDateRegex.DATE_MY_OPTIONS, TimespanType.DATE);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, LongDateRegex.LONG_DATE_OPTIONS, TimespanType.DATE);
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.CENTURY_INTERVAL, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.CENTURY_INTERVAL_PREFIXED, TimespanType.CENTURY);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.CENTURY_INTERVAL_BASE, TimespanType.CENTURY);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.CENTURY_OPTIONS, TimespanType.CENTURY);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.MILLENNIUM_INTERVAL, TimespanType.MILLENNIUM);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.MILLENNIUM_INTERVAL_PREFIXED, TimespanType.MILLENNIUM);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.MILLENNIUM_INTERVAL_BASE, TimespanType.MILLENNIUM);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.MILLENNIUM_OPTIONS, TimespanType.MILLENNIUM);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.OTHER_CENTURY_ROMAN_INTERVAL, TimespanType.CENTURY);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, TimePeriodRegex.OTHER_CENTURY_ROMAN_OPTIONS, TimespanType.CENTURY);
@@ -81,7 +83,7 @@ public class TimespanUtils {
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.AFTER, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL_EXTRA, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL_PREFIXED, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL_BASE, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
@@ -109,7 +111,7 @@ public class TimespanUtils {
             }
 
             matchedValue = matchedValue.trim();
-            TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(matchedValue), historicalOnly, regex);
+            TimePeriodModel timePeriod = prepareTimePeriodModel(original, TimeUtils.normalizeChristumNotation(matchedValue), regex, historicalOnly);
             String matchedItems = timePeriod.toString();
 
             if (!matchedItems.isEmpty() && !matchedItems.equals(matchedValue)) {
@@ -131,20 +133,20 @@ public class TimespanUtils {
      * Ensure the right format for date-like, year-like, centuries and millenniums values
      * @param original The original value
      * @param value The value subjected to the replacement process (part of the original value)
+     * @param regex The regular expression that defines a search pattern
      * @param historicalOnly Flag which specifies whether the Framework will only handle historical
      *                       dates (future dates will be ignored)
-     * @param regex A regular expression
      * @return The formatted value
      */
-    private static TimePeriodModel prepareTimePeriodModel(String original, String value, boolean historicalOnly, String regex) {
-        TimePeriodModel prepared = prepareAges(original, value, historicalOnly, regex);
+    private static TimePeriodModel prepareTimePeriodModel(String original, String value, String regex, boolean historicalOnly) {
+        TimePeriodModel prepared = prepareAges(original, value, regex, historicalOnly);
 
         if (prepared == null) {
-            prepared = prepareDateTime(original, value, historicalOnly, regex);
+            prepared = prepareDateTime(original, value, regex, historicalOnly);
         }
 
         if (prepared == null) {
-            prepared = preparePeriod(original, value, historicalOnly, regex);
+            prepared = preparePeriod(original, value, regex, historicalOnly);
         }
 
         return prepared;
@@ -154,12 +156,12 @@ public class TimespanUtils {
      * Ensure the right format for year-like value
      * @param original The original value
      * @param value The value subjected to the replacement process (part of the original value)
+     * @param regex The regular expression that defines a search pattern
      * @param historicalOnly Flag which specifies whether the Framework will only handle historical
      *                       dates (future dates will be ignored)
-     * @param regex A regular expression
      * @return The formatted value
      */
-    private static TimePeriodModel prepareAges(String original, String value, boolean historicalOnly, String regex) {
+    private static TimePeriodModel prepareAges(String original, String value, String regex, boolean historicalOnly) {
         switch (regex) {
             case InaccurateYearRegex.AFTER:
             case InaccurateYearRegex.AFTER_INTERVAL:
@@ -173,10 +175,10 @@ public class TimespanUtils {
             case UnknownRegex.UNKNOWN:
                 return new DatelessModel(original, value, historicalOnly);
             case YearRegex.YEAR_INTERVAL_BASE:
-            case YearRegex.YEAR_INTERVAL_EXTRA:
+            case YearRegex.YEAR_INTERVAL_PREFIXED:
             case YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL:
             case YearRegex.YEAR_OPTIONS:
-                return new YearModel(original, value, historicalOnly, regex);
+                return new YearModel(original, value, regex, historicalOnly);
             default:
                 return null;
         }
@@ -186,12 +188,12 @@ public class TimespanUtils {
      * Ensure the right format for date-like value
      * @param original The original value
      * @param value The value subjected to the replacement process (part of the original value)
+     * @param regex The regular expression that defines a search pattern
      * @param historicalOnly Flag which specifies whether the Framework will only handle historical
      *                       dates (future dates will be ignored)
-     * @param regex A regular expression
      * @return The formatted value
      */
-    private static TimePeriodModel prepareDateTime(String original, String value, boolean historicalOnly, String regex) {
+    private static TimePeriodModel prepareDateTime(String original, String value, String regex, boolean historicalOnly) {
         switch (regex) {
             case DateRegex.DATE_DMY_INTERVAL:
             case DateRegex.DATE_DMY_OPTIONS:
@@ -213,21 +215,23 @@ public class TimespanUtils {
      * Ensure the right format for centuries and millenniums
      * @param original The original value
      * @param value The value subjected to the replacement process (part of the original value)
+     * @param regex The regular expression that defines a search pattern
      * @param historicalOnly Flag which specifies whether the Framework will only handle historical
      *                       dates (future dates will be ignored)
-     * @param regex A regular expression
      * @return The list of formatted values
      */
-    private static TimePeriodModel preparePeriod(String original, String value, boolean historicalOnly, String regex) {
+    private static TimePeriodModel preparePeriod(String original, String value, String regex, boolean historicalOnly) {
         switch (regex) {
-            case TimePeriodRegex.CENTURY_INTERVAL:
+            case TimePeriodRegex.CENTURY_INTERVAL_BASE:
+            case TimePeriodRegex.CENTURY_INTERVAL_PREFIXED:
             case TimePeriodRegex.CENTURY_OPTIONS:
             case TimePeriodRegex.OTHER_CENTURY_ROMAN_INTERVAL:
             case TimePeriodRegex.OTHER_CENTURY_ROMAN_OPTIONS:
-                return new CenturyModel(original, value, historicalOnly);
-            case TimePeriodRegex.MILLENNIUM_INTERVAL:
+                return new CenturyModel(original, value, regex, historicalOnly);
+            case TimePeriodRegex.MILLENNIUM_INTERVAL_BASE:
+            case TimePeriodRegex.MILLENNIUM_INTERVAL_PREFIXED:
             case TimePeriodRegex.MILLENNIUM_OPTIONS:
-                return new MillenniumModel(original, value, historicalOnly);
+                return new MillenniumModel(original, value, regex, historicalOnly);
             case AgeRegex.AURIGNACIAN_CULTURE:
             case AgeRegex.BRONZE_AGE:
             case AgeRegex.CHALCOLITHIC_AGE:
@@ -245,7 +249,7 @@ public class TimespanUtils {
             case AgeRegex.ROMAN_EMPIRE_AGE:
             case AgeRegex.WW_I_PERIOD:
             case AgeRegex.WW_II_PERIOD:
-                return new AgeModel(original, value, historicalOnly, regex);
+                return new AgeModel(original, value, regex, historicalOnly);
             default:
                 return null;
         }

@@ -29,10 +29,16 @@ public class TimePeriodRegex {
                 + "(" + CENTURY_ROMAN_FORTH_QUARTER + ")" + REGEX_OR
                 + "(" + CENTURY_ROMAN + ")"
             + ")";
-    private static final String CENTURY_ROMAN_INTERVAL = CENTURY_ROMAN_OPTIONS + REGEX_INTERVAL_DELIMITER
+    private static final String CENTURY_ROMAN_INTERVAL_BASE = CENTURY_ROMAN_OPTIONS + REGEX_INTERVAL_DELIMITER
             + "("
                 + CENTURY_ROMAN_OPTIONS + REGEX_OR
                 + AGES_ROMAN_NOTATION
+            + ")";
+    private static final String CENTURY_ROMAN_INTERVAL_PREFIXED = REGEX_INTERVAL_PREFIX
+            + CENTURY_ROMAN_OPTIONS + REGEX_INTERVAL_CONJUNCTION
+            + "("
+                + "(" + ARTICLE_AL + AGES_ROMAN_NOTATION + ")" + REGEX_OR
+                + CENTURY_ROMAN_OPTIONS
             + ")";
 
     // CENTURY TIME PERIOD (ARABIC NOTATION)
@@ -55,10 +61,16 @@ public class TimePeriodRegex {
                 + "(" + CENTURY_ARABIC_FORTH_QUARTER + ")" + REGEX_OR
                 + "(" + CENTURY_ARABIC + ")"
             + ")";
-    private static final String CENTURY_ARABIC_INTERVAL = CENTURY_ARABIC_OPTIONS + REGEX_INTERVAL_DELIMITER
+    private static final String CENTURY_ARABIC_INTERVAL_BASE = CENTURY_ARABIC_OPTIONS + REGEX_INTERVAL_DELIMITER
             + "("
                 + CENTURY_ARABIC_OPTIONS + REGEX_OR
                 + AGES_ARABIC_NOTATION
+            + ")";
+    private static final String CENTURY_ARABIC_INTERVAL_PREFIXED = REGEX_INTERVAL_PREFIX
+            + CENTURY_ARABIC_OPTIONS + REGEX_INTERVAL_CONJUNCTION
+            + "("
+                + "(" + ARTICLE_AL + AGES_ARABIC_NOTATION + ")" + REGEX_OR
+                + CENTURY_ARABIC_OPTIONS
             + ")";
 
     // MILLENNIUM TIME PERIOD (ROMAN NOTATION)
@@ -81,10 +93,16 @@ public class TimePeriodRegex {
                 + "(" + MILLENNIUM_ROMAN_FORTH_QUARTER + ")" + REGEX_OR
                 + "(" + MILLENNIUM_ROMAN + ")"
             + ")";
-    private static final String MILLENNIUM_ROMAN_INTERVAL = MILLENNIUM_ROMAN_OPTIONS + REGEX_INTERVAL_DELIMITER
+    private static final String MILLENNIUM_ROMAN_INTERVAL_BASE = MILLENNIUM_ROMAN_OPTIONS + REGEX_INTERVAL_DELIMITER
             + "("
                 + MILLENNIUM_ROMAN_OPTIONS + REGEX_OR
                 + AGES_ROMAN_NOTATION
+            + ")";
+    private static final String MILLENNIUM_ROMAN_INTERVAL_PREFIXED = REGEX_INTERVAL_PREFIX
+            + MILLENNIUM_ROMAN_OPTIONS + REGEX_INTERVAL_CONJUNCTION
+            + "("
+                + "(" + ARTICLE_AL + AGES_ROMAN_NOTATION + ")" + REGEX_OR
+                + MILLENNIUM_ROMAN_OPTIONS
             + ")";
 
     // MILLENNIUM TIME PERIOD (ARABIC NOTATION)
@@ -107,10 +125,16 @@ public class TimePeriodRegex {
                 + "(" + MILLENNIUM_ARABIC_FORTH_QUARTER + ")" + REGEX_OR
                 + "(" + MILLENNIUM_ARABIC + ")"
             + ")";
-    private static final String MILLENNIUM_ARABIC_INTERVAL = MILLENNIUM_ARABIC_OPTIONS + REGEX_INTERVAL_DELIMITER
+    private static final String MILLENNIUM_ARABIC_INTERVAL_BASE = MILLENNIUM_ARABIC_OPTIONS + REGEX_INTERVAL_DELIMITER
             + "("
                 + MILLENNIUM_ARABIC_OPTIONS + REGEX_OR
                 + AGES_ARABIC_NOTATION
+            + ")";
+    private static final String MILLENNIUM_ARABIC_INTERVAL_PREFIXED = REGEX_INTERVAL_PREFIX
+            + MILLENNIUM_ARABIC_OPTIONS + REGEX_INTERVAL_CONJUNCTION
+            + "("
+                + "(" + ARTICLE_AL + AGES_ARABIC_NOTATION + ")" + REGEX_OR
+                + MILLENNIUM_ARABIC_OPTIONS
             + ")";
 
     // OTHER TIME PERIOD (ROMAN NOTATION)
@@ -154,15 +178,27 @@ public class TimePeriodRegex {
                 + "(" + MILLENNIUM_ROMAN_OPTIONS + ")"
             + ")";
 
-    public static final String CENTURY_INTERVAL = CASE_INSENSITIVE
+    public static final String CENTURY_INTERVAL_BASE = CASE_INSENSITIVE
             + "("
-                + "(" + CENTURY_ARABIC_INTERVAL + ")" + REGEX_OR
-                + "(" + CENTURY_ROMAN_INTERVAL + ")"
+                + "(" + CENTURY_ARABIC_INTERVAL_BASE + ")" + REGEX_OR
+                + "(" + CENTURY_ROMAN_INTERVAL_BASE + ")"
             + ")";
 
-    public static final String MILLENNIUM_INTERVAL = CASE_INSENSITIVE
+    public static final String CENTURY_INTERVAL_PREFIXED = CASE_INSENSITIVE
+        + "("
+            + "(" + CENTURY_ARABIC_INTERVAL_PREFIXED + ")" + REGEX_OR
+            + "(" + CENTURY_ROMAN_INTERVAL_PREFIXED + ")"
+        + ")";
+
+    public static final String MILLENNIUM_INTERVAL_BASE = CASE_INSENSITIVE
             + "("
-                + "(" + MILLENNIUM_ARABIC_INTERVAL + ")" + REGEX_OR
-                + "(" + MILLENNIUM_ROMAN_INTERVAL + ")"
+                + "(" + MILLENNIUM_ARABIC_INTERVAL_BASE + ")" + REGEX_OR
+                + "(" + MILLENNIUM_ROMAN_INTERVAL_BASE + ")"
+            + ")";
+
+    public static final String MILLENNIUM_INTERVAL_PREFIXED = CASE_INSENSITIVE
+            + "("
+                + "(" + MILLENNIUM_ARABIC_INTERVAL_PREFIXED + ")" + REGEX_OR
+                + "(" + MILLENNIUM_ROMAN_INTERVAL_PREFIXED + ")"
             + ")";
 }
