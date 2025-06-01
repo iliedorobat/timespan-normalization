@@ -1,12 +1,12 @@
 package ro.webdata.normalization.timespan.ro.regex.date;
 
-import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
+import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.CASE_INSENSITIVE;
 
 public class LongDateRegex {
     private LongDateRegex() {}
 
     public static final String DATE_SEPARATOR = ";";
-    public static final String LONG_DATE_OPTIONS = TimespanRegex.CASE_INSENSITIVE
+    public static final String LONG_DATE_OPTIONS = CASE_INSENSITIVE
             + "("
                 + "^"
                     + "s:[\\d]{1,2}"
