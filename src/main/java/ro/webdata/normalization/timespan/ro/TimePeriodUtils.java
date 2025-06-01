@@ -19,8 +19,8 @@ public class TimePeriodUtils {
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.SECOND_QUARTER,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.THIRD_QUARTER,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FORTH_QUARTER,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.CENTURY_NOTATION,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MILLENNIUM_NOTATION,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.CENTURY_LABEL,
+            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MILLENNIUM_LABEL,
             TimespanRegex.CASE_INSENSITIVE + TimespanRegex.AGES_GROUP_SUFFIX,
             SPECIAL_CHARS_REGEX
     };

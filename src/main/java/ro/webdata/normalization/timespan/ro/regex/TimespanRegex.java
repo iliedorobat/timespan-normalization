@@ -108,8 +108,8 @@ public class TimespanRegex {
 
     // E.g.: "sfârșitul sec. xi-începutul sec. xiii p. chr"
     public static final String START_END = END + START;
-    public static final String CENTURY_NOTATION = "(" + START_END +  "\\s*(?:(secol|secoi)(?:ele|ului|ul)?|sec)[\\.\\s]*" + ARTICLE_AL + ")";
-    public static final String MILLENNIUM_NOTATION = "(" + START_END + "\\s*(?:mileni(?:ile|ului|ul)?|mil)[\\.\\s]*" + ARTICLE_AL + ")";
+    public static final String CENTURY_LABEL = "(" + START_END +  "\\s*(?:(secol|secoi)(?:ele|ului|ul)?|sec)[\\.\\s]*" + ARTICLE_AL + ")";
+    public static final String MILLENNIUM_LABEL = "(" + START_END + "\\s*(?:mileni(?:ile|ului|ul)?|mil)[\\.\\s]*" + ARTICLE_AL + ")";
 
     private static final String HALF = "jum([aă]tate(a)?)?";
     private static final String FIRST_HALF_STRING_REGEX = "(" + "prim[a]*[\\. ]+(" + HALF + "|part)" + ")";
