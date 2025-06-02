@@ -112,7 +112,11 @@ public class TimePeriodUtils {
         try {
             value = Integer.parseInt(clearedTimePeriod);
         } catch (Exception e) {
-            value = TimeUtils.romanToInt(clearedTimePeriod);
+            try {
+                value = TimeUtils.romanToInt(clearedTimePeriod);
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
 
         return value;

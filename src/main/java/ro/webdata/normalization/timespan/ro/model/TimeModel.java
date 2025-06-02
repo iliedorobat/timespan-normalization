@@ -44,10 +44,23 @@ public class TimeModel {
             this.eraStart = TimeUtils.getEraName(startValue);
             this.eraEnd = TimeUtils.CHRISTUM_AD_PLACEHOLDER;
         }
+        // E.g.: sec. 4 - sec. 2 p. chr.
+        // E.g.: sec. 4 - sec. 7 p. chr.
         else if (!hasStartEra && hasEndEra) {
-            String endEra = TimeUtils.getEraName(endValue);
-            this.eraStart = endEra;
-            this.eraEnd = endEra;
+            this.eraEnd = TimeUtils.getEraName(endValue);
+
+            Integer start = TimePeriodUtils.timePeriodToNumber(startValue, isDate);
+            Integer end = TimePeriodUtils.timePeriodToNumber(endValue, isDate);
+
+            if (start == null || end == null) {
+                // E.g.: "17 nov. 375-9 aug. 378 a.chr."
+                this.eraStart = this.eraEnd;
+            } else if (start > end) {
+                // E.g.: "cca.120 - 60 a. chr."
+                this.eraStart = TimeUtils.CHRISTUM_BC_PLACEHOLDER;
+            } else {
+                this.eraStart = this.eraEnd;
+            }
         }
     }
 

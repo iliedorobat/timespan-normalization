@@ -4,7 +4,6 @@ package ro.webdata.normalization.timespan.ro.regex;
  * By using the <b>[?<=sentence]</b> construction, it will be matched
  * any text after "sentence" ("sentence" is a word as example).
  */
-//TODO: check "sec. xviii; (gema: sec. i e.n.)"
 public class TimespanRegex {
     private TimespanRegex() {}
 

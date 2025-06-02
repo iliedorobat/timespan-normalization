@@ -50,6 +50,15 @@ public class TimespanAnalysis {
         write(inputPath, outputFullPath, null, excludeDemoFiles, onlyUnique, historicalOnly, sanitize);
     }
 
+    public static void writeAdditionalData(String outputFullPath, boolean historicalOnly, boolean sanitize) {
+        Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
+        System.out.println("File: additional data");
+
+        write(AdditionalData.TIMESPAN_LIST, outputFullPath, true, historicalOnly, sanitize);
+
+        Print.operation(OPERATION_END, EnvConst.SHOULD_PRINT);
+    }
+
     // Extract all time expressions from LIDO files
     public static void write(String inputPath, String outputFullPath, String fileName, boolean excludeDemoFiles, boolean onlyUnique, boolean historicalOnly, boolean sanitize) {
         Print.operation(OPERATION_START, EnvConst.SHOULD_PRINT);
