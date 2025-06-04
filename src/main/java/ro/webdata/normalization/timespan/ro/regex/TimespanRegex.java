@@ -100,6 +100,8 @@ public class TimespanRegex {
                 + "){0,1}"
             + ")";
 
+    public static final String AGES_NOTATIONS = "(" + AGES_ROMAN_NOTATION + REGEX_OR + AGES_ARABIC_NOTATION + ")";
+
     public static final String ARTICLE_AL = "(?:al[\\.\\s]*)?";
     private static final String START = "((?:[iî]nceput(?:u(?:l)?|ului)?|[iî]nc\\.?)(?:\\s+de)?)?";
     private static final String END = "(?:sf[aâ]r[sșş]it(?:u(?:l)?)?|sf[\\.\\s]{0,6})?";

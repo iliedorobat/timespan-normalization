@@ -15,6 +15,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - "În intervalul x și y"
     - "În intervalul 2004 și 2008"
     - "În intervalul mijl. mil. i a. chr. și al ii-lea"
+- Added support to detect century/millennium intervals containing both Roman and Arabic numerals, such as but not limited to the following:
+  - "sec. 4 - 1/2 sec. 2 p. chr"
+  - "sec. iv - 1/2 sec. ii p. chr"
+  - "între mil. iii şi 1/2 mil. ii p. chr"
 
 ## 1.7
 - Added support for preserving diacritics of transformed values

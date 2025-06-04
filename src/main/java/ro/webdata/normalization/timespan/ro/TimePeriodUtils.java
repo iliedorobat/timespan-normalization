@@ -101,25 +101,23 @@ public class TimePeriodUtils {
      */
     public static Integer timePeriodToNumber(String timePeriod, boolean isDate) {
         // E.g.: "1/2 mil. 5 - sec. i al mil. 4 a.chr."
-        if (timePeriod == null || timePeriod.trim().length() == 0) {
+        if (timePeriod == null || timePeriod.trim().isEmpty()) {
             return null;
         }
 
-        Integer value = null;
         String clearedTimePeriod = isDate ? TimeUtils.clearDate(timePeriod) : timePeriod;
         clearedTimePeriod = TimeUtils.clearChristumNotation(clearedTimePeriod);
 
         try {
-            value = Integer.parseInt(clearedTimePeriod);
+            return Integer.parseInt(clearedTimePeriod);
         } catch (Exception e) {
             try {
-                value = TimeUtils.romanToInt(clearedTimePeriod);
+                return TimeUtils.romanToInt(clearedTimePeriod);
             } catch (Exception e2) {
                 e2.printStackTrace();
+                return null;
             }
         }
-
-        return value;
     }
 
     public static Integer getStartTime(String[] intervalValues, String eraStart, boolean isDate) {
