@@ -56,6 +56,8 @@ public class LidoXmlAnalysis {
                 AgeRegex.WW_II_PERIOD,
 
                 DatelessRegex.DATELESS,
+                DatelessRegex.DATELESS_MODEL_X,
+                DatelessRegex.DATELESS_UNDATED,
                 InaccurateYearRegex.AFTER_INTERVAL,
                 InaccurateYearRegex.BEFORE_INTERVAL,
                 InaccurateYearRegex.APPROX_AGES_INTERVAL,
@@ -110,6 +112,8 @@ public class LidoXmlAnalysis {
                 AgeRegex.WW_II_PERIOD,
 
                 DatelessRegex.DATELESS,
+                DatelessRegex.DATELESS_MODEL_X,
+                DatelessRegex.DATELESS_UNDATED,
                 InaccurateYearRegex.AFTER_INTERVAL,
                 InaccurateYearRegex.BEFORE_INTERVAL,
                 InaccurateYearRegex.APPROX_AGES_INTERVAL,

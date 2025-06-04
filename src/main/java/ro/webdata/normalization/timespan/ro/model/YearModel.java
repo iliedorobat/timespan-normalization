@@ -10,11 +10,13 @@ public class YearModel extends TimePeriodModel {
     // Used to separate the minus sign from the dash separator "-2 - -14 p.chr"; "-2 p.chr - -14 p.chr"
     private static final String REGEX_AGE_SEPARATOR = "(?<=[\\wăâîşșţțĂÂÎŞȘŢȚ\\W&&[^ -]])[ ]*-[ ]*";
 
+    public YearModel() {}
+
     public YearModel(String original, String value, String regex, boolean historicalOnly) {
         setYearModel(original, value, regex, historicalOnly);
     }
 
-    private void setYearModel(String original, String value, String regex, boolean historicalOnly) {
+    protected void setYearModel(String original, String value, String regex, boolean historicalOnly) {
         String preparedValue = prepareValue(value, regex);
         String[] intervalValues = preparedValue.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 

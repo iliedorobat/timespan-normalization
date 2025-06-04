@@ -76,6 +76,8 @@ public class TimespanUtils {
             residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, AgeRegex.AGE_OPTIONS[i], TimespanType.EPOCH);
         }
 
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS_MODEL_X, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS_UNDATED, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS, TimespanType.UNKNOWN);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.AFTER_INTERVAL, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.BEFORE_INTERVAL, TimespanType.YEAR);
@@ -94,8 +96,6 @@ public class TimespanUtils {
         return timespanModels;
     }
 
-    //TODO: "1/2 mil. 5 - sec. I al mil. 4 a.Chr."
-    //TODO: "2 a.chr - 14 p.chr"
     private static String updateMatchedValues(String original, List<TimespanModel> timespanModels, boolean historicalOnly, boolean sanitize, String regex, String matchedType) {
         String residualValue = sanitize
                 ? TimeSanitizeUtils.clearJunks(original, regex)
@@ -171,9 +171,11 @@ public class TimespanUtils {
             case InaccurateYearRegex.BEFORE_INTERVAL:
                 return new InaccurateYearModel(original, value, historicalOnly);
             case DatelessRegex.DATELESS:
+            case DatelessRegex.DATELESS_MODEL_X:
+            case DatelessRegex.DATELESS_UNDATED:
             case YearRegex.UNKNOWN_YEARS:
             case UnknownRegex.UNKNOWN:
-                return new DatelessModel(original, value, historicalOnly);
+                return new DatelessModel(original, value, regex, historicalOnly);
             case YearRegex.YEAR_INTERVAL_BASE:
             case YearRegex.YEAR_INTERVAL_PREFIXED:
             case YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL:

@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - "sec. 4 - 1/2 sec. 2 p. chr"
   - "sec. iv - 1/2 sec. ii p. chr"
   - "între mil. iii şi 1/2 mil. ii p. chr"
+- Added a safety guard to the TimeExpression constructor
 
 ## 1.7
 - Added support for preserving diacritics of transformed values

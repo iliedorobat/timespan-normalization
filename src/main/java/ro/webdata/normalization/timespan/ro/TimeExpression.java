@@ -2,20 +2,16 @@ package ro.webdata.normalization.timespan.ro;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import org.apache.commons.lang3.StringUtils;
 import ro.webdata.normalization.timespan.ro.model.DBpediaModel;
 import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 
 import java.util.*;
 
 // FIXME:
-//  1880-1890 (nedatat)
-//  1893-1902 (nedatat)
-//  1903-1914 (nedatat)
-//  1907 (nedatat)
-//  1910 (nedatat)
-//  1912-1914 (nedatat)
+//  nedatat (1852 ? – 1860 ?)
 //  an 1  an 21  etc.
+//  1/2 mil. 5 - sec. I al mil. 4 a.Chr.
+//  2 a.chr - 14 p.chr
 public class TimeExpression {
     private static final Gson GSON = new Gson();
     private static final String SEPARATOR = "|";
@@ -58,13 +54,18 @@ public class TimeExpression {
      *                 framework on LIDO datasets.
      */
     public TimeExpression(String inputValue, boolean historicalOnly, boolean sanitize) {
-        String sanitizedValue = sanitize
-                ? TimeSanitizeUtils.sanitizeValue(inputValue)
-                : inputValue;
+        try {
+            String sanitizedValue = sanitize
+                    ? TimeSanitizeUtils.sanitizeValue(inputValue)
+                    : inputValue;
 
-        this.inputValue = inputValue;
-        this.preparedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
-        this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly, sanitize);
+            this.inputValue = inputValue;
+            this.preparedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
+            this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly, sanitize);
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.timespanModels = new ArrayList<>();
+        }
     }
 
     @Override

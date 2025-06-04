@@ -1,7 +1,5 @@
 package ro.webdata.normalization.timespan.ro.regex.imprecise;
 
-import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
-
 import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.*;
 
 public class DatelessRegex {
@@ -66,21 +64,33 @@ public class DatelessRegex {
     /**
      * E.g.:
      * <ul>
-     *     <li>"model 1850"</li>
-     *     <li>"nedatat (1897)"</li>
-     *     <li>"1910 (nedatat)"</li>
-     *     <li>"nedatabil"</li>
-     *     <li>"nu are"</li>
      *     <li>"f.a. octombrie 29"; "f.an"</li>
      *     <li>"fara data"</li>
      *     <li>"1861 f.d"</li>
      * </ul>
      */
-    public static final String DATELESS = TimespanRegex.CASE_INSENSITIVE
+    public static final String DATELESS = CASE_INSENSITIVE
             + "("
-                + MODEL_X + REGEX_OR
-                + UNDATED + REGEX_OR
                 + WITHOUT_AGE + REGEX_OR
                 + WITHOUT_DATE
             + ")";
+
+    /**
+     * E.g.:
+     * <ul>
+     *     <li>"model 1850"</li>
+     * </ul>
+     */
+    public static final String DATELESS_MODEL_X = CASE_INSENSITIVE + MODEL_X;
+
+    /**
+     * E.g.:
+     * <ul>
+     *     <li>"nedatat (1897)"</li>
+     *     <li>"1910 (nedatat)"</li>
+     *     <li>"nedatabil"</li>
+     *     <li>"nu are"</li>
+     * </ul>
+     */
+    public static final String DATELESS_UNDATED = CASE_INSENSITIVE + UNDATED;
 }
