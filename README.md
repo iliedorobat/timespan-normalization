@@ -47,26 +47,28 @@ JDK 11+ or OpenJDK 11+
 
 ## Usage
 ### Input Parameters
-- <b>expression="SOME_TEXT"</b> takes the text to be parsed.
-- <b>historicalOnly=true</b> specifies whether the Framework will only handle historical dates
+- <b>--expression="SOME_TEXT"</b> takes the text to be parsed.
+- <b>--historicalOnly</b> indicates whether the Framework will only handle historical dates
 (future dates will be ignored).
-- <b>sanitize=true</b> specifies if the custom method TimeSanitizeUtils.sanitizeValue will
-be used to sanitize values. Use "true" only if you  use this framework on LIDO datasets.
+- <b>--sanitize</b> specifies if the custom method TimeSanitizeUtils.sanitizeValue will
+be used to sanitize values. <b>Use this flag only if you use the library on LIDO datasets.</b>
+- <b>--py4j</b> starts the GatewayServer used by Python applications to access the Java library.
+<b>Use this flag if you want to use this library in a Python application.</b>
 
 ### Test the library:
 ```bash
   # Parse only historical dates
-  java -jar build/libs/temporal-normalization-1.8.jar --historicalOnly=true --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/temporal-normalization-2.0.jar --historicalOnly --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
   # Include future dates
-  java -jar build/libs/temporal-normalization-1.8.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  java -jar build/libs/temporal-normalization-2.0.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```
 
 ### Normalize multiple temporal expressions:
 ```bash
   # Parse only historical dates
-  java -jar build/libs/temporal-normalization-1.8.jar --historicalOnly=true --analysis
+  java -jar build/libs/temporal-normalization-2.0.jar --historicalOnly --analysis
   # Include future dates
-  java -jar build/libs/temporal-normalization-1.8.jar --analysis
+  java -jar build/libs/temporal-normalization-2.0.jar --analysis
 ```
 
 ## Example

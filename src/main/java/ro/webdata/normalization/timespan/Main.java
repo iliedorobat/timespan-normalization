@@ -38,10 +38,13 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main app = new Main();
-        app.startServer();
-
         List<String> list = Arrays.asList(args);
+        boolean py4j = ParamsUtils.py4j(list);
+
+        if (py4j) {
+            Main app = new Main();
+            app.startServer();
+        }
 
         if (ParamsUtils.contains(list, "--expression")) {
             Demo.main(args);
@@ -49,12 +52,12 @@ public class Main {
             boolean historicalOnly = ParamsUtils.historicalOnly(list);
             boolean sanitize = ParamsUtils.sanitize(list);
 
-           // Extract time expressions from LIDO datasets and write them to files for validation
-           TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false, historicalOnly, sanitize);
-           TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true, historicalOnly, sanitize);
+            // Extract time expressions from LIDO datasets and write them to files for validation
+            TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false, historicalOnly, sanitize);
+            TimespanAnalysis.write(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true, historicalOnly, sanitize);
 
-           TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false, historicalOnly, sanitize);
-           TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true, historicalOnly, sanitize);
+            TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_ALL_TIMESPAN_FILE, true, false, historicalOnly, sanitize);
+            TimespanAnalysis.writeDetails(LIDO_DATASET_PATH, PATH_OUTPUT_UNIQUE_TIMESPAN_FILE, true, true, historicalOnly, sanitize);
 
             // Write additional time expressions to files for validation
             TimespanAnalysis.writeAdditionalData(PATH_OUTPUT_ADDITIONAL_TIMESPAN_FILE, historicalOnly, sanitize);
