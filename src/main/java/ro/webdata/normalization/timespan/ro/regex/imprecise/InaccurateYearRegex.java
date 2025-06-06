@@ -1,30 +1,23 @@
 package ro.webdata.normalization.timespan.ro.regex.imprecise;
 
-import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import ro.webdata.normalization.timespan.ro.regex.YearRegex;
 import ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
 
+import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.*;
+
 public class InaccurateYearRegex {
     private InaccurateYearRegex() {}
-
-    private static final String REGEX_OR = TimespanRegex.REGEX_OR;
-    private static final String REGEX_INTERVAL_DELIMITER = TimespanRegex.REGEX_INTERVAL_DELIMITER;
-    private static final String REGEX_PUNCTUATION_UNLIMITED = TimespanRegex.REGEX_PUNCTUATION_UNLIMITED;
-
-    private static final String AD_BC_OPTIONAL = TimespanRegex.AD_BC_OPTIONAL;
-    private static final String TEXT_START = TimespanRegex.TEXT_START;
-    private static final String TEXT_END = TimespanRegex.TEXT_END;
 
     public static final String APPROX_NOTATION = TEXT_START
             + "("
                 + "catre" + REGEX_OR
                 + "probabil" + REGEX_OR
                 + "aprox[\\.]*" + REGEX_OR
-                + "aproximativ([ ]anii)*" + REGEX_OR
-                + "c[a]{0,1}[\\.]{0,1}" + REGEX_OR
+                + "aproximativ(\\s*anii){0,1}" + REGEX_OR
                 + "cca[\\.]*" + REGEX_OR
+                + "c[a]{0,1}[\\.]{0,1}" + REGEX_OR
                 + "circa"
-            + ")[ ]*";
+            + ")\\s*";
     private static final String APPROX_AGES_GROUP =
             "("
                 + "("
@@ -80,7 +73,7 @@ public class InaccurateYearRegex {
                     + "dupa" + REGEX_OR
                     + "post" + REGEX_OR
                     + "postum"
-                + ")" + "[ ]*"
+                + ")" + "\\s*"
                 + DATE
             + ")" + TEXT_END;
 
@@ -98,9 +91,9 @@ public class InaccurateYearRegex {
     public static final String BEFORE = TEXT_START + "("
                 + "("
                     + "ante" + REGEX_OR
-                    + "anterior[ ]*lui" + REGEX_OR
-                    + "inainte[ ]*de"
-                + ")" + "[ ]*"
+                    + "anterior\\s*lui" + REGEX_OR
+                    + "inainte\\s*de"
+                + ")" + "\\s*"
                 + DATE
             + ")" + TEXT_END;
 

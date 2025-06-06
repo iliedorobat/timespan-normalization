@@ -21,7 +21,7 @@ public class TimeSanitizeUtils {
     }
 
     /**
-     * Clean value by junks<br/>
+     * Clean value by junks that could be interpreted by other regexes<br/>
      * E.g.: "anul 13=1800/1801" will lead to "anul 13=" junk value.
      * This junk value could be interpreted by another regex as being
      * a year, which is wrong.
@@ -29,7 +29,6 @@ public class TimeSanitizeUtils {
      * @param regex The related regular expression
      * @return The cleaned value
      */
-    //TODO: check all the regexes to find if they lead to some junk values
     public static String clearJunks(String value, String regex) {
         // Avoid adding junks that could be interpreted by other regexes.
         // E.g.: "anul 13=1800/1801" will lead to "anul 13=" junk value

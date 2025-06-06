@@ -163,6 +163,10 @@ public class TimeUtils {
      * @return The preprared integer
      */
     public static Integer romanToInt(String string) {
+        if (string == null || string.trim().isEmpty()) {
+            return null;
+        }
+
         String romanChar = string.toLowerCase();
         int length = romanChar.length() - 1;
         int sum = 0;

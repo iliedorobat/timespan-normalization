@@ -3,6 +3,25 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ---
 
+## 2.0
+- Added <b>--py4j</b> parameter which allows users to specify whether they need to start GatewayServer
+- Added support for a greater range of intervals, such as but not limited to the following:
+  - "Între x și y"
+    - "Între 2004 și 2008"
+    - "Între sec. al 2-lea a. chr. și al 21-lea"
+    - "Între mijl. sec. al xix-lea și xxi"
+  - "Între x - y"
+    - "Între 2004 - 2008"
+    - "Între sec. al 2-lea a. chr. - al 21-lea"
+  - "În intervalul x și y"
+    - "În intervalul 2004 și 2008"
+    - "În intervalul mijl. mil. i a. chr. și al ii-lea"
+- Added support to detect century/millennium intervals containing both Roman and Arabic numerals, such as but not limited to the following:
+  - "sec. 4 - 1/2 sec. 2 p. chr"
+  - "sec. iv - 1/2 sec. ii p. chr"
+  - "între mil. iii şi 1/2 mil. ii p. chr"
+- Added a safety guard to the TimeExpression constructor
+
 ## 1.7
 - Added support for preserving diacritics of transformed values
 

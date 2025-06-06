@@ -1,27 +1,32 @@
 package ro.webdata.normalization.timespan.ro;
 
 import ro.webdata.echo.commons.Const;
-import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.*;
+
 public class TimePeriodUtils {
     private static final String SPECIAL_CHARS_REGEX = "[\\.,;\\?!]*\\s*";
     private static final String[] REGEX_LIST = {
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.START_END,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FIRST_HALF,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.SECOND_HALF,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MIDDLE_OF,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FIRST_QUARTER,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.SECOND_QUARTER,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.THIRD_QUARTER,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.FORTH_QUARTER,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.CENTURY_NOTATION,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.MILLENNIUM_NOTATION,
-            TimespanRegex.CASE_INSENSITIVE + TimespanRegex.AGES_GROUP_SUFFIX,
+            CASE_INSENSITIVE + START_END,
+            CASE_INSENSITIVE + FIRST_HALF,
+            CASE_INSENSITIVE + SECOND_HALF,
+            CASE_INSENSITIVE + MIDDLE_OF,
+            CASE_INSENSITIVE + FIRST_QUARTER,
+            CASE_INSENSITIVE + SECOND_QUARTER,
+            CASE_INSENSITIVE + THIRD_QUARTER,
+            CASE_INSENSITIVE + FORTH_QUARTER,
+            CASE_INSENSITIVE + CENTURY_LABEL,
+            CASE_INSENSITIVE + MILLENNIUM_LABEL,
+            CASE_INSENSITIVE + AGES_GROUP_SUFFIX,
+            CASE_INSENSITIVE + ARTICLE_AL,
             SPECIAL_CHARS_REGEX
     };
 
@@ -100,21 +105,23 @@ public class TimePeriodUtils {
      */
     public static Integer timePeriodToNumber(String timePeriod, boolean isDate) {
         // E.g.: "1/2 mil. 5 - sec. i al mil. 4 a.chr."
-        if (timePeriod == null || timePeriod.trim().length() == 0) {
+        if (timePeriod == null || timePeriod.trim().isEmpty()) {
             return null;
         }
 
-        Integer value = null;
         String clearedTimePeriod = isDate ? TimeUtils.clearDate(timePeriod) : timePeriod;
         clearedTimePeriod = TimeUtils.clearChristumNotation(clearedTimePeriod);
 
         try {
-            value = Integer.parseInt(clearedTimePeriod);
+            return Integer.parseInt(clearedTimePeriod);
         } catch (Exception e) {
-            value = TimeUtils.romanToInt(clearedTimePeriod);
+            try {
+                return TimeUtils.romanToInt(clearedTimePeriod);
+            } catch (Exception e2) {
+                e2.printStackTrace();
+                return null;
+            }
         }
-
-        return value;
     }
 
     public static Integer getStartTime(String[] intervalValues, String eraStart, boolean isDate) {

@@ -4,7 +4,6 @@ import ro.webdata.echo.commons.Date;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.model.TimePeriodModel;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
-import ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
 
 /**
  * Used for date presented as day-month-year or year-month-day format.<br/>
@@ -19,7 +18,7 @@ public class DateModel extends TimePeriodModel {
     }
 
     private void setDateModel(String original, String value, String order, boolean historicalOnly) {
-        String[] intervalValues = value.split(DateRegex.REGEX_DATE_INTERVAL_SEPARATOR);
+        String[] intervalValues = value.split(TimespanRegex.REGEX_INTERVAL_DELIMITER);
 
         if (intervalValues.length == 2) {
             setEra(

@@ -1,5 +1,8 @@
 package ro.webdata.normalization.timespan.ro.regex;
 
+import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.CASE_INSENSITIVE;
+import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.REGEX_OR;
+
 /**
  * Regular expressions for those time intervals that are stored
  * as an unknown time period
@@ -7,9 +10,7 @@ package ro.webdata.normalization.timespan.ro.regex;
 public class UnknownRegex {
     private UnknownRegex() {}
 
-    private static final String REGEX_OR = TimespanRegex.REGEX_OR;
-
-    public static final String UNKNOWN = TimespanRegex.CASE_INSENSITIVE
+    public static final String UNKNOWN = CASE_INSENSITIVE
             + "^("
                 + "-"
                 + REGEX_OR + "4/4 sec\\."

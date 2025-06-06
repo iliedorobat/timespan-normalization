@@ -31,9 +31,9 @@ public class LidoXmlAnalysis {
                 ShortDateRegex.DATE_MY_OPTIONS,
                 LongDateRegex.LONG_DATE_OPTIONS,
 
-                TimePeriodRegex.CENTURY_INTERVAL,
+                TimePeriodRegex.CENTURY_INTERVAL_BASE,
                 TimePeriodRegex.CENTURY_OPTIONS,
-                TimePeriodRegex.MILLENNIUM_INTERVAL,
+                TimePeriodRegex.MILLENNIUM_INTERVAL_BASE,
                 TimePeriodRegex.MILLENNIUM_OPTIONS,
                 TimePeriodRegex.OTHER_CENTURY_ROMAN_INTERVAL,
                 TimePeriodRegex.OTHER_CENTURY_ROMAN_OPTIONS,
@@ -56,6 +56,8 @@ public class LidoXmlAnalysis {
                 AgeRegex.WW_II_PERIOD,
 
                 DatelessRegex.DATELESS,
+                DatelessRegex.DATELESS_MODEL_X,
+                DatelessRegex.DATELESS_UNDATED,
                 InaccurateYearRegex.AFTER_INTERVAL,
                 InaccurateYearRegex.BEFORE_INTERVAL,
                 InaccurateYearRegex.APPROX_AGES_INTERVAL,
@@ -63,7 +65,8 @@ public class LidoXmlAnalysis {
                 InaccurateYearRegex.BEFORE,
                 InaccurateYearRegex.APPROX_AGES_OPTIONS,
 
-                YearRegex.YEAR_INTERVAL,
+                YearRegex.YEAR_INTERVAL_BASE,
+                YearRegex.YEAR_INTERVAL_PREFIXED,
                 YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL,
                 YearRegex.YEAR_OPTIONS,
                 YearRegex.UNKNOWN_YEARS
@@ -109,6 +112,8 @@ public class LidoXmlAnalysis {
                 AgeRegex.WW_II_PERIOD,
 
                 DatelessRegex.DATELESS,
+                DatelessRegex.DATELESS_MODEL_X,
+                DatelessRegex.DATELESS_UNDATED,
                 InaccurateYearRegex.AFTER_INTERVAL,
                 InaccurateYearRegex.BEFORE_INTERVAL,
                 InaccurateYearRegex.APPROX_AGES_INTERVAL,
