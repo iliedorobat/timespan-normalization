@@ -39,9 +39,9 @@ public class Main {
 
     public static void main(String[] args) {
         List<String> list = Arrays.asList(args);
-        boolean py4j = ParamsUtils.py4j(list);
+        boolean python = ParamsUtils.python(list);
 
-        if (py4j) {
+        if (python) {
             Main app = new Main();
             app.startServer();
         }
