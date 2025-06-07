@@ -53,8 +53,8 @@ public class ParamsUtils {
         return Boolean.parseBoolean(value);
     }
 
-    public static boolean py4j(List<String> pairs) {
-        String value = getValue(pairs, "--py4j");
+    public static boolean python(List<String> pairs) {
+        String value = getValue(pairs, "--python");
 
         return Boolean.parseBoolean(value);
     }

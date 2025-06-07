@@ -52,7 +52,7 @@ JDK 11+ or OpenJDK 11+
 (future dates will be ignored).
 - <b>--sanitize</b> specifies if the custom method TimeSanitizeUtils.sanitizeValue will
 be used to sanitize values. <b>Use this flag only if you use the library on LIDO datasets.</b>
-- <b>--py4j</b> starts the GatewayServer used by Python applications to access the Java library.
+- <b>--python</b> starts the server used by Python applications to access the Java library.
 <b>Use this flag if you want to use this library in a Python application.</b>
 
 ### Test the library:
