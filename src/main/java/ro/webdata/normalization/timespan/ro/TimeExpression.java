@@ -27,8 +27,8 @@ public class TimeExpression {
         List<String> headers = new ArrayList<>(){{
             add("input value");
             add("prepared value");
-            add("normalized values");
             add("normalized edge values");
+            add("normalized values");
         }};
 
         return String.join(SEPARATOR, headers);
@@ -72,8 +72,8 @@ public class TimeExpression {
     public String toString() {
         return inputValue
                 + SEPARATOR + preparedValue
-                + SEPARATOR + this.getDBpediaItems()
-                + SEPARATOR + this.getDBpediaEdges();
+                + SEPARATOR + this.getDBpediaEdges()
+                + SEPARATOR + this.getDBpediaItems();
     }
 
     public String serialize() {
