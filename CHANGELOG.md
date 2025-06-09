@@ -16,6 +16,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - "În intervalul x și y"
     - "În intervalul 2004 și 2008"
     - "În intervalul mijl. mil. i a. chr. și al ii-lea"
+  - Sfârșitul/Începutul...:
+    - "Sf. anului 1990"
+    - "Înc. anului 1990"
+    - "Sfârșit de an 1990"
+    - "Început de an 1990"
+    - "Sfârșitul anului 1990"
+    - "Începutul anului 1990"
+    - "Înc de an 1990 - sfârșitul anului 1995"
 - Added support to detect century/millennium intervals containing both Roman and Arabic numerals, such as but not limited to the following:
   - "sec. 4 - 1/2 sec. 2 p. chr"
   - "sec. iv - 1/2 sec. ii p. chr"

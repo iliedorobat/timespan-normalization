@@ -104,12 +104,13 @@ public class TimespanRegex {
 
     public static final String ARTICLE_AL = "(?:al[\\.\\s]*)?";
     private static final String START = "((?:[iî]nceput(?:u(?:l)?|ului)?|[iî]nc\\.?)(?:\\s+de)?)?";
-    private static final String END = "(?:sf[aâ]r[sșş]it(?:u(?:l)?)?|sf[\\.\\s]{0,6})?";
+    private static final String END = "((?:sf[aâ]r[sșş]it(?:u(?:l)?)?|sf[\\.\\s]{0,6})(?:\\s+de)?)?";
 
     // E.g.: "sfârșitul sec. xi-începutul sec. xiii p. chr"
     public static final String START_END = END + START;
     public static final String CENTURY_LABEL = "(" + START_END +  "\\s*(?:(secol|secoi)(?:ele|ului|ul)?|sec)[\\.\\s]*" + ARTICLE_AL + ")";
     public static final String MILLENNIUM_LABEL = "(" + START_END + "\\s*(?:mileni(?:ile|ului|ul)?|mil)[\\.\\s]*" + ARTICLE_AL + ")";
+    public static final String YEAR_LABEL = "(" + START_END + "\\s*(?:ani+|an(?:ului|ulu|ul|u)?|an)[\\.\\s]*" + ARTICLE_AL + ")";
 
     private static final String HALF = "jum([aă]tate(a)?)?";
     private static final String FIRST_HALF_STRING_REGEX = "(" + "prim[a]*[\\. ]+(" + HALF + "|part)" + ")";

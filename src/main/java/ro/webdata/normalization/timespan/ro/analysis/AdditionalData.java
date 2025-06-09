@@ -52,6 +52,15 @@ public class AdditionalData {
         add("în intervalu 2004 – 2008");
         add("în interval 2004 – 2008");
         add("IN INTERVAL 2004 – 2008");
+
+        add("Sf. anului 1990");
+        add("Înc. anului 1990");
+        add("Sfârșit de an 1990");
+        add("Început de an 1990");
+        add("Sfârșitul anului 1990");
+        add("Începutul anului 1990");
+        add("Înc de an 1990 - sfârșitul anului 1995");
+        add("Între anii 1990 - 1995");
     }};
 
     public static final List<String> MILLENNIUM_TIMESPAN_LIST = new ArrayList<>() {{

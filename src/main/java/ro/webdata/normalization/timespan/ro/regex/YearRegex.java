@@ -26,11 +26,11 @@ public class YearRegex {
                 + "\\s*"
             + ")";
 
-    public static final String YEAR = "(\\({0,1}\\d{1,}(\\.\\d{1,})?\\){0,1}\\s*\\d{1,})";
+    public static final String YEAR = "(" + YEAR_LABEL + ")?" + "(\\({0,1}\\d{1,}(\\.\\d{1,})?\\){0,1}\\s*\\d{1,})";
 
     public static final String YEAR_AD_BC = YEAR + AD_BC_OPTIONAL;
 
-    public static final String YEAR_OPTIONS =
+    public static final String YEAR_OPTIONS = CASE_INSENSITIVE +
             "("
                 + TEXT_START
                 + YEAR_AD_BC
