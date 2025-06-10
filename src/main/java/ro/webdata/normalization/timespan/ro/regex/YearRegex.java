@@ -26,30 +26,47 @@ public class YearRegex {
                 + "\\s*"
             + ")";
 
-    public static final String YEAR = "(" + YEAR_LABEL + ")?" + "(\\({0,1}\\d{1,}(\\.\\d{1,})?\\){0,1}\\s*\\d{1,})";
+    public static final String YEAR_GROUP = "(\\({0,1}\\d{1,}(\\.\\d{1,})?\\){0,1}\\s*\\d{1,})";
+    public static final String YEAR_NOTATION = YEAR_GROUP + AD_BC_OPTIONAL;
 
-    public static final String YEAR_AD_BC = YEAR + AD_BC_OPTIONAL;
-
-    public static final String YEAR_OPTIONS = CASE_INSENSITIVE +
+    public static final String YEAR = CASE_INSENSITIVE +
             "("
                 + TEXT_START
-                + YEAR_AD_BC
+                + "(" + YEAR_LABEL + ")?" + YEAR_NOTATION
                 + TEXT_END
+            + ")";
+    private static final String YEAR_FIRST_HALF = FIRST_HALF + REGEX_PUNCTUATION_UNLIMITED + YEAR;
+    private static final String YEAR_SECOND_HALF = SECOND_HALF + REGEX_PUNCTUATION_UNLIMITED + YEAR;
+    private static final String YEAR_MIDDLE_OF = MIDDLE_OF + REGEX_PUNCTUATION_UNLIMITED + YEAR;
+    private static final String YEAR_FIRST_QUARTER = FIRST_QUARTER + REGEX_PUNCTUATION_UNLIMITED + YEAR;
+    private static final String YEAR_SECOND_QUARTER = SECOND_QUARTER + REGEX_PUNCTUATION_UNLIMITED + YEAR;
+    private static final String YEAR_THIRD_QUARTER = THIRD_QUARTER + REGEX_PUNCTUATION_UNLIMITED + YEAR;
+    private static final String YEAR_FORTH_QUARTER = FORTH_QUARTER + REGEX_PUNCTUATION_UNLIMITED + YEAR;
+    public static final String YEAR_OPTIONS = CASE_INSENSITIVE +
+            "("
+                + "(" + YEAR_FIRST_HALF + ")" + REGEX_OR
+                + "(" + YEAR_SECOND_HALF + ")" + REGEX_OR
+                + "(" + YEAR_MIDDLE_OF + ")" + REGEX_OR
+                + "(" + YEAR_FIRST_QUARTER + ")" + REGEX_OR
+                + "(" + YEAR_SECOND_QUARTER + ")" + REGEX_OR
+                + "(" + YEAR_THIRD_QUARTER + ")" + REGEX_OR
+                + "(" + YEAR_FORTH_QUARTER + ")" + REGEX_OR
+                + "(" + YEAR + ")"
             + ")";
 
     public static final String YEAR_INTERVAL_BASE = CASE_INSENSITIVE + TEXT_START
             + "("
-                + YEAR_AD_BC
+                + YEAR_OPTIONS
                 + REGEX_INTERVAL_DELIMITER
-                + YEAR_AD_BC
+                + YEAR_OPTIONS
             + ")";
 
     public static final String YEAR_INTERVAL_PREFIXED =  CASE_INSENSITIVE + TEXT_START
             + "("
                 + REGEX_INTERVAL_PREFIX
-                + YEAR_AD_BC
+                + YEAR_OPTIONS
                 + REGEX_INTERVAL_CONJUNCTION
-                + YEAR_AD_BC
+                + YEAR_OPTIONS
             + ")";
 
     public static final String YEAR_3_4_DIGITS_SPECIAL_PREFIX =

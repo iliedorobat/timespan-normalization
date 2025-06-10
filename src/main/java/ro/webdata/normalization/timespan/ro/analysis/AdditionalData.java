@@ -61,6 +61,7 @@ public class AdditionalData {
         add("Începutul anului 1990");
         add("Înc de an 1990 - sfârșitul anului 1995");
         add("Între anii 1990 - 1995");
+        add("Mijlocul anilor 1960-1970");
     }};
 
     public static final List<String> MILLENNIUM_TIMESPAN_LIST = new ArrayList<>() {{
