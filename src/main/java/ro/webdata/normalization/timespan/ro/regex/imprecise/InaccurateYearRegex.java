@@ -13,9 +13,9 @@ public class InaccurateYearRegex {
                 + "catre" + REGEX_OR
                 + "probabil" + REGEX_OR
                 + "aprox[\\.]*" + REGEX_OR
-                + "aproximativ(\\s*anii){0,1}" + REGEX_OR
+                + "aproximativ(\\s*anii)?" + REGEX_OR
                 + "cca[\\.]*" + REGEX_OR
-                + "c[a]{0,1}[\\.]{0,1}" + REGEX_OR
+                + "c[a]?[\\.]?" + REGEX_OR
                 + "circa"
             + ")\\s*";
     private static final String APPROX_AGES_GROUP =

@@ -26,7 +26,7 @@ public class YearRegex {
                 + "\\s*"
             + ")";
 
-    public static final String YEAR_GROUP = "(\\({0,1}\\d{1,}(\\.\\d{1,})?\\){0,1}\\s*\\d{1,})";
+    public static final String YEAR_GROUP = "(\\(?\\d+(\\.\\d+)?\\)?\\s*\\d+)";
     public static final String YEAR_NOTATION = YEAR_GROUP + AD_BC_OPTIONAL;
 
     public static final String YEAR = CASE_INSENSITIVE +
