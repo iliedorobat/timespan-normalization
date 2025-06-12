@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - "sec. iv - 1/2 sec. ii p. chr"
   - "între mil. iii şi 1/2 mil. ii p. chr"
 - Added a safety guard to the TimeExpression constructor
+- Prevented matching day-month expressions like "23 decembrie", "30 august", etc.
 
 ## 1.7
 - Added support for preserving diacritics of transformed values
