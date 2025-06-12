@@ -5,14 +5,8 @@ import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.*;
 public class YearRegex {
     private YearRegex() {}
 
-    private static final String BRACKETS_START =
-            "("
-                + "?<=[\\[\\(]"
-            + ")";
-    private static final String BRACKETS_END =
-            "("
-                + "?=[\\]\\)]"
-            + ")";
+    private static final String BRACKETS_START = "[\\[\\(]";
+    private static final String BRACKETS_END = "[\\]\\)]";
 
     public static final String YEAR_OR_SEPARATOR =
             "("
@@ -26,7 +20,20 @@ public class YearRegex {
                 + "\\s*"
             + ")";
 
-    public static final String YEAR_GROUP = "(\\(?\\d+(\\.\\d+)?\\)?\\s*\\d+)";
+    // E.g.: "15.000"; "[1]989"; "(19)89"; "1989"; "(19)89 martie"
+    public static final String YEAR_GROUP_1 =
+            "(?:"
+                + "\\d{1,3}\\.(?:\\d{1,3}\\.?)+"
+                + REGEX_OR
+                + BRACKETS_START + "\\d{1,4}" + BRACKETS_END + "\\d{0,3}"
+                + REGEX_OR
+                + "\\d?" + BRACKETS_START + "\\d{1,3}" + BRACKETS_END + "\\d{0,2}"
+                + REGEX_OR
+                + "\\d{3,4}"
+            + ")(" + MONTHS_RO + ")?";
+    // Prevents matching day-month expressions like "23 martie"
+    public static final String YEAR_GROUP_2 = "(?:\\d{2,3})" + "(?!\\s*" + MONTHS_RO + ")\\b";
+    public static final String YEAR_GROUP = "(?<!\\d)" + "(" + YEAR_GROUP_1 + REGEX_OR + YEAR_GROUP_2 + ")";
     public static final String YEAR_NOTATION = YEAR_GROUP + AD_BC_OPTIONAL;
 
     public static final String YEAR = CASE_INSENSITIVE +

@@ -121,7 +121,7 @@ public class TimeUtils {
     public static String clearDate(String value) {
         return value
                 .replaceAll(InaccurateYearRegex.APPROX_NOTATION, "")
-                .replaceAll("[\\.\\(\\)\\s]*", "")
+                .replaceAll("[\\.\\(\\)\\[\\]\\s]*", "")
                 .trim();
     }
 
