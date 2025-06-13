@@ -12,7 +12,7 @@ public class DateRegex {
     // d{3,} allows avoiding the month-day pattern (E.g.: "noiembrie 22")
     private static final String DATE_DMY_DOT =
             "("
-                + "\\d{1,2}[\\.]{1}\\d{2}[\\.]{1}\\d{3,}"
+                + "\\d{1,2}[\\.]{1}\\d{1,2}[\\.]{1}\\d{3,}"
                 + AD_BC_OPTIONAL
             + ")";        // E.g.: "01.01.1911"
     private static final String DATE_DMY_DOT_PARTIAL =
@@ -55,14 +55,14 @@ public class DateRegex {
     private static final String DATE_DMY_TEXT =
             "("
                 + "\\d{1,2}[,\\s]+"
-                + MONTHS_RO
+                + MONTHS
                 + "[,\\s]+\\d{3,}"
                 + AD_BC_OPTIONAL
             + ")";  // E.g.: "9 iulie 1807"
     public static final String DATE_DMY_TEXT_PARTIAL =
             "("
                 + "\\d{1,2}[, ]+"
-                + MONTHS_RO
+                + MONTHS
                 + "("
                     + "[,\\s]+\\d{3,}"
                     + AD_BC_OPTIONAL
@@ -78,7 +78,7 @@ public class DateRegex {
     private static final String DATE_YMD_TEXT =
             "("
                 + "\\d{3,}[,\\s]+"
-                + MONTHS_RO
+                + MONTHS
                 + "[,\\s]+\\d{1,2}"
                 + AD_BC_OPTIONAL
             + ")";  // E.g.: "1752 aprilie 25"

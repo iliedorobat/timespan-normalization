@@ -59,22 +59,23 @@ public class TimespanRegex {
                 + "(" + "[abiî][\\. ]*" + REGEX_CHRISTUM + ")"
             + ")" + TEXT_END;
     public static final String CHRISTUM_NOTATION = "(" + AGE_AD + REGEX_OR + AGE_BC + ")";
-
+    
+    public static final String MONTHS_DIGITS = "01|02|03|04|05|06|07|08|09|10|11|12";
     public static final String MONTHS_RO =
             "("
-                + "ianuarie" + REGEX_OR + "ian[\\.]" + REGEX_OR + "01" + REGEX_OR
-                + "februarie" + REGEX_OR + "fevruarie" + REGEX_OR + "feb[\\.]" + REGEX_OR + "02" + REGEX_OR
-                + "martie" + REGEX_OR + "mart[\\.]" + REGEX_OR + "03" + REGEX_OR
-                + "aprilie" + REGEX_OR + "apr[\\.]" + REGEX_OR + "04" + REGEX_OR
-                + "mai" + REGEX_OR + "05" + REGEX_OR
-                + "iunie" + REGEX_OR + "iumie" + REGEX_OR + "iun[\\.]" + REGEX_OR + "06" + REGEX_OR
-                + "iulie" + REGEX_OR + "iul[\\.]" + REGEX_OR + "07" + REGEX_OR
-                + "august" + REGEX_OR + "aug[\\.]" + REGEX_OR + "08" + REGEX_OR
-                + "septembrie" + REGEX_OR + "sept[\\.]" + REGEX_OR + "09" + REGEX_OR
-                + "octombrie" + REGEX_OR + "0ctombrie" + REGEX_OR + "oct[\\.]" + REGEX_OR + "10" + REGEX_OR
-                + "noiembrie" + REGEX_OR + "noimbrie" + REGEX_OR + "nov[\\.]" + REGEX_OR + "11" + REGEX_OR
-                + "decembrie" + REGEX_OR + "decembre" + REGEX_OR + "dec[\\.]" + REGEX_OR + "12"
+                + "ianuarie|februarie|martie|aprilie|mai|iunie|iulie|august|septembrie|octombrie|noiembrie|decembrie"
+                + REGEX_OR
+                + "(ian|feb|mart|apr|iun|iul|aug|sept|oct|noi|dec)\\."
+                + REGEX_OR
+                + "fevruarie|iumie|0ctombrie|noimbrie|decembre"
             + ")";
+    public static final String MONTHS_EN =
+            "("
+                + "january|february|march|april|may|june|july|august|september|october|november|december"
+                + REGEX_OR
+                + "(jan|feb|apr|jun|jul|aug|sep|oct|nov|dec)\\."
+            + ")";
+    public static final String MONTHS = "(" + MONTHS_RO + REGEX_OR + MONTHS_EN + REGEX_OR + MONTHS_DIGITS + ")";
 
     public static final String AGES_GROUP_SUFFIX = "([- ]*lea)?";
     public static final String AGES_ARABIC_GROUP = "(" + TEXT_START + "\\d+" + TEXT_END + ")";
