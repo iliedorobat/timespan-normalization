@@ -11,9 +11,7 @@ import static ro.webdata.normalization.timespan.ro.regex.imprecise.DatelessRegex
 import static ro.webdata.normalization.timespan.ro.regex.imprecise.DatelessRegex.DATELESS_UNDATED;
 
 public class DatelessModel extends YearModel {
-    private static final String PATTERN = "(" + YEAR_INTERVAL_PREFIXED + ")" + REGEX_OR
-            + "(" + YEAR_INTERVAL_BASE + ")" + REGEX_OR
-            + "(" + YEAR_OPTIONS + ")";
+    private static final String PATTERN = "(" + YEAR_INTERVAL_PREFIXED + ")" + REGEX_OR + "(" + YEAR_INTERVAL_BASE + ")";
 
     public DatelessModel(String original, String value, String regex, boolean historicalOnly) {
         if (regex.equals(DATELESS_MODEL_X) || regex.equals(DATELESS_UNDATED)) {
@@ -23,6 +21,14 @@ public class DatelessModel extends YearModel {
             if (matcher.find()) {
                 String matchedValue = matcher.group();
                 setYearModel(original, matchedValue, regex, historicalOnly);
+            } else {
+                pattern = Pattern.compile(YEAR_OPTIONS);
+                matcher = pattern.matcher(original);
+
+                if (matcher.find()) {
+                    String matchedValue = matcher.group();
+                    setYearModel(original, matchedValue, regex, historicalOnly);
+                }
             }
         }
     }

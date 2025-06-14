@@ -8,17 +8,32 @@ public class YearRegex {
     private static final String BRACKETS_START = "[\\[\\(]";
     private static final String BRACKETS_END = "[\\]\\)]";
 
+    private static final String PREFIX_CONSTRUCTIONS =
+            "lunile" + REGEX_OR + "luni(i|[aă]|lor)?" + REGEX_OR + "lun[aă]" + REGEX_OR
+            + "s[aă]pt[aă]m[aâ]ni(i|le|lor)?" + REGEX_OR + "s[aă]pt[aă]m[aâ]n[aă]" + REGEX_OR
+            + "zile(le|lor)?" + REGEX_OR + "ziu[aă]" + REGEX_OR + "zi" + REGEX_OR
+            + "ore(i|le|lor)?" + REGEX_OR + "or[aă]" + REGEX_OR
+            + "minute(le|lor)?" + REGEX_OR + "minut(ului|ul)?" + REGEX_OR
+            + "secunde(i|le|lor)?" + REGEX_OR + "secund[aă]" + REGEX_OR
+            + "milisecunde(i|le|lor)?" + REGEX_OR + "milisecund[aă]";
+    private static final String POSTFIX_CONSTRUCTIONS = "ani(lor)?" + REGEX_OR + "an(ului|ul)?" + REGEX_OR + PREFIX_CONSTRUCTIONS;
+
+    // Prevents matching patterns like "luna 38", "ziua 10", etc.
+    private static final String EXCLUDED_PREFIX = "(?<!(?:" + PREFIX_CONSTRUCTIONS + ")\\s)";
+    // Prevents matching patterns like "38 de ani", "38 ani", etc.
+    private static final String EXCLUDED_POSTFIX = "(?!\\s*(?:de\\s*)?(?:" + POSTFIX_CONSTRUCTIONS + "))";
+
     public static final String YEAR_OR_SEPARATOR =
             "("
-                + "\\s*"
-                + "("
+                    + "\\s*"
+                    + "("
                     // E.g.: "110/109 a. chr."; "anul 13=1800/1801"
                     + "/" + REGEX_OR
                     // E.g.: "112 sau 111 î.chr."
                     + "sau"
-                + ")"
-                + "\\s*"
-            + ")";
+                    + ")"
+                    + "\\s*"
+                    + ")";
 
     // E.g.: "15.000"; "[1]989"; "(19)89"; "1989"; "(19)89 martie"
     public static final String YEAR_GROUP_1 =
@@ -30,11 +45,11 @@ public class YearRegex {
                 + "\\d?" + BRACKETS_START + "\\d{1,3}" + BRACKETS_END + "\\d{0,2}"
                 + REGEX_OR
                 + "\\d{3,4}"
-            + ")(" + MONTHS + ")?";
+            + ")" + MONTHS + "?";
     // Prevents matching day-month expressions like "23 martie" and hour-minutes expressions like "18.05"
     public static final String YEAR_GROUP_2 = "(?:\\d{2,3})" + "(?!(\\s*" + MONTHS + ")|(\\.\\d))\\b";
-    public static final String YEAR_GROUP = "(?<![\\d\\.])" + "(" + YEAR_GROUP_1 + REGEX_OR + YEAR_GROUP_2 + ")";
-    public static final String YEAR_NOTATION = YEAR_GROUP + AD_BC_OPTIONAL;
+    public static final String YEAR_GROUP = "(?<![\\d\\.])" + "(" + YEAR_GROUP_1 + REGEX_OR + YEAR_GROUP_2 + ")" + EXCLUDED_POSTFIX;
+    public static final String YEAR_NOTATION = EXCLUDED_PREFIX + YEAR_GROUP + AD_BC_OPTIONAL;
 
     public static final String YEAR = CASE_INSENSITIVE +
             "("
@@ -49,8 +64,8 @@ public class YearRegex {
     private static final String YEAR_SECOND_QUARTER = SECOND_QUARTER + REGEX_PUNCTUATION_UNLIMITED + YEAR;
     private static final String YEAR_THIRD_QUARTER = THIRD_QUARTER + REGEX_PUNCTUATION_UNLIMITED + YEAR;
     private static final String YEAR_FORTH_QUARTER = FORTH_QUARTER + REGEX_PUNCTUATION_UNLIMITED + YEAR;
-    public static final String YEAR_OPTIONS = CASE_INSENSITIVE +
-            "("
+    public static final String YEAR_OPTIONS = CASE_INSENSITIVE
+            + "("
                 + "(" + YEAR_FIRST_HALF + ")" + REGEX_OR
                 + "(" + YEAR_SECOND_HALF + ")" + REGEX_OR
                 + "(" + YEAR_MIDDLE_OF + ")" + REGEX_OR

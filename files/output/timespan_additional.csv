@@ -1,4 +1,8 @@
 input value|prepared value|normalized edge values|normalized values
+23 decembrie|23 decembrie|[]|[]
+30 august|30 august|[]|[]
+38 de ani|38 de ani|[]|[]
+38 săptămâni|38 săptămâni|[]|[]
 IN INTERVAL 2004 - 2008|IN INTERVAL 2004 - 2008|[{start=https://dbpedia.org/page/2004, end=https://dbpedia.org/page/2008}]|[https://dbpedia.org/page/3rd_millennium, https://dbpedia.org/page/21st_century, https://dbpedia.org/page/2004, https://dbpedia.org/page/2005, https://dbpedia.org/page/2006, https://dbpedia.org/page/2007, https://dbpedia.org/page/2008]
 IN INTERVAL 2004 SI 2008|IN INTERVAL 2004 SI 2008|[{start=https://dbpedia.org/page/2004, end=https://dbpedia.org/page/2008}]|[https://dbpedia.org/page/3rd_millennium, https://dbpedia.org/page/21st_century, https://dbpedia.org/page/2004, https://dbpedia.org/page/2005, https://dbpedia.org/page/2006, https://dbpedia.org/page/2007, https://dbpedia.org/page/2008]
 IN INTERVAL 2004 – 2008|IN INTERVAL 2004 – 2008|[{start=https://dbpedia.org/page/2004, end=https://dbpedia.org/page/2008}]|[https://dbpedia.org/page/3rd_millennium, https://dbpedia.org/page/21st_century, https://dbpedia.org/page/2004, https://dbpedia.org/page/2005, https://dbpedia.org/page/2006, https://dbpedia.org/page/2007, https://dbpedia.org/page/2008]
@@ -7,6 +11,8 @@ Mijlocul anilor 1960-1970|Mijlocul anilor 1960-1970|[{start=https://dbpedia.org/
 Sf. anului 1990|Sf. anului 1990|[{start=https://dbpedia.org/page/1990, end=https://dbpedia.org/page/1990}]|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/20th_century, https://dbpedia.org/page/1990]
 Sfârșit de an 1990|Sfârșit de an 1990|[{start=https://dbpedia.org/page/1990, end=https://dbpedia.org/page/1990}]|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/20th_century, https://dbpedia.org/page/1990]
 Sfârșitul anului 1990|Sfârșitul anului 1990|[{start=https://dbpedia.org/page/1990, end=https://dbpedia.org/page/1990}]|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/20th_century, https://dbpedia.org/page/1990]
+luna 10|luna 10|[]|[]
+ziua 20|ziua 20|[]|[]
 Înc de an 1990 - sfârșitul anului 1995|Înc de an 1990 - sfârșitul anului 1995|[{start=https://dbpedia.org/page/1990, end=https://dbpedia.org/page/1995}]|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/20th_century, https://dbpedia.org/page/1990, https://dbpedia.org/page/1991, https://dbpedia.org/page/1992, https://dbpedia.org/page/1993, https://dbpedia.org/page/1994, https://dbpedia.org/page/1995]
 Înc. anului 1990|Înc. anului 1990|[{start=https://dbpedia.org/page/1990, end=https://dbpedia.org/page/1990}]|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/20th_century, https://dbpedia.org/page/1990]
 Început de an 1990|Început de an 1990|[{start=https://dbpedia.org/page/1990, end=https://dbpedia.org/page/1990}]|[https://dbpedia.org/page/2nd_millennium, https://dbpedia.org/page/20th_century, https://dbpedia.org/page/1990]

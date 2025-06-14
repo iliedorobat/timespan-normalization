@@ -29,39 +29,6 @@ public class AdditionalData {
         add("între sec. ii î. chr. şi 1/2 sec. iii");
         add("între sec. 2 î. hr. şi 1/2 sec. 3");
         add("între sec. ii î. hr. şi 1/2 sec. iii");
-
-        add("între 2004 - 2008");
-        add("între sec. 2 a. chr. - 1/2 sec. 3");
-        add("între 2004 – 2008");
-        add("între sec. 2 a. chr. – 1/2 sec. 3");
-
-        add("în intervalul 2004 și 2008");
-        add("în intervalul sec. 2 a. chr. și 1/2 sec. 3");
-        add("în intervalu 2004 și 2008");
-        add("în intervalu sec. 2 a. chr. și 1/2 sec. 3");
-        add("în interval 2004 și 2008");
-        add("în interval sec. 2 a. chr. și 1/2 sec. 3");
-        add("IN INTERVAL 2004 SI 2008");
-
-        add("în intervalul 2004 - 2008");
-        add("în intervalu 2004 - 2008");
-        add("în interval 2004 - 2008");
-        add("IN INTERVAL 2004 - 2008");
-
-        add("în intervalul 2004 – 2008");
-        add("în intervalu 2004 – 2008");
-        add("în interval 2004 – 2008");
-        add("IN INTERVAL 2004 – 2008");
-
-        add("Sf. anului 1990");
-        add("Înc. anului 1990");
-        add("Sfârșit de an 1990");
-        add("Început de an 1990");
-        add("Sfârșitul anului 1990");
-        add("Începutul anului 1990");
-        add("Înc de an 1990 - sfârșitul anului 1995");
-        add("Între anii 1990 - 1995");
-        add("Mijlocul anilor 1960-1970");
     }};
 
     public static final List<String> MILLENNIUM_TIMESPAN_LIST = new ArrayList<>() {{
@@ -114,8 +81,53 @@ public class AdditionalData {
         add("IN INTERVAL 2004 – 2008");
     }};
 
+    private static final List<String> YEAR_LIST = new ArrayList<>() {{
+
+
+        add("între 2004 - 2008");
+        add("între sec. 2 a. chr. - 1/2 sec. 3");
+        add("între 2004 – 2008");
+        add("între sec. 2 a. chr. – 1/2 sec. 3");
+
+        add("în intervalul 2004 și 2008");
+        add("în intervalul sec. 2 a. chr. și 1/2 sec. 3");
+        add("în intervalu 2004 și 2008");
+        add("în intervalu sec. 2 a. chr. și 1/2 sec. 3");
+        add("în interval 2004 și 2008");
+        add("în interval sec. 2 a. chr. și 1/2 sec. 3");
+        add("IN INTERVAL 2004 SI 2008");
+
+        add("în intervalul 2004 - 2008");
+        add("în intervalu 2004 - 2008");
+        add("în interval 2004 - 2008");
+        add("IN INTERVAL 2004 - 2008");
+
+        add("în intervalul 2004 – 2008");
+        add("în intervalu 2004 – 2008");
+        add("în interval 2004 – 2008");
+        add("IN INTERVAL 2004 – 2008");
+
+        add("Sf. anului 1990");
+        add("Înc. anului 1990");
+        add("Sfârșit de an 1990");
+        add("Început de an 1990");
+        add("Sfârșitul anului 1990");
+        add("Începutul anului 1990");
+        add("Înc de an 1990 - sfârșitul anului 1995");
+        add("Între anii 1990 - 1995");
+        add("Mijlocul anilor 1960-1970");
+
+        add("23 decembrie");
+        add("30 august");
+        add("38 săptămâni");
+        add("38 de ani");
+        add("ziua 20");
+        add("luna 10");
+    }};
+
     public static final List<String> TIMESPAN_LIST = new ArrayList<>() {{
         addAll(CENTURY_TIMESPAN_LIST);
         addAll(MILLENNIUM_TIMESPAN_LIST);
+        addAll(YEAR_LIST);
     }};
 }

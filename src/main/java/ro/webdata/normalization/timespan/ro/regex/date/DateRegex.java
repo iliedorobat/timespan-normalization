@@ -83,30 +83,30 @@ public class DateRegex {
                 + AD_BC_OPTIONAL
             + ")";  // E.g.: "1752 aprilie 25"
 
-    private static final String DATE_DMY_INTERVAL_START =
-            "("
-                + "(" + TEXT_START + DATE_DMY_DOT_PARTIAL + ")" + REGEX_OR
-                + "(" + TEXT_START + DATE_DMY_SLASH_PARTIAL + ")" + REGEX_OR
-                + "(" + TEXT_START + DATE_DMY_SPACE_PARTIAL + ")" + REGEX_OR
-                + "(" + TEXT_START + DATE_DMY_TEXT_PARTIAL + ")"
+    private static final String DATE_DMY_INTERVAL_START = TEXT_START
+            + "("
+                + DATE_DMY_DOT_PARTIAL + REGEX_OR
+                + DATE_DMY_SLASH_PARTIAL + REGEX_OR
+                + DATE_DMY_SPACE_PARTIAL + REGEX_OR
+                + DATE_DMY_TEXT_PARTIAL
             + ")";
-    private static final String DATE_YMD_INTERVAL_START =
-            "("
-                + "(" + TEXT_START + DATE_YMD_DASH + ")" + REGEX_OR
-                + "(" + TEXT_START + DATE_YMD_TEXT + ")"
+    private static final String DATE_YMD_INTERVAL_START = TEXT_START
+            + "("
+                + DATE_YMD_DASH + REGEX_OR
+                + DATE_YMD_TEXT
             + ")";
     private static final String DATE_DMY_INTERVAL_END =
             "("
-                + "(" + DATE_DMY_DOT + TEXT_END + ")" + REGEX_OR
-                + "(" + DATE_DMY_SLASH + TEXT_END + ")" + REGEX_OR
-                + "(" + DATE_DMY_SPACE + TEXT_END + ")" + REGEX_OR
-                + "(" + DATE_DMY_TEXT + TEXT_END + ")"
-            + ")";
+                + DATE_DMY_DOT + REGEX_OR
+                + DATE_DMY_SLASH + REGEX_OR
+                + DATE_DMY_SPACE + REGEX_OR
+                + DATE_DMY_TEXT
+            + ")" + TEXT_END;
     private static final String DATE_YMD_INTERVAL_END =
             "("
-                + "(" + DATE_YMD_DASH + TEXT_END + ")" + REGEX_OR
-                + "(" + DATE_YMD_TEXT + TEXT_END + ")"
-            + ")";
+                + DATE_YMD_DASH + REGEX_OR
+                + DATE_YMD_TEXT
+            + ")" + TEXT_END;
 
     public static final String DATE_DMY_INTERVAL = CASE_INSENSITIVE
             + "("
@@ -121,16 +121,16 @@ public class DateRegex {
                 + DATE_YMD_INTERVAL_END
             + ")";
 
-    public static final String DATE_DMY_OPTIONS = CASE_INSENSITIVE
+    public static final String DATE_DMY_OPTIONS = CASE_INSENSITIVE + TEXT_START
             + "("
-                + "(" + TEXT_START + DATE_DMY_DOT + TEXT_END + ")" + REGEX_OR
-                + "(" + TEXT_START + DATE_DMY_SLASH + TEXT_END + ")" + REGEX_OR
-                + "(" + TEXT_START + DATE_DMY_SPACE+ ")" + REGEX_OR
-                + "(" + TEXT_START + DATE_DMY_TEXT + TEXT_END + ")"
-            + ")";
-    public static final String DATE_YMD_OPTIONS = CASE_INSENSITIVE
+                + DATE_DMY_DOT + REGEX_OR
+                + DATE_DMY_SLASH + REGEX_OR
+                + DATE_DMY_SPACE + REGEX_OR
+                + DATE_DMY_TEXT
+            + ")" + TEXT_END;
+    public static final String DATE_YMD_OPTIONS = CASE_INSENSITIVE + TEXT_START
             + "("
-                + "(" + TEXT_START + DATE_YMD_DASH + TEXT_END + ")" + REGEX_OR
-                + "(" + TEXT_START + DATE_YMD_TEXT + TEXT_END + ")"
-            + ")";
+                + DATE_YMD_DASH + REGEX_OR
+                + DATE_YMD_TEXT
+            + ")" + TEXT_END;
 }
