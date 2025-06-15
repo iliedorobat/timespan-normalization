@@ -76,20 +76,21 @@ public class TimespanUtils {
             residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, AgeRegex.AGE_OPTIONS[i], TimespanType.EPOCH);
         }
 
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS_MODEL_X, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS_UNDATED, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS, TimespanType.UNKNOWN);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.AFTER_INTERVAL, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.BEFORE_INTERVAL, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.APPROX_AGES_INTERVAL, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.AFTER, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
-
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL_PREFIXED, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_INTERVAL_BASE, TimespanType.YEAR);
-        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_3_4_DIGITS_SPECIAL_INTERVAL, TimespanType.YEAR);
+
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS_MODEL_X, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS_UNDATED, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, DatelessRegex.DATELESS, TimespanType.UNKNOWN);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.AFTER, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.BEFORE, TimespanType.YEAR);
+        residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, InaccurateYearRegex.APPROX_AGES_OPTIONS, TimespanType.YEAR);
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.YEAR_OPTIONS, TimespanType.YEAR);
+
         // This call must be made after all processing performed on calendar years!!!
         residualValue = updateMatchedValues(residualValue, timespanModels, historicalOnly, sanitize, YearRegex.UNKNOWN_YEARS, TimespanType.UNKNOWN);
 

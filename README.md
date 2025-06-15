@@ -57,8 +57,8 @@ be used to sanitize values. <b>Use this flag only if you use the library on LIDO
 
 ### Test the library:
 ```bash
-  # Parse only historical dates
-  java -jar build/libs/temporal-normalization-2.0.jar --historicalOnly --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
+  # Parse only historical dates after sanitizing them
+  java -jar build/libs/temporal-normalization-2.0.jar --historicalOnly --sanitize --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
   # Include future dates
   java -jar build/libs/temporal-normalization-2.0.jar --expression="1/2 sec. 3 a. chr - sec. 2 p. chr."
 ```

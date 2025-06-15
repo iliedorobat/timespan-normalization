@@ -1,5 +1,6 @@
 package ro.webdata.normalization.timespan.ro.model;
 
+import ro.webdata.normalization.timespan.ro.TimePeriodUtils;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.regex.TimespanRegex;
 import ro.webdata.normalization.timespan.ro.regex.YearRegex;
@@ -40,11 +41,14 @@ public class YearModel extends TimePeriodModel {
 
     private String prepareValue(String value, String regex) {
         if (regex.equals(YearRegex.YEAR_INTERVAL_PREFIXED)) {
-            String preparedValue = value.replaceAll(CASE_INSENSITIVE + REGEX_INTERVAL_PREFIX, "").trim();
-            return preparedValue.replaceAll(CASE_INSENSITIVE + REGEX_INTERVAL_CONJUNCTION, " - ");
+            String preparedValue = value.replaceAll(CASE_INSENSITIVE + REGEX_INTERVAL_PREFIX, "")
+                    .replaceAll(CASE_INSENSITIVE + REGEX_INTERVAL_CONJUNCTION, " - ")
+                    .trim();
+            return TimePeriodUtils.sanitizeTimePeriod(preparedValue);
         }
 
-        return value.replaceAll(CASE_INSENSITIVE + YearRegex.YEAR_OR_SEPARATOR, " - ");
+        String preparedValue = value.replaceAll(CASE_INSENSITIVE + YearRegex.YEAR_OR_SEPARATOR, " - ");
+        return TimePeriodUtils.sanitizeTimePeriod(preparedValue);
     }
 
     private void setDate(String original, String year, String position, boolean historicalOnly) {

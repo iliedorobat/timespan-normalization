@@ -18,7 +18,7 @@ public class UnknownRegex {
                 + REGEX_OR + "1884 martie 28/aprilie 09"
                 + REGEX_OR + "189-45"
                 + REGEX_OR + "al doile afert al s1900"
-                + REGEX_OR + "an[ ]{0,1}\\d{1,2}[\\?]{0,1}"
+                + REGEX_OR + "an[ ]?\\d{1,2}[\\?]?"
                 + REGEX_OR + "cultura inca sau chachapoya\\?"
                 + REGEX_OR + "datat"
                 + REGEX_OR + "dinastia xxv"

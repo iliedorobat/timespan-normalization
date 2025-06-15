@@ -16,11 +16,30 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - "În intervalul x și y"
     - "În intervalul 2004 și 2008"
     - "În intervalul mijl. mil. i a. chr. și al ii-lea"
+  - Sfârșitul/Începutul/Mijlocul...:
+    - "Sf. anului 1990"
+    - "Înc. anului 1990"
+    - "Sfârșit de an 1990"
+    - "Început de an 1990"
+    - "Sfârșitul anului 1990"
+    - "Începutul anului 1990"
+    - "Înc de an 1990 - sfârșitul anului 1995"
+    - "Mijlocul anilor 1960-1970"
+  - DMY-like intervals:
+    - "19 -26 noiembrie 2010"
+    - "19 03 -26 noiembrie 2010"
+    - "19 martie -26 noiembrie 2010"
+    - "19.02  -26 11 2010"
+    - "19.02-  26.11.2010"
 - Added support to detect century/millennium intervals containing both Roman and Arabic numerals, such as but not limited to the following:
   - "sec. 4 - 1/2 sec. 2 p. chr"
   - "sec. iv - 1/2 sec. ii p. chr"
   - "între mil. iii şi 1/2 mil. ii p. chr"
 - Added a safety guard to the TimeExpression constructor
+- Prevented matching the following patterns:
+  - day-month expressions like "23 decembrie", "30 august", etc.
+  - hour-minute expressions like "18.05"
+  - term-value like "luna 10", "minutul 30", etc.
 
 ## 1.7
 - Added support for preserving diacritics of transformed values

@@ -1,9 +1,9 @@
 package ro.webdata.normalization.timespan.ro.regex.imprecise;
 
-import ro.webdata.normalization.timespan.ro.regex.YearRegex;
 import ro.webdata.normalization.timespan.ro.regex.date.DateRegex;
 
 import static ro.webdata.normalization.timespan.ro.regex.TimespanRegex.*;
+import static ro.webdata.normalization.timespan.ro.regex.YearRegex.YEAR_NOTATION;
 
 public class InaccurateYearRegex {
     private InaccurateYearRegex() {}
@@ -13,9 +13,9 @@ public class InaccurateYearRegex {
                 + "catre" + REGEX_OR
                 + "probabil" + REGEX_OR
                 + "aprox[\\.]*" + REGEX_OR
-                + "aproximativ(\\s*anii){0,1}" + REGEX_OR
+                + "aproximativ(\\s*anii)?" + REGEX_OR
                 + "cca[\\.]*" + REGEX_OR
-                + "c[a]{0,1}[\\.]{0,1}" + REGEX_OR
+                + "c[a]?[\\.]?" + REGEX_OR
                 + "circa"
             + ")\\s*";
     private static final String APPROX_AGES_GROUP =
@@ -34,19 +34,14 @@ public class InaccurateYearRegex {
                 // E.g.: "[c. 250-c. 225 a.chr.]"
                 + APPROX_AGES_OPTIONS + REGEX_OR
                 // E.g.: "[c. 260-230]"
-                + "("
-                    + YearRegex.YEAR + AD_BC_OPTIONAL
-                + ")"
+                + "(" + YEAR_NOTATION + ")"
             + ")"
             + TEXT_END;
     // E.g.: "281 a.chr. - cca 200 a.chr."
     private static final String APPROX_AGES_INTERVAL_2 = TEXT_START
-            + "("
-                + YearRegex.YEAR + AD_BC_OPTIONAL
-            + ")" + REGEX_INTERVAL_DELIMITER
-            + "("
-                + APPROX_AGES_OPTIONS
-            + ")"
+            + "(" + YEAR_NOTATION + ")"
+            + REGEX_INTERVAL_DELIMITER
+            + "(" + APPROX_AGES_OPTIONS + ")"
             + TEXT_END;
 
     public static final String APPROX_AGES_INTERVAL = APPROX_AGES_INTERVAL_1 + REGEX_OR + APPROX_AGES_INTERVAL_2;
