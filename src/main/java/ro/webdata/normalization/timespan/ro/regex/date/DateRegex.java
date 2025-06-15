@@ -89,7 +89,7 @@ public class DateRegex {
                 + DATE_DMY_SLASH_PARTIAL + REGEX_OR
                 + DATE_DMY_SPACE_PARTIAL + REGEX_OR
                 + DATE_DMY_TEXT_PARTIAL + REGEX_OR
-                + "\\d{1,2}\\s+" + MONTHS + "?"
+                + "\\d{1,2}\\s*" + MONTHS + "?"
             + ")";
     private static final String DATE_YMD_INTERVAL_START = TEXT_START
             + "("
