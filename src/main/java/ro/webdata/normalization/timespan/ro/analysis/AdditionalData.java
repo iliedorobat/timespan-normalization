@@ -82,8 +82,6 @@ public class AdditionalData {
     }};
 
     private static final List<String> YEAR_LIST = new ArrayList<>() {{
-
-
         add("între 2004 - 2008");
         add("între sec. 2 a. chr. - 1/2 sec. 3");
         add("între 2004 – 2008");
@@ -117,6 +115,11 @@ public class AdditionalData {
         add("Între anii 1990 - 1995");
         add("Mijlocul anilor 1960-1970");
 
+        add("19 -26 noiembrie 2010");
+        add("19 martie -26 noiembrie 2010");
+        add("19 03 -26 noiembrie 2010");
+        add("19.02  -26 11 2010");
+        add("19.02-  26.11.2010");
         add("23 decembrie");
         add("30 august");
         add("38 săptămâni");

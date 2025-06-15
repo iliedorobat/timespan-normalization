@@ -25,6 +25,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     - "Începutul anului 1990"
     - "Înc de an 1990 - sfârșitul anului 1995"
     - "Mijlocul anilor 1960-1970"
+  - DMY-like intervals:
+    - "19 -26 noiembrie 2010"
+    - "19 03 -26 noiembrie 2010"
+    - "19 martie -26 noiembrie 2010"
+    - "19.02  -26 11 2010"
+    - "19.02-  26.11.2010"
 - Added support to detect century/millennium intervals containing both Roman and Arabic numerals, such as but not limited to the following:
   - "sec. 4 - 1/2 sec. 2 p. chr"
   - "sec. iv - 1/2 sec. ii p. chr"

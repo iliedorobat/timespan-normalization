@@ -76,6 +76,9 @@ public class DateModel extends TimePeriodModel {
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return getYear(secondDate, mainDate, order);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
 
         return null;
@@ -85,10 +88,20 @@ public class DateModel extends TimePeriodModel {
         String preparedDate = Date.prepareDate(mainDate);
         String[] values = preparedDate.split(TimespanRegex.REGEX_DATE_SEPARATOR);
 
-        if (order.equals(TimeUtils.DMY_PLACEHOLDER)) {
-            return Date.getMonthName(values[1].trim());
-        } else if (order.equals(TimeUtils.YMD_PLACEHOLDER)) {
-            return Date.getMonthName(values[1].trim());
+        if (order.equals(TimeUtils.DMY_PLACEHOLDER) || order.equals(TimeUtils.YMD_PLACEHOLDER)) {
+            try {
+                return Date.getMonthName(values[1].trim());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                // E.g.: 19-26 noiembrie 2010
+                String preparedSecondDate = Date.prepareDate(secondDate);
+                String[] secondValues = preparedSecondDate.split(TimespanRegex.REGEX_DATE_SEPARATOR);
+
+                return Date.getMonthName(secondValues[1].trim());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
 
         return null;

@@ -12,42 +12,42 @@ public class DateRegex {
     // d{3,} allows avoiding the month-day pattern (E.g.: "noiembrie 22")
     private static final String DATE_DMY_DOT =
             "("
-                + "\\d{1,2}[\\.]{1}\\d{1,2}[\\.]{1}\\d{3,}"
+                + "\\d{1,2}\\.\\d{1,2}\\.\\d{3,}"
                 + AD_BC_OPTIONAL
             + ")";        // E.g.: "01.01.1911"
     private static final String DATE_DMY_DOT_PARTIAL =
             "("
-                + "\\d{1,2}[\\.]{1}\\d{2}"
+                + "\\d{1,2}\\.\\d{2}"
                 + "("
-                    + "[\\.]{1}\\d{3,}"
+                    + "\\.\\d{3,}"
                 + ")*"
                 + AD_BC_OPTIONAL
             + ")";
 
     private static final String DATE_DMY_SLASH =
             "("
-                + "\\d{1,2}[/]{1}\\d{2}[/]{1}\\d{3,}"
+                + "\\d{1,2}\\/\\d{2}\\/\\d{3,}"
                 + AD_BC_OPTIONAL
             + ")";          // E.g.: "21/01/1916"
     private static final String DATE_DMY_SLASH_PARTIAL =
             "("
-                + "\\d{1,2}[/]{1}\\d{2}"
+                + "\\d{1,2}\\/\\d{2}"
                 + "("
-                    + "[/]{1}\\d{3,}"
+                    + "\\/\\d{3,}"
                 + ")*"
                 + AD_BC_OPTIONAL
             + ")";
 
     private static final String DATE_DMY_SPACE =
             "("
-            + "\\d{1,2}\\s*{1}\\d{2}\\s*{1}\\d{3,}"
+            + "\\d{1,2}\\s*\\d{2}\\s*\\d{3,}"
             + AD_BC_OPTIONAL
             + ")";          // E.g.: "7 06 1911"
     private static final String DATE_DMY_SPACE_PARTIAL =
             "("
-                + "\\d{1,2}\\s*{1}\\d{2}"
+                + "\\d{1,2}\\s*\\d{2}"
                 + "("
-                    + "\\s*{1}\\d{3,}"
+                    + "\\s*\\d{3,}"
                 + ")*"
                 + AD_BC_OPTIONAL
             + ")";
@@ -88,7 +88,8 @@ public class DateRegex {
                 + DATE_DMY_DOT_PARTIAL + REGEX_OR
                 + DATE_DMY_SLASH_PARTIAL + REGEX_OR
                 + DATE_DMY_SPACE_PARTIAL + REGEX_OR
-                + DATE_DMY_TEXT_PARTIAL
+                + DATE_DMY_TEXT_PARTIAL + REGEX_OR
+                + "\\d{1,2}\\s+" + MONTHS + "?"
             + ")";
     private static final String DATE_YMD_INTERVAL_START = TEXT_START
             + "("
