@@ -59,8 +59,8 @@ public class TimespanRegex {
                 + "(" + "[abiî][\\. ]*" + REGEX_CHRISTUM + ")"
             + ")" + TEXT_END;
     public static final String CHRISTUM_NOTATION = "(" + AGE_AD + REGEX_OR + AGE_BC + ")";
-    
-    public static final String MONTHS_DIGITS = "01|02|03|04|05|06|07|08|09|10|11|12";
+
+    public static final String MONTHS_DIGITS = "(?:0?(?:1|2|3|4|5|6|7|8|9))|10|11|12";
     public static final String MONTHS_RO =
             "("
                 + "ianuarie|februarie|martie|aprilie|mai|iunie|iulie|august|septembrie|octombrie|noiembrie|decembrie"

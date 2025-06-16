@@ -31,6 +31,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
     - "19 martie -26 noiembrie 2010"
     - "19.02  -26 11 2010"
     - "19.02-  26.11.2010"
+  - MY-like intervals:
+    - "noiembrie 1784 - aprilie 1785"
+    - "noiembrie 1784 - 1785"
+    - "1784 - aprilie 1785"
 - Added support to detect century/millennium intervals containing both Roman and Arabic numerals, such as but not limited to the following:
   - "sec. 4 - 1/2 sec. 2 p. chr"
   - "sec. iv - 1/2 sec. ii p. chr"

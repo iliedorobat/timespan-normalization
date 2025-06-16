@@ -55,14 +55,30 @@ public class ShortDateModel extends TimePeriodModel {
         String[] endValues = splitDate(endDate);
 
         if (order.equals(TimeUtils.MY_PLACEHOLDER)) {
-            // For cases like "septembrie - octombrie 1919", we need to extract
-            // the startYear from the section that stores the endYear
             if (position.equals(TimeUtils.START_PLACEHOLDER)) {
-                return startValues.length > 1
-                        ? startValues[1]
-                        : endValues[1];
+                if (startValues.length > 1) {
+                    return startValues[1];
+                } else {
+                    // Avoids the "Invalid month number" warning thrown by the "getMonth" method
+                    if (startValues[0].length() > 2) {
+                        // E.g.: "629-ianuarie 632"
+                        return startValues[0];
+                    }
+
+                    return getMonth(startValues[0]).equals("Unknown")
+                            // E.g.: "54-ianuarie 632"
+                            ? startValues[0]
+                            // E.g.: "septembrie - octombrie 1919
+                            : endValues[1];
+                }
             } else if (position.equals(TimeUtils.END_PLACEHOLDER)) {
-                return endValues[1];
+                // E.g.: "noiembrie 1784 - aprilie 1785"
+                if (endValues.length > 1) {
+                    return endValues[1];
+                }
+
+                // E.g.: "noiembrie 1784 - 1785"
+                return endValues[0];
             }
         }
 

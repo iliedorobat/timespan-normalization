@@ -120,6 +120,9 @@ public class AdditionalData {
         add("19 03 -26 noiembrie 2010");
         add("19.02  -26 11 2010");
         add("19.02-  26.11.2010");
+        add("noiembrie 1784 - aprilie 1785");
+        add("noiembrie 1784 - 1785");
+        add("1784 - aprilie 1785");
         add("23 decembrie");
         add("30 august");
         add("38 săptămâni");
