@@ -63,6 +63,12 @@ public class TimeExpression {
             this.preparedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
             this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly, sanitize);
         } catch (Exception e) {
+            System.err.println(
+                    "Something went wrong while creating the \"TimeExpression\" object with the following parameters:" +
+                            "\n\tinputValue = " + inputValue +
+                            "\n\t historicalOnly = " + historicalOnly +
+                            "\n\t sanitize = " + sanitize
+            );
             e.printStackTrace();
             this.timespanModels = new ArrayList<>();
         }

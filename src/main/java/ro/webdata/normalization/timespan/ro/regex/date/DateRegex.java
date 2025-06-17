@@ -12,19 +12,19 @@ public class DateRegex {
     // d{3,} allows avoiding the month-day pattern (E.g.: "noiembrie 22")
     private static final String DATE_DMY_DOT = "\\d{1,2}\\.\\d{1,2}\\.\\d{3,}"; // E.g.: "01.01.1911"
     private static final String DATE_DMY_SLASH = "\\d{1,2}\\/\\d{2}\\/\\d{3,}"; // E.g.: "21/01/1916"
-    private static final String DATE_DMY_SPACE = "\\d{1,2}\\s*\\d{2}\\s*\\d{3,}"; // E.g.: "7 06 1911"
+    private static final String DATE_DMY_SPACE = "\\d{1,2}\\s+\\d{2}\\s+\\d{3,}"; // E.g.: "7 06 1911"
     private static final String DATE_DMY_TEXT = "\\d{1,2}[,\\s]+" + MONTHS + "[,\\s]+\\d{3,}";  // E.g.: "9 iulie 1807"
     private static final String DATE_DMY =
             "("
-                    + DATE_DMY_DOT + REGEX_OR
-                    + DATE_DMY_SLASH + REGEX_OR
-                    + DATE_DMY_SPACE + REGEX_OR
-                    + DATE_DMY_TEXT
-                    + ")" + AD_BC_OPTIONAL;
+                + DATE_DMY_DOT + REGEX_OR
+                + DATE_DMY_SLASH + REGEX_OR
+                + DATE_DMY_SPACE + REGEX_OR
+                + DATE_DMY_TEXT
+            + ")" + AD_BC_OPTIONAL;
 
     private static final String DATE_DMY_DOT_PARTIAL = "\\d{1,2}\\.\\d{2}" + "(\\.\\d{3,})?";
     private static final String DATE_DMY_SLASH_PARTIAL = "\\d{1,2}\\/\\d{2}" + "(\\/\\d{3,})?";
-    private static final String DATE_DMY_SPACE_PARTIAL = "\\d{1,2}\\s*\\d{2}" + "(\\s*\\d{3,})?";
+    private static final String DATE_DMY_SPACE_PARTIAL = "\\d{1,2}\\s+\\d{2}" + "(\\s+\\d{3,})?";
     private static final String DATE_DMY_TEXT_PARTIAL = "\\d{1,2}[, ]+" + MONTHS + "([,\\s]+\\d{3,})?"; // E.g.: "10 iunie - 15 octombrie 1382"
     private static final String DATE_DMY_PARTIAL =
             "("
