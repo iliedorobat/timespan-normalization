@@ -53,7 +53,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - term-value like "luna 10", "minutul 30", etc.
 
 #### Breaking
-- ⚠️ API change
+- ⚠️ API change: TimeExpression
 
 ### 1.7.0
 #### Added
