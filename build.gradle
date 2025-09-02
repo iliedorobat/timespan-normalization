@@ -24,7 +24,7 @@ dependencies {
 }
 
 group = 'ro.webdata.normalization.timespan'
-version = '2.0'
+version = '2.1'
 description = 'temporal-normalization'
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11

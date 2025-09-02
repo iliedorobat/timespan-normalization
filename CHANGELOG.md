@@ -3,8 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ---
 
+## 2.1
+- Pre-sanitize datasets only if the user explicitly requests it via the `--sanitize` flag
+
 ## 2.0
-- Added <b>--py4j</b> parameter which allows users to specify whether they need to start GatewayServer
+- Added `--py4j` parameter which allows users to specify whether they need to start GatewayServer
 - Added support for a greater range of intervals, such as but not limited to the following:
   - "Între x și y"
     - "Între 2004 și 2008"
