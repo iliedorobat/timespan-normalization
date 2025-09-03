@@ -15,7 +15,9 @@ import java.util.*;
 public class TimeExpression {
     private static final Gson GSON = new Gson();
     private static final String SEPARATOR = "|";
-    transient private String preparedValue;
+
+    @SerializedName("preparedValue")
+    private String preparedValue;
 
     @SerializedName("inputValue")
     private String inputValue;
