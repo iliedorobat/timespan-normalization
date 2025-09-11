@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### 2.1.0
 #### Changed
+- Bump commons-echo to 1.6.1
 - Pre-sanitize datasets only if the user explicitly requests it via the `--sanitize` flag
 
 ### 2.0.0

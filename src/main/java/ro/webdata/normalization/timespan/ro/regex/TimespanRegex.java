@@ -63,11 +63,11 @@ public class TimespanRegex {
     public static final String MONTHS_DIGITS = "(?:0?(?:1|2|3|4|5|6|7|8|9))|10|11|12";
     public static final String MONTHS_RO =
             "("
-                + "ianuarie|februarie|martie|aprilie|mai|iunie|iulie|august|septembrie|octombrie|noiembrie|decembrie"
+                + "ianuarie|fe[bv]ruarie|martie|aprilie|mai|iu[mn]ie|iulie|august|septembrie|[o0]ctombrie|noiembrie|decembrie"
                 + REGEX_OR
-                + "(ian|feb|mart|apr|iun|iul|aug|sept|oct|noi|dec)\\."
+                + "(ian|feb(r)?|mart|apr|iun|iul|aug|sept|[o0]ct|noi|dec)\\."
                 + REGEX_OR
-                + "fevruarie|iumie|0ctombrie|noimbrie|decembre"
+                + "noimbrie|decembre"
             + ")";
     public static final String MONTHS_EN =
             "("
