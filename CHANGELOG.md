@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ---
 
-## 1.7.patch1
+## 1.7-patch1
 - Updated TimeExpression serialization to fit the new format used in release 2.x
 
 ## 1.7
