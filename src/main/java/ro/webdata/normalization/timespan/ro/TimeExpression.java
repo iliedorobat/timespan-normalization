@@ -2,7 +2,6 @@ package ro.webdata.normalization.timespan.ro;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import org.apache.commons.lang3.StringUtils;
 import ro.webdata.normalization.timespan.ro.model.DBpediaModel;
 import ro.webdata.normalization.timespan.ro.model.TimespanModel;
 
@@ -19,7 +18,9 @@ import java.util.*;
 public class TimeExpression {
     private static final Gson GSON = new Gson();
     private static final String SEPARATOR = "|";
-    transient private String preparedValue;
+
+    @SerializedName("preparedValue")
+    private String preparedValue;
 
     @SerializedName("inputValue")
     private String inputValue;
@@ -31,8 +32,8 @@ public class TimeExpression {
         List<String> headers = new ArrayList<>(){{
             add("input value");
             add("prepared value");
-            add("normalized values");
             add("normalized edge values");
+            add("normalized values");
         }};
 
         return String.join(SEPARATOR, headers);
@@ -58,21 +59,26 @@ public class TimeExpression {
      *                 framework on LIDO datasets.
      */
     public TimeExpression(String inputValue, boolean historicalOnly, boolean sanitize) {
-        String sanitizedValue = sanitize
-                ? TimeSanitizeUtils.sanitizeValue(inputValue)
-                : inputValue;
+        try {
+            String sanitizedValue = sanitize
+                    ? TimeSanitizeUtils.sanitizeValue(inputValue)
+                    : inputValue;
 
-        this.inputValue = inputValue;
-        this.preparedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
-        this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly, sanitize);
+            this.inputValue = inputValue;
+            this.preparedValue = TimeUtils.normalizeChristumNotation(sanitizedValue);
+            this.timespanModels = TimespanUtils.prepareTimespanModels(inputValue, historicalOnly, sanitize);
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.timespanModels = new ArrayList<>();
+        }
     }
 
     @Override
     public String toString() {
         return inputValue
                 + SEPARATOR + preparedValue
-                + SEPARATOR + this.getDBpediaItems()
-                + SEPARATOR + this.getDBpediaEdges();
+                + SEPARATOR + this.getDBpediaEdges()
+                + SEPARATOR + this.getDBpediaItems();
     }
 
     public String serialize() {
