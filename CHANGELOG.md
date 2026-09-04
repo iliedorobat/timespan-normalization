@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### 2.2.0
 #### Changed
-- Changed https://dbpedia.org/page/ to https://dbpedia.org/resource/
+- Bump commons-echo to 1.6.2 (changed https://dbpedia.org/page/ to https://dbpedia.org/resource/)
 
 ### 2.1.0
 #### Changed
