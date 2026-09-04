@@ -3,6 +3,7 @@ package ro.webdata.normalization.timespan.ro.model;
 import com.google.gson.annotations.SerializedName;
 import ro.webdata.echo.commons.Const;
 import ro.webdata.echo.commons.graph.Namespace;
+import ro.webdata.normalization.timespan.commons.Constants;
 import ro.webdata.normalization.timespan.ro.TimeUtils;
 import ro.webdata.normalization.timespan.ro.TimespanType;
 
@@ -23,7 +24,7 @@ public class DBpediaModel {
         if (uri != null) {
             this.uri = uri;
             this.label = uri
-                    .replace(Namespace.NS_DBPEDIA_RESOURCE, "")
+                    .replace(Constants.NS_DBPEDIA_RESOURCE, "")
                     .replace(Const.UNDERSCORE_PLACEHOLDER, " ");
             this.matchedValue = matchedValue;
             this.matchedType = matchedType;
@@ -39,12 +40,12 @@ public class DBpediaModel {
 
         switch (matchedType) {
             case TimespanType.CENTURY:
-                return Namespace.NS_DBPEDIA_RESOURCE + TimeUtils.getOrdinal(value) + Const.DBPEDIA_CENTURY_PLACEHOLDER + DBpediaModel.getEraSuffix(era);
+                return Constants.NS_DBPEDIA_RESOURCE + TimeUtils.getOrdinal(value) + Const.DBPEDIA_CENTURY_PLACEHOLDER + DBpediaModel.getEraSuffix(era);
             case TimespanType.MILLENNIUM:
-                return Namespace.NS_DBPEDIA_RESOURCE + TimeUtils.getOrdinal(value) + Const.DBPEDIA_MILLENNIUM_PLACEHOLDER + DBpediaModel.getEraSuffix(era);
+                return Constants.NS_DBPEDIA_RESOURCE + TimeUtils.getOrdinal(value) + Const.DBPEDIA_MILLENNIUM_PLACEHOLDER + DBpediaModel.getEraSuffix(era);
             case TimespanType.DATE:
             case TimespanType.YEAR:
-                return Namespace.NS_DBPEDIA_RESOURCE + String.valueOf(value) + DBpediaModel.getEraSuffix(era);
+                return Constants.NS_DBPEDIA_RESOURCE + String.valueOf(value) + DBpediaModel.getEraSuffix(era);
             default:
                 return null;
         }
