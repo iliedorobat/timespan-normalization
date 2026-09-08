@@ -104,9 +104,9 @@ be used to sanitize values. <b>Use this flag only if you use the library on LIDO
     input value = 1/2 sec. iii - sec. ii a. chr.
     sanitized value = 1/2 sec. iii - sec. i __BC__
     normalized values = [
-            http://dbpedia.org/page/1st_century_BC,
-            http://dbpedia.org/page/2nd_century_BC,
-            http://dbpedia.org/page/3rd_century_BC
+            http://dbpedia.org/resource/1st_century_BC,
+            http://dbpedia.org/resource/2nd_century_BC,
+            http://dbpedia.org/resource/3rd_century_BC
     ]
 ```
 
