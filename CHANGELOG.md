@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ---
 
+### 2.2.1
+#### Added
+- Support for providing a custom gateway port.
+
 ### 2.2.0
 #### Changed
 - Bump commons-echo to 1.6.2 (changed https://dbpedia.org/page/ to https://dbpedia.org/resource/)
