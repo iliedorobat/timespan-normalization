@@ -2,6 +2,8 @@ package ro.webdata.normalization.timespan.commons;
 
 import java.util.List;
 
+import static py4j.GatewayServer.DEFAULT_PORT;
+
 public class ParamsUtils {
     public static boolean contains(List<String> pairs, String comparator) {
         for (String pair : pairs) {
@@ -57,5 +59,18 @@ public class ParamsUtils {
         String value = getValue(pairs, "--python");
 
         return Boolean.parseBoolean(value);
+    }
+
+    public static int gatewayPort(List<String> pairs) {
+        String value = getValue(pairs, "--gateway-port");
+
+        if (value == null)
+            return DEFAULT_PORT;
+
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception e) {
+            return DEFAULT_PORT;
+        }
     }
 }
